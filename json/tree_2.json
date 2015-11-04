@@ -1,0 +1,23 @@
+{
+  "tree_id": 2,
+    "tree_structure": [
+      {
+        "attr_type": "criterion",
+        "attr_name": "infarction",
+        "branch_yes": "",
+        "branch_no": "",
+      },
+      {
+        "attr_type": "cue",
+        "attr_name": "OC",
+        "branch_yes": "continue",
+        "branch_no": "exit",
+      },
+      {
+        "attr_type": "cue",
+        "attr_name": "ST",
+        "branch_yes": "exit",
+        "branch_no": "exit",
+    }
+  ]
+}

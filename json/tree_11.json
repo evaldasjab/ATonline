@@ -1,0 +1,68 @@
+{
+    "TreeId": 1,
+    "TreeInfo": {
+        "TreeInfoId": 1,
+        "Image": "icon_FFT_512.jpg",
+        "Title": "My Favorite FFTree",
+        "Date": "22.02.2015, 22:22",
+        "NoOfCues": 3,
+        "Description": "This is description of my favorite Fast and Frugal Tree.",
+        "Owner": {
+            "UserId": 1,
+            "UserName": "evaldasjab",
+            "FirstName": "Evaldas",
+            "LastName": "Jablonskis",
+            "Email": "evaldas.jab@gmail.com"
+        }
+    },
+    "TreeCues": [
+        {
+            "NoBranch": "",
+            "YesBranch": "",
+            "CueId": 1,
+            "IsCriterion": true,
+            "CueValue": "11111",
+            "CueInfo": {
+                "CueInfoId": 1,
+                "CueName": "infarction",
+                "CueDataType": "binary"
+            }
+        },
+        {
+            "NoBranch": "continue",
+            "YesBranch": "exit",
+            "CueId": 2,
+            "IsCriterion": false,
+            "CueValue": "22222",
+            "CueInfo": {
+                "CueInfoId": 2,
+                "CueName": "ST",
+                "CueDataType": "binary"
+            }
+        },
+        {
+            "NoBranch": "exit",
+            "YesBranch": "continue",
+            "CueId": 3,
+            "IsCriterion": false,
+            "CueValue": "33333",
+            "CueInfo": {
+                "CueInfoId": 3,
+                "CueName": "OC",
+                "CueDataType": "binary"
+            }
+        },
+        {
+            "NoBranch": "exit",
+            "YesBranch": "exit",
+            "CueId": 3,
+            "IsCriterion": false,
+            "CueValue": "22222",
+            "CueInfo": {
+                "CueInfoId": 2,
+                "CueName": "CP",
+                "CueDataType": "binary"
+            }
+        }
+    ]
+}

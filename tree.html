@@ -1,0 +1,126 @@
+<!--Here is FFT for the dataset no.: {{dataset_id}}-->
+
+
+<div class="blue_area">
+
+    <div>
+        <button id="create_fft" class="button_gray">Save</button>
+        <button id="create_fft" class="button_gray">Clone</button>
+        <button id="create_fft" class="button_gray">Remove</button>
+
+<!--        <button class="button_gray button_selectdata button_on disabled" id="button_allcases">All Cases</button>
+        <button class="button_gray button_selectdata disabled" id="button_training">Training</button>
+        <button class="button_gray button_selectdata disabled" id="button_testing"> Testing</button>-->
+    </div>
+
+
+    <div id="horiz_scroll"> <!-- need this and #cues_list to make the scroll work -->
+
+        <ul id="cues_list" class="sortable_area"> <!-- need this and #horiz_scroll to make the scroll work -->
+
+            <li ng-repeat="attribute in attributes_info" on-finish-render="ngRepeatFinished" id="{{attribute.name}}" name="{{attribute.name}}" class="widget">
+                <div class="widget_head">
+                    <div title="Expand/Collapse the Cue">
+                        <svg class="button_controls button_expand" height="20" width="20">
+                            <polyline class="down" points="3 7,10 14,17 7"/>
+                            <polyline class="up" points="3 13,10 6,17 13"/>
+                        </svg>
+                    </div>
+                    <div class="widget_title" >
+                        <span title="{{attribute.name}}">{{attribute.name}}</span>
+                    </div>
+                </div>
+                <div class="widget_content">
+                    <div class="unsortable">
+                        <table class="split_table">
+                            <tr><td class="table_title" colspan="5">SPLIT OF CUE VALUES</td></tr>
+                            <tr><th>min</th><td class="stats_slider" colspan="3"><div class="split_slider" title="Change the Split Value"></div></td><th>max</th></tr>
+                            <tr><td class="cell_values" id="min_value" title="Minimum Value">0</td><th class="cell_exit" id="split_label_left" title="Values between MIN (included) and SPLIT (included) are...">no</th><td class="cell_values"><input type="text" id="split_value" value="0" title="Split Value"></input></td><th class="cell_exit" id="split_label_right" title="Values between SPLIT (excluded) and MAX (included) are...">yes</th><td class="cell_values" id="max_value" title="Maximum Value">0</td></tr>
+                            <tr><th></th><td class="swap" colspan="3" title="Swap YES and NO Ranges"><svg class="button_swap" height="20" width="40"><polyline class="left" points="9 3,2 10,9 17"/><polyline class="right" points="31 3,38 10,31 17"/><line x1="2" y1="10" x2="38" y2="10"/></svg></td><th></th></tr>
+                        </table>
+                    </div>
+                    <ul class="stat_cue_header unsortable">
+                        <li class="stat_inline stat_cue unsortable">
+                            <table class="eval_table">
+                                <tr><td class="stats_header table_title" colspan="6">STATS OF SINGLE CUE TREE</td></tr>
+                                <tr><td class="cell_narrow"></td><td></td><td class="table_header" colspan="4">PREDICTION</td></tr>
+                                <tr><td></td><td></td><th>yes</th><th>no</th><th>und</th><th>sum</th></tr>
+                                <tr><td class="table_header_rotated" rowspan="3"><div class="rotate">CRITERION</div></td><th class="cell_narrow">yes</td><td class="success" id="hits" title="Hits">Hit</td><td class="fail" id="misses" title="Misses">Miss</td><td class="undecided" id="undecided_pos" title="Undecided Positive">0</td><td class="cell_values" id="crit_yes_sum">0</td></tr>
+                                <tr><th class="cell_narrow">no</th><td class="fail" id="falsealarms" title="False Alarms">FA</td><td class="success" id="correctrejections" title="Correct Rejections">CR</td><td class="undecided" id="undecided_neg" title="Undecided Negative">0</td><td class="cell_values" id="crit_no_sum">0</td></tr>
+                                <tr><th class="cell_narrow">sum</th><td class="cell_values" id="pred_yes_sum">0</td><td class="cell_values" id="pred_no_sum">0</td><td class="cell_values" id="pred_und_sum">0</td><td class="cell_values" id="pred_sum_sum">0</td></tr>
+                                <tr><th></th></tr>
+                            </table>
+                            <table class="eval_table">
+                                <tr><th colspan="2" title="Probability of Hits">p(H)</th><th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th><th title="D prime">d&#8242</th><th title="Frugality">Frug</th><th title="C or Bias">Bias</th></tr>
+                                <tr><td colspan="2" class="cell_values" id="pHits" title="Probability of Hits">0</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">0</td><td class="cell_values" id="dprime" title="D prime">0</td><td class="cell_values" id="frugality" title="Frugality">0</td><td class="cell_values" id="bias" title="C or Bias">0</td></tr>
+                            </table>
+                        </li
+                    </ul>
+                </div>
+                <ul class="exits"></ul>
+            </li>
+        </ul>
+
+    </div>
+
+</div>
+
+<div id="white_area">
+
+    <div id="stats_column">
+        <div id="criterion_area"> Criterion:
+            <ul id="criterion_place" class="sortable_area"></ul>
+        </div>
+
+        <div id="stats_container" class="inline">
+            <table class="eval_table" >
+                <tr><th class="cell_narrow"></th><th></th><td class="table_header" colspan="4">PREDICTION</td></tr>
+                <tr><th></th><th></th><th>yes</th><th>no</th><th>und</th><th>sum</th></tr>
+                <tr><td class="table_header_rotated" rowspan="3"><div class="rotate">CRITERION</div></td><th class="cell_narrow">yes</td><td class="success" id="hits" title="Hits">Hit</td><td class="fail" id="misses" title="Misses">Miss</td><td class="undecided" id="undecided_pos" title="Undecided Positive">0</td><td class="cell_values" id="crit_yes_sum">0</td></tr>
+                <tr><th class="cell_narrow">no</td><td class="fail" id="falsealarms" title="False Alarms">FA</td><td class="success" id="correctrejections" title="Correct Rejections">CR</td><td class="undecided" id="undecided_neg" title="Undecided Negative">0</td><td class="cell_values" id="crit_no_sum">0</td></tr>
+                <tr><th class="cell_narrow">sum</th><td class="cell_values" id="pred_yes_sum">0</td><td class="cell_values" id="pred_no_sum">0</td><td class="cell_values" id="pred_und_sum">0</td><td class="cell_values" id="pred_sum_sum">0</td></tr>
+                <tr><th></th></tr>
+            </table>
+            <table class="eval_table" >
+                <tr><th colspan="2" title="Probability of Hits">p(H)</th><th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th><th title="D prime">d'</th><th title="Frugality">Frug</th><th title="C or Bias">Bias</th></tr>
+                <tr><td colspan="2" class="cell_values" id="pHits" title="Probability of Hits">0</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">0</td><td class="cell_values" id="dprime" title="D prime">0</td></tr>
+                <tr><th></th></tr>
+            </table>
+            <table class="eval_table" >
+                <tr><td class="table_header" colspan="4">COMPETITORS</td></tr>
+                <tr><th></th><th title="Probability of Hits">p(H)</th><th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th><th title="D prime">d'</th></tr>
+                <tr><th>Dawes's rule</th><td class="cell_values" id="pHits" title="Probability of Hits">0</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">0</td><td class="cell_values" id="dprime" title="D prime">0</td></tr>
+                <tr><th>Franklin's rule</th><td class="cell_values" id="pHits" title="Probability of Hits">0</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">0</td><td class="cell_values" id="dprime" title="D prime">0</td></tr>
+                <tr><th>Mult. regression</th><td class="cell_values" id="pHits" title="Probability of Hits">0</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">0</td><td class="cell_values" id="dprime" title="D prime">0</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="columns">
+        <!--<div class="drophere disabled" id="drophere_tree0">Drop the cues here!</div>-->
+    </div>
+    <ul id="tree" class="sortable_area">
+        <!-- here will go the cues -->
+    </ul>
+    <div class="columns">
+    </div>
+
+    <div id="info_container">
+        <div class="titleblock">
+            <h3 class="title">{{tree_info.title}}</h3>
+            <h5 class="date_author">{{tree_info.date}} by {{tree_info.username}}</h5>
+            <h5 class="properties">{{tree_info.size_cues}} cues</h5>
+            <h5 class="usage">Used by {{tree_info.usage_users}} users with {{tree_info.usage_datasets}} datasets</h5>
+        </div>
+        <div class="infoblock">{{tree_info.description}}</div>
+
+        <table class="usage_table" >
+            <tr><th class="table_title" colspan="3">USAGE</th></tr>
+            <tr><th>Dataset</th><th>Date</th><th>User</th></tr>
+            <tr><td>data_CCU_89.csv</td><td>17.08.2015</td><td>H.Neth</td></tr>
+            <tr><td>data_CCU_89.csv</td><td>15.08.2015</td><td>E.Jablonskis</td></tr>
+            <tr><td>data_CCU_240.csv</td><td>09.08.2015</td><td>L.Schooler</td></tr>
+        </table>
+    </div>
+
+</div>

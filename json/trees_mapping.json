@@ -1,0 +1,64 @@
+[
+  {
+    "mapping_id": 1,
+    "dataset_id": 1,
+    "tree_id": 1,
+      "mapping": [
+        {
+          "dataset_attr_name": "infarction",
+          "tree_attr_name": "infarction",
+          "split_value": "0,5",
+          "isflipped": false,
+        },
+        {
+          "dataset_attr_name": "ST",
+          "tree_attr_name": "ST",
+          "split_value": "0,5",
+          "isflipped": false,
+        },
+        {
+          "dataset_attr_name": "CP",
+          "tree_attr_name": "CP",
+          "split_value": "0,5",
+          "isflipped": false,
+        },
+        {
+          "dataset_attr_name": "OC",
+          "tree_attr_name": "OC",
+          "split_value": "0,5",
+          "isflipped": false,
+        },
+      ]
+  },
+  {
+    "mapping_id": 2,
+    "dataset_id": 1,
+    "tree_id": 2,
+      "mapping": [
+        {
+          "dataset_attr_name": "infarction",
+          "tree_attr_name": "infarction",
+          "split_value": "0,5",
+          "isflipped": false,
+        },
+        {
+          "dataset_attr_name": "ST",
+          "tree_attr_name": "ST",
+          "split_value": "0,5",
+          "isflipped": false,
+        },
+        {
+          "dataset_attr_name": "CP",
+          "tree_attr_name": "CP",
+          "split_value": "0,5",
+          "isflipped": false,
+        },
+        {
+          "dataset_attr_name": "OC",
+          "tree_attr_name": "OC",
+          "split_value": "0,5",
+          "isflipped": false,
+        },
+      ]
+  }
+]

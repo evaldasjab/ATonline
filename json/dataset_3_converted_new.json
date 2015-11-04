@@ -1,0 +1,1791 @@
+{
+    "Image": "icon_CSV_3.jpg",
+    "Title": "Data_CCU_89.csv",
+    "Date": "30.10.2015, 14:00",
+    "UserId": 3,
+    "SizeCues": 4,
+    "SizeCases": 89,
+    "Description": "Obtained from the UCI Machine Learning Repository and is a subset of the 1987 National Indonesia Contraceptive Survey. Cases are samples of married women who were either not pregnant or did not know if they were pregnant at the time of the interview.",
+    "DatasetFull": [
+        {
+            "CaseId": 0,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 0,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 0,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 0,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 1,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 1,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 1,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 1,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 2,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 2,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 2,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 2,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 3,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 3,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 3,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 3,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 4,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 4,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 4,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 4,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 5,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 5,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 5,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 5,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 6,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 6,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 6,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 6,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 7,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 7,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 7,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 7,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 8,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 8,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 8,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 8,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 9,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 9,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 9,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 9,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 10,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 10,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 10,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 10,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 11,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 11,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 11,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 11,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 12,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 12,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 12,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 12,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 13,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 13,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 13,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 13,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 14,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 14,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 14,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 14,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 15,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 15,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 15,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 15,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 16,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 16,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 16,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 16,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 17,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 17,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 17,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 17,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 18,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 18,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 18,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 18,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 19,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 19,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 19,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 19,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 20,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 20,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 20,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 20,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 21,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 21,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 21,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 21,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 22,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 22,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 22,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 22,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 23,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 23,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 23,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 23,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 24,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 24,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 24,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 24,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 25,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 25,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 25,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 25,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 26,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 26,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 26,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 26,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 27,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 27,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 27,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 27,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 28,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 28,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 28,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 28,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 29,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 29,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 29,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 29,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 30,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 30,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 30,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 30,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 31,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 31,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 31,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 31,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 32,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 32,
+            "CueName": "ST",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 32,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 32,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 33,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 33,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 33,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 33,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 34,
+            "CueName": "infarction",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 34,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 34,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 34,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 35,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 35,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 35,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 35,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 36,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 36,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 36,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 36,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 37,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 37,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 37,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 37,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 38,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 38,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 38,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 38,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 39,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 39,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 39,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 39,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 40,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 40,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 40,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 40,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 41,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 41,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 41,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 41,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 42,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 42,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 42,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 42,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 43,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 43,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 43,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 43,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 44,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 44,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 44,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 44,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 45,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 45,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 45,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 45,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 46,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 46,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 46,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 46,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 47,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 47,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 47,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 47,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 48,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 48,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 48,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 48,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 49,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 49,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 49,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 49,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 50,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 50,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 50,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 50,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 51,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 51,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 51,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 51,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 52,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 52,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 52,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 52,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 53,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 53,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 53,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 53,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 54,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 54,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 54,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 54,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 55,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 55,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 55,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 55,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 56,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 56,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 56,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 56,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 57,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 57,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 57,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 57,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 58,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 58,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 58,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 58,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 59,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 59,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 59,
+            "CueName": "CP",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 59,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 60,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 60,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 60,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 60,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 61,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 61,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 61,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 61,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 62,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 62,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 62,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 62,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 63,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 63,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 63,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 63,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 64,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 64,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 64,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 64,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 65,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 65,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 65,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 65,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 66,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 66,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 66,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 66,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 67,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 67,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 67,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 67,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 68,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 68,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 68,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 68,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 69,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 69,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 69,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 69,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 70,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 70,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 70,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 70,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 71,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 71,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 71,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 71,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 72,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 72,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 72,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 72,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 73,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 73,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 73,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 73,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 74,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 74,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 74,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 74,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 75,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 75,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 75,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 75,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 76,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 76,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 76,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 76,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 77,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 77,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 77,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 77,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 78,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 78,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 78,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 78,
+            "CueName": "OC",
+            "CueValue": 1
+        },
+        {
+            "CaseId": 79,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 79,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 79,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 79,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 80,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 80,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 80,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 80,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 81,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 81,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 81,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 81,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 82,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 82,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 82,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 82,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 83,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 83,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 83,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 83,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 84,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 84,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 84,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 84,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 85,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 85,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 85,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 85,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 86,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 86,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 86,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 86,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 87,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 87,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 87,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 87,
+            "CueName": "OC",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 88,
+            "CueName": "infarction",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 88,
+            "CueName": "ST",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 88,
+            "CueName": "CP",
+            "CueValue": 0
+        },
+        {
+            "CaseId": 88,
+            "CueName": "OC",
+            "CueValue": 0
+        }
+    ]
+}

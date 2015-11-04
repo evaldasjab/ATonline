@@ -1,0 +1,51 @@
+
+<div id="blue_area">
+
+    <div>
+        <button id="button_upload_csv_file" class="button_gray button_load_csv" >Upload CSV File</button>
+        <input type="file" id="csv-file" name="files">
+        <!--<button class="buttons_grey button_load_csv" id="button_load_csv_sample">Load CSV Sample</button>-->
+
+        <select id="button_sort" class="button_gray">
+            <option>Sort By:</option>
+            <option value="date">Date</option>
+            <option value="kind">Kind</option>
+            <option value="title">Title</option>
+            <option value="usage">Usage</option>
+            <option value="author">Author</option>
+            </optgroup>
+        </select>
+
+        <select id="button_view" class="button_gray">
+            <option>View As:</option>
+            <option value="list">List</option>
+            <option value="grid">Grid</option>
+            </optgroup>
+        </select>
+    </div>
+
+</div>
+
+<div id="white_area">
+
+    <!--solution with angular.js-->
+    Search: <input ng-model="query" type="text"/>
+    Sorty by: <a href="" ng-click="sortField ='title'; reverse = !reverse">Title</a>,
+    <a href="" ng-click="sortField ='date'; reverse = !reverse">Date</a>,
+    <a href="" ng-click="sortField ='uploader'; reverse = !reverse">Uploader</a>,
+    <a href="" ng-click="sortField ='usage_users'; reverse = !reverse">Usage</a>
+
+    <ul id ="view_tools" class="view-list">
+        <li ng-repeat="entry in datasets | filter:query | orderBy:sortField:reverse" >
+            <a class="image inline" href="#/{{entry.DatasetId}}"><img ng-src="img/{{entry.Image}}" width="96" height="96"></a>
+            <div id="titleblock_id" class="titleblock inline">
+                <h2 class="title">{{entry.Title}}</h2>
+                <h4><span class="date">{{entry.Date}}</span> by <span class="username">{{entry.UserId}}</span></h4>
+                <h4 class="date_author"><span class="size_attributes">{{entry.SizeCues}}</span> variables x <span class="size_cases">{{entry.SizeCases}}</span> cases</h4>
+                <h4><span class="usage_users">{{entry.UsageUsers}}</span> users for <span class="usage_ffts">{{entry.UsageFfts}}</span> FFTs and <span class="usage_heuristics">{{entry.UsageHeuristics}}</span> heuristics</h4>
+            </div>
+            <div class="infoblock inline"><span class="description">{{entry.Description}}</span></div>
+        </li>
+    </ul>
+
+</div>

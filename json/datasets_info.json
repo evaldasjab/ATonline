@@ -1,0 +1,54 @@
+[
+    {
+        "dataset_id": 1,
+        "img": "icon_CSV_512.jpg",
+        "title": "Data_CCU_89_reordered.csv",
+        "date": "01.08.2015, 12:45",
+        "username": "John Steward",
+        "size_attributes": "4",
+        "size_cases": "89",
+        "usage_users": "5",
+        "usage_ffts": "2",
+        "usage_heuristics": "3",
+        "description": "Developed by Green & Mehr (1997), the dataset was used in a Fast-and-Frugal tree, which an emergency-room doctor could use to decide whether a patient concerned about a possible heart attack should be sent to the coronary care unit (CCU) or a regular nursing-bed."
+    },
+    {
+        "dataset_id": 2,
+        "img": "icon_CSV_3.jpg",
+        "title": "Data_CMC_400_reordered.csv",
+        "date": "01.08.2015, 12:45",
+        "username": "John Steward",
+        "size_attributes": "9",
+        "size_cases": "400",
+        "usage_users": "5",
+        "usage_ffts": "2",
+        "usage_heuristics": "3",
+        "description": "Obtained from the UCI Machine Learning Repository and is a subset of the 1987 National Indonesia Contraceptive Survey. Cases are samples of married women who were either not pregnant or did not know if they were pregnant at the time of the interview."
+    },
+    {
+        "dataset_id": 3,
+        "img": "icon_CSV_2.jpg",
+        "title": "Data_CCU_89_original.csv",
+        "date": "03.08.2015, 12:45",
+        "username": "Evaldas Jablonskis",
+        "size_attributes": "4",
+        "size_cases": "89",
+        "usage_users": "51",
+        "usage_ffts": "52",
+        "usage_heuristics": "53",
+        "description": "Dico veri deserunt his at, sed eirmod impedit suscipit ei. Mundi oratio veritus ex pri. Eam alii fuisset an, vis ea sumo vituperata. Ex illum ridens sea, et mei possim labitur scriptorem. Dico audire et usu, has ut vidit labore scribentur."
+    },
+    {
+        "dataset_id": 4,
+        "img": "icon_CSV_3.jpg",
+        "title": "Third_Data_CMC_400.csv",
+        "date": "02.08.2015, 12:45",
+        "username": "Shenghua Luan",
+        "size_attributes": "9",
+        "size_cases": "400",
+        "usage_users": "2",
+        "usage_ffts": "2",
+        "usage_heuristics": "3",
+        "description": "Alii dicam libris nam id, ut his denique dissentias. Eam an quis odio disputationi. Primis nemore consequat mea et, mei ad populo legendos. At aeque legere eos, qui ut movet corpora perfecto. Id ius wisi nonumy, vim no movet persequeris."
+    }
+]

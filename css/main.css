@@ -1,0 +1,1158 @@
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+/*CSS RESET*/
+html,body,blockquote,code,h1,h2,h3,h4,h5,h6,ul,ol,p,pre{margin:0;padding:0;list-style:none;border:none;}
+button,fieldset,form,input,legend,textarea,select{margin:0;padding:0}
+fieldset{border:0}
+a,a *{cursor:pointer}
+div{margin:0;padding:0;background-color:transparent;text-align:left}
+img{border:0}
+applet,iframe,object{border:0;margin:0;padding:0}
+button,input[type=button],input[type=image],input[type=reset],input[type=submit],label{cursor:pointer;}
+ul,li{list-style:none;margin:0;padding:0;-webkit-padding-start:0}
+strong{font-weight:bold;}
+em{font-style:italic;}
+
+/*GENERAL*/
+
+body {
+    font-family: 'Offside', Arial, Sans-Serif;
+    font-size: 13px;
+    margin: 0;
+}
+
+.inline {
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+/* LISTS *****************/
+
+.date_author {
+    color: darkgray;
+}
+
+.infoblock {
+    font-family: 'Arial Narrow', Arial, Sans-Serif;
+}
+
+
+/* VIEW MODES */
+
+/* LIST view */
+
+.view-list li {
+    /*padding: 20px 0;*/
+    white-space: nowrap;
+    border: 2px solid lightgray;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.view-list .rowblock{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.view-list img {
+    padding-right: 20px;
+}
+.view-list .titleblock {
+    width: 30%;
+    overflow: hidden;
+}
+.view-list h3 {
+    margin-top: 10px;
+}
+
+.view-list .infoblock {
+    width: 50%;
+    padding: 0 15px;
+    overflow: hidden;
+    white-space: normal;
+}
+
+/* Large GRID view */
+
+
+.view-grid ul li {
+    width: 32%;
+    text-align: center;
+    padding: 10px;
+    margin: 0px;
+    display: inline-block;
+    /*min-height: 420px;*/
+    vertical-align: top;
+    border-style: solid;
+    border-color: lightgray;
+    border-width: 2px;
+}
+
+.view-grid img  {
+    width: 256px;
+    height: auto;
+}
+
+.view-grid .title {
+    font-size: 2em;
+}
+
+.view-grid .infoblock {
+    max-width: 300px;
+    min-height: 70px;
+    margin: 0 auto;
+}
+
+/*dataset TABLE view*/
+
+#dataset_container {
+    width: 600px;
+    height: 400px;
+    overflow: auto;
+}
+.handsontable col {
+    width: 80px;
+}
+.handsontable td {
+    font-family: Arial, Sans-Serif;
+    text-align: center;
+}
+
+#info_container {
+    width: 340px;
+    padding-left: 30px;
+    vertical-align: top;
+    display: table-cell;
+}
+#info_container .usage {
+    height: 20px;
+    background: #EEE;
+    vertical-align: middle;
+}
+
+.container .rowblock{
+    display: inline-block;
+    vertical-align: middle;
+
+}
+
+.usage_table {
+    margin-top: 20px;
+    width: 100%;
+}
+.usage_table .table_title {
+    background: #EEE;
+    text-align: center;
+}
+.usage_table tr {
+    height: 20px;
+}
+.usage_table td {
+    font-family: "Arial Narrow", Arial, Sans-Serif;
+    background: #EEE;
+}
+/* LISTS End *****************/
+
+
+/*BLUE AREA*/
+
+.blue_area {
+    background: #50ADE1;  /* Special BLUE */
+    padding: 20px 0px 0px 20px;
+}
+.blue_area h1 {
+    font-size: 44px;
+    white-space: nowrap;
+    color: white;
+}
+
+.blue_area a {
+    color: white;
+    text-decoration: none;
+}
+
+#mpib_logo {
+    height: 34px;
+    width: 360px;
+    position: absolute;
+    left: 867px;
+    top: 36px;
+}
+
+/*#menu li {
+    padding-right: 20px;
+}*/
+
+.button_gray {
+    cursor: pointer;
+    /*width: 120px;*/
+    height: 20px;
+    border-radius: 100px;   /*makes responsive, normally should be half of height*/
+    border: 0px solid black;
+    /*font-family: 'Offside', Arial, Sans-Serif;*/
+    /*font-size: 12px;*/
+    color: Black;
+    text-align: center;
+    background: LightGrey;    /* or d4d4d4, b 83% */
+    color: Black;
+    z-index: 0;
+    transition: color 1s;
+    margin-right: 20px;
+    padding: 0px 20px 0px 20px;
+}
+.button_gray:disabled {
+    opacity: 0.2;
+}
+.button_gray:hover {
+    background: #e5e5e5;     /*lighter than LightGrey, b 90% */
+    color: Black;
+    z-index: 1;
+}
+.buttons_grey:active {
+    color: #50ADE1;  /* Special BLUE */
+    transition: color 0s;
+}
+.button_on {
+    background: White;
+    color: Black;
+    z-index: 1;
+}
+#csv-file {
+    display: none;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.button_expand_all {
+    cursor: pointer;
+    background: transparent;
+    border: none !important;
+    fill: none;
+    stroke-width: 1;
+}
+.blue_area .button_expand_all {
+    stroke: White;
+    position: relative;
+    top: -20px;
+    left: -21px;
+}
+#white_area .button_expand_all {
+    stroke: Grey;
+    vertical-align: top;
+    position: relative;
+    top: -20px;
+    left: 4px;
+}
+
+/*****************/
+/* #cues_list is defined under WIDGETS*/
+/*****************/
+
+/* BLUE AREA End ***************/
+
+/* WHITE AREA *************/
+
+
+#white_area {
+    background: white;
+    padding: 20px 0px 20px 20px;
+    /*width: 1200px;*/
+    display: inline-table;
+}
+
+#stats_column {
+    width:230px;
+    display: table-cell;
+    /*background-color: yellow;*/
+}
+
+#criterion_area {
+    width: 100%;
+    height: 80px;
+    vertical-align: top;
+    /*background: palevioletred;*/
+    text-align: center;
+    margin-bottom: 20px;
+}
+#criterion_place {
+    border: 1px solid #50ADE1;  /* Special BLUE */
+    width: 160px;
+    height: 40px;
+    border-radius: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#valid_container {
+    margin-bottom: 20px;
+}
+
+#tree {
+    width: 160px;
+    display: table-cell;
+    height: 455px;
+    vertical-align: top;
+}
+
+.columns {
+    width:200px;
+    display: table-cell;
+    background-color: white;
+    /*position: relative;*/
+    vertical-align: top;
+}
+
+
+
+.drophere {
+    width: 120px;
+    position: absolute;
+    left: 130px;
+    top: 14px;
+}
+
+/*#footer {
+    width: 435px;
+    background: White;
+    font-size: 10px;
+    color: Grey;
+    text-align: center;
+    white-space: nowrap;
+    position: fixed;
+    left: 394px;
+    padding: 10px 10px 20px 10px;
+    bottom: 0px;
+}*/
+
+footer {
+    font-family: Arial, Sans-Serif;
+    font-size: 10px;
+    padding: 20px;
+}
+/* WHITE AREA End *************/
+
+
+/* Widgets ***************/
+
+
+/* This container element gives us the scrollbars we want.*/
+#horiz_scroll {
+    margin: 20px 0px 0px 0px;
+    padding-bottom: 20px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+/* table-layout: fixed does a lot of the magic, here. It makes sure that the "table cells" retain the pixel dimensions you want.*/
+/*.cues_list {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}*/
+
+#cues_list {
+    display: inline-table; /* doesn't let cues to jump vertically */
+    min-width: 160px;      /* holds a place to drag the criterion back, when the list is empty */
+    min-height: 40px;      /* holds a place to drag the criterion back, when the list is empty */
+}
+
+/* Arranging your content inside the "cells" is as simple as using the vertical-align and text-align properties. Floats work, too.*/
+#cues_list .widget {
+    width: auto;
+    height: auto;
+    display: table-cell; /* makes cues be inline with overflow:auto in #horiz_scroll */
+    vertical-align: top;
+    padding: 0px 20px 0px 0px;
+}
+#tree .widget {
+    display: block !important; /* makes cues align vertical */
+    margin: 0px 0px 40px 0px;
+}
+
+.widget {
+    height: auto !important;
+    position: relative;
+}
+
+.widget_placeholder {
+    border: 2px dashed LightGrey;
+    width: 156px;
+    height: 36px;
+    border-radius: 36px;
+    /*margin: 0px 0px 40px 0px;*/
+}
+
+.ui-sortable-placeholder { /* fixes vertically jumping cues in the list */
+    display: inline-block;
+    height: 1px;
+}
+
+.widget_head {
+    width: 158px;
+    height: 38px;
+    border-radius: 38px;
+    border: 1px solid #50ADE1;   /* Special BLUE */;
+    background: White;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+li:not(.ui-draggable-disabled) .widget_head {
+    border: 1px solid #50ADE1;   /* Special BLUE */;
+}
+#tree .widget_head, #criterion_place .widget_head {
+    background: #50ADE1;   /* Special BLUE */
+}
+
+.widget_title {
+    width: 60px;
+    line-height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    color: Grey;
+    font-family: 'Offside', Arial, Sans-Serif;
+    font-size: 20px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+li:not(.ui-draggable-disabled) .widget_title {
+    cursor: move;
+    color: Black;
+}
+.criterion_cue .widget_title {
+    color: #50ADE1;   /* Special BLUE */
+}
+
+.widget_validity {
+    width: 38px;
+    height: 38px;
+    border-radius: 38px;
+    border: 0px solid black;
+    background: White;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 38px; /* for vertical align of the text */
+}
+.widget_validity_weta {
+    width: 38px;
+    height: 38px;
+    border-radius: 38px;
+    border: 1px solid #50ADE1;  /* Special BLUE */
+    background: White;
+    position: absolute;
+    right: -60px;
+    top: -1px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 38px; /* for vertical align of the text */
+}
+
+.widget_multiply {
+    fill: none;
+    stroke: Grey;
+    stroke-width: 1;
+    position: absolute;
+    right: -20px;
+    top: 9px;
+}
+
+.blue_area .widget_content {
+    width: 220px;
+    position: relative;
+    left: 0px;
+}
+#white_area .widget_content {
+    width: 220px;
+    position: relative;
+    left: -47px;
+}
+
+.exit_widget {
+    width: 110px;
+    height: 40px;
+    border-radius: 20px;
+    background: #f6bb42;   /* special yellow */
+}
+.exit_widget_title {
+    width: 70px;
+    line-height: 40px;
+    color: black;
+    /*font-family: 'Offside', Arial, Sans-Serif;*/
+    font-size: 20px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+.exit_arrow {
+    stroke: LightGrey;
+    stroke-width: 2;
+    fill: none;
+}
+.exit_left {
+    position: absolute;
+    left: -130px;
+    bottom: -80px;
+    /*background: #edaf8a; /*  ORANGE 50% */
+}
+.exit_left .exit_arrow {
+    position: absolute;
+    left: 100px;
+    top: -42px;
+}
+.exit_left .exit_widget_title {
+    position: absolute;
+    left: 13px;
+}
+.exit_right {
+    position: absolute;
+    left: 180px;
+    bottom: -80px;
+    /*background: #edaf8a;  /*  ORANGE 50% */
+}
+.exit_right .exit_arrow {
+    position: absolute;
+    left: -34px;
+    top: -42px;
+}
+.exit_right .exit_widget_title {
+    position: absolute;
+    left: 25px;
+}
+.exit_down {
+    position: absolute;
+    left: 25px;
+    bottom: -80px;
+    /*background: #edaf8a; /*  ORANGE 50% */
+}
+
+.cue_arrow {
+    stroke: LightGrey;
+    stroke-width: 2;
+    fill: none;
+    position: absolute;
+    left: 60px;
+    bottom: -40px;
+
+}
+
+.exit_canvas {
+    position: absolute;
+    left: -40px;
+    top: -45px;
+}
+
+/* Widgets End ***************/
+
+/* Button Controls ***************/
+
+.button_controls {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;   /* CHECK HERE why mouse is not detected around svg??? */
+    fill: none;
+    stroke: Grey;
+    stroke-width: 1;
+    transition: background 1s, stroke 1s, stroke-width 1s;
+}
+.button_controls:hover {
+    background: #e5e5e5;     /*lighter than LightGrey, b 90% */
+    transition: background 0s;
+}
+#tree .button_controls:hover {
+    background: #7cc2e9;     /*lighter than special BLUE, opacity 75% */
+    transition: background 0s;
+}
+.button_controls:active {
+    background: transparent;
+    stroke: #50ADE1;  /* Special BLUE */
+    stroke-width: 2;
+    transition: background 0s, stroke 0s, stroke-width 0s;
+}
+
+.button_expand {
+    position: absolute;
+    left: 6px;
+    top: 10px;
+}
+.button_shuffle {
+    position: absolute;
+    right: 8px;
+    top: 9px;
+}
+#white_area .button_controls{
+    stroke: White;
+}
+#criterion_place .button_expand, #criterion_place .button_radio, #criterion_place .button_close{
+    stroke: White;
+}
+.exit_widget .button_switch {
+    stroke: White;
+}
+.exit_left .button_switch {
+    position: absolute;
+    left: 85px;
+    top: 10px;
+}
+.exit_right .button_switch {
+    position: absolute;
+    left: 5px;
+    top: 10px;
+}
+.exit_widget .button_switch:hover {
+    background: #f8cc71;    /* special yellow 75% */
+}
+.exit_left .button_switch:hover {
+    /*background: #62d995;     /*lighter than special GREEN, opacity 75% */
+}
+.exit_right .button_switch:hover {
+    /*background: #ed796d;     /*lighter than special RED, opacity 75% */
+}
+
+input[type=radio] {
+    display: none;
+}
+input[type=radio] + label {
+    stroke: grey;
+    stroke-width: 1;
+    fill: none;
+    position: absolute;
+    left: 93px;
+    top: 10px;
+}
+input[type=radio]:checked + label{
+    fill: grey;
+}
+
+/* Button Controls End ***************/
+
+/* Split values **************/
+
+.split_table {
+    border-spacing: 0px;
+    border: 0px solid black;
+    width: 200px;
+    position: relative;
+    left: 10px;
+}
+
+.ui-slider-horizontal {
+    height: 1px;
+}
+.ui-slider .ui-widget-content {
+}
+.ui-slider .ui-slider-handle {
+    height: 12px;
+    width: 12px;
+    border-radius: 7px;
+    top: -7px;
+}
+
+.blue_area .ui-slider-horizontal {
+    background: White;
+}
+.blue_area .ui-slider .ui-widget-content {
+    border: 1px solid White;
+    background: White;
+}
+.blue_area .ui-slider .ui-slider-handle {
+    border: 1px solid White;
+    background: White;
+}
+
+#white_area .ui-slider-horizontal {
+    background: Grey;
+}
+#white_area .ui-slider .ui-widget-content {
+    border: 1px solid Grey;
+    background: Grey;
+}
+#white_area .ui-slider .ui-slider-handle {
+    border: 1px solid Grey;
+    background: Grey;
+}
+
+.ui-slider-handle .ui-state-hover:hover {
+    border: 1px solid Black;
+    background: LightGrey;
+}
+.ui-slider .ui-state-hover:hover {
+    border: 1px solid LightGrey;
+    background: LightGrey;
+}
+
+.cell_exit{
+    width: 40px;
+    border: 0px;
+    text-align: center;
+    font-family: 'Offside', Arial, Sans-Serif;
+    color: Black;
+    background-color: #f6bb42;    /* ORANGE 50% */
+}
+
+input[type=text] {
+    width: inherit;
+    height: inherit;
+    margin: 0px;
+    padding: 1px;
+    border: 0px solid LightGrey;
+    font-size: 10px;
+    text-align: center;
+}
+input[type=text]:hover {
+//background: #e5e5e5;     /*lighter than LightGrey, b 90% */
+    color: #50ADE1;  /* Special BLUE */
+    font-weight: bold;
+}
+
+.button_swap {
+    height: 20px;
+    width: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: transparent;
+    border: none !important;
+    fill: none;
+    stroke-width: 1;
+    transition: background 1s, stroke 1s, stroke-width 1s;
+}
+.blue_area .button_swap {
+    stroke: White;
+}
+.blue_area .button_swap:hover {
+    background: #7cc2e9;     /*lighter than special BLUE, opacity 75% */
+    transition: background 0s;
+}
+#white_area .button_swap {
+    stroke: Grey;
+}
+#white_area .button_swap:hover {
+    background: #e5e5e5;     /*lighter than LightGrey, b 90% */
+    transition: background 0s;
+}
+.button_swap:active {
+    stroke-width: 2;
+    transition: background 0s, stroke 0s, stroke-width 0s;
+}
+
+/* Split values End *********/
+
+/* Statistics ***************/
+
+.button_stat {
+    cursor: pointer;
+    width: 230px;
+    height: 20px;
+    border-radius: 10px;
+    border: 0px solid black;
+    background: LightGrey;
+    font-family: 'Offside', Arial, Sans-Serif;
+    font-size: 12px;
+    color: Black;
+    text-align: center;
+}
+
+.stat_cue_header {
+    display: inline-block;
+}
+.stat_inline {
+    display: inline-block;
+}
+
+.eval_table {
+    border-spacing: 0px;
+    border: 0px solid black;
+}
+
+th, td {
+    height: 20px;
+    font-size: 10px;
+    text-align: center;
+    border: 0px solid black;
+    white-space: nowrap;
+}
+
+th {
+    font-family: 'Offside', Arial, Sans-Serif;
+}
+
+.table_title{
+    font-family: 'Offside', Arial, Sans-Serif;
+    font-size: 12px;
+    color: #50ADE1;          /* blue */
+    white-space: nowrap;
+}
+.blue_area .table_title{
+    color: White;
+}
+.table_header{
+    font-family: 'Offside', Arial, Sans-Serif;
+    font-size: 12px;
+    white-space: nowrap;
+    border-top: 0px solid LightGrey;
+    border-bottom: 1px solid LightGrey;
+    white-space: nowrap;
+}
+.blue_area .table_header{
+    border-bottom: 1px solid White;
+}
+
+.table_header_rotated{
+    font-family: 'Offside', Arial, Sans-Serif;
+    font-size: 12px;
+    border-left: 0px solid LightGrey;
+    border-right: 1px solid LightGrey;
+}
+.blue_area .table_header_rotated{
+    border-right: 1px solid White;
+}
+
+.rotate {
+    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
+    -moz-transform: rotate(-90.0deg);  /* FF3.5+ */
+    -ms-transform: rotate(-90.0deg);  /* IE9+ */
+    -o-transform: rotate(-90.0deg);  /* Opera 10.5 */
+    -webkit-transform: rotate(-90.0deg);  /* Safari 3.1+, Chrome */
+    transform: rotate(-90.0deg);  /* Standard */
+    -webkit-transform-origin: 100% 100%;
+    -moz-transform-origin: 100% 100%;
+    -o-transform-origin: 100% 100%;
+    width: 20px;
+}
+
+.cell_narrow{
+    width: 20px;
+}
+
+.cell_values{
+    border-top: 1px solid LightGrey;
+    border-bottom: 0px solid LightGrey;
+    border-collapse: collapse;
+    width: 40px;
+    padding: 0px;
+}
+.blue_area .cell_values{
+    border-top: 1px solid White;
+    border-bottom: 0px solid White;
+    border-collapse: collapse;
+    width: 40px;
+}
+
+.success{
+    text-align: center;
+    color: Black;
+    background-color: #8cc152;   /* green */
+}
+
+.fail{
+    text-align: center;
+    color: Black;
+    background-color: #fc6e51;  /* red */
+}
+
+.undecided{
+    text-align: center;
+    color: Black;
+    background-color: #50ADE1;   /* blue */
+}
+
+.button_export {
+    cursor: pointer;
+    width: 166px;
+    height: 20px;
+    border-radius: 10px;
+    border: 0px solid black;
+    background: LightGrey;
+    font-family: 'Offside', Arial, Sans-Serif;
+    font-size: 12px;
+    color: Black;
+    text-align: center;
+}
+
+/* Statistics End ***************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers:
+ */
+
+.hidden {
+    display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (min-resolution: 1.25dppx),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster:
+                                   http://www.sanbeiji.com/archives/953 */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

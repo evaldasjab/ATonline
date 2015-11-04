@@ -1,0 +1,50 @@
+<!--Here will be the table showing a dataset no.: {{dataset_id}}-->
+<!--Dataset entry: {{dataset_full[0].age}}-->
+
+
+<div id="blue_area">
+
+    <div>
+        <button id="download" class="button_gray">Download</button>
+        <a href="#/{{dataset_info.dataset_id}}/fft/1"><button id="create_fft" class="button_gray">Create FFT</button></a>
+        <!--<a href="#/{{dataset_info.dataset_id}}/ttb/1"><button id="apply_heuristic" class="button_gray">Apply Heuristic</button></a>-->
+
+        <select id="apply_heuristic" class="button_gray" onChange="window.location.href=this.value">
+            <option>Apply Heuristic:</option>
+            <option value="#/{{dataset_info.DatasetId}}/ttb/1">Take The Best</option>
+            <option value="#/{{dataset_info.DatasetId}}/mini/2">Minimalist</option>
+            <option value="#/{{dataset_info.DatasetId}}/tall/4">Tallying</option>
+            <option value="#/{{dataset_info.DatasetId}}/weta/3">Weighted Tallying</option>
+            </optgroup>
+        </select>
+
+        <button id="remove" class="button_gray">Remove</button>
+    </div>
+
+</div>
+
+<div id="white_area">
+
+    <!--show the dataset using handsontable.js -->
+    <div id="dataset_container" class="inline"></div>
+
+    <div id="info_container" class="inline">
+        <div class="titleblock">
+            <h3 class="title">{{dataset_info.Title}}</h3>
+            <h5 class="date_author">{{dataset_info.Date}} by {{dataset_info.UserId}}</h5>
+            <h5 class="properties">{{dataset_info.SizeCues}} attributes x {{dataset_info.SizeCases}} cases</h5>
+            <h5 class="usage">Used by {{dataset_info.UsageUsers}} users for {{dataset_info.UsageFfts}} FFTs and {{dataset_info.UsageHeuristics}} heuristics</h5>
+        </div>
+        <div class="infoblock">{{dataset_info.Description}}</div>
+
+        <table class="usage_table" >
+            <tr><th class="table_title" colspan="3">USAGE</th></tr>
+            <tr><th>Strategy</th><th>Date</th><th>User</th></tr>
+            <tr><td>My FFTree of the Day</td><td>17.08.2015</td><td>H.Neth</td></tr>
+            <tr><td>Newbie FFT</td><td>15.08.2015</td><td>E.Jablonskis</td></tr>
+            <tr><td>Take the Best</td><td>09.08.2015</td><td>L.Schooler</td></tr>
+            <tr><td>Minimalist</td><td>25.07.2015</td><td>S.Luan</td></tr>
+        </table>
+    </div>
+
+</div>

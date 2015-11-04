@@ -1,0 +1,553 @@
+{
+  "dataset_id": 2,
+  "data": [
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 0,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 0,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 0,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 0,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 1
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 1
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 1,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 1,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 1,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 0
+      },
+      {
+      "infarction": 0,
+      "CP": 0,
+      "OC": 0,
+      "ST": 0
+      }
+      ],
+      "errors": [],
+      "meta": {
+          "delimiter": ";",
+          "linebreak": "\r",
+          "aborted": false,
+          "truncated": false,
+          "cursor": 731,
+          "fields": [
+              "infarction",
+              "CP",
+              "OC",
+              "ST"
+          ]
+      }
+}

@@ -1,0 +1,2692 @@
+{
+  "DatasetId": 10,
+  "Name": "Data_CCU_89_reordered.csv",
+  "DatasetInfo": {
+    "DatasetInfoId": 10,
+    "Image": "icon_CSV_512.jpg",
+    "Title": "Data_CCU_89_reordered.csv",
+    "Date": "01.08.2015, 12:45",
+    "NoOfCues": 4,
+    "NoOfCases": 89,
+    "Description": "Developed by Green & Mehr (1997), the dataset was used in a Fast-and-Frugal tree, which an emergency-room doctor could use to decide whether a patient concerned about a possible heart attack should be sent to the coronary care unit (CCU) or a regular nursing-bed.",
+    "Owner": {
+      "UserId": 10,
+      "UserName": "evaldasjab",
+      "FirstName": "Evaldas",
+      "LastName": "Jablonskis",
+      "Email": "evaldas.jab@gmail.com"
+    }
+  },
+  "Cases": [
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 1,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    },
+    {
+      "Label": "case label",
+      "Description": "case description",
+      "Cues": [
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "infarction"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "CP"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "OC"
+          }
+        },
+        {
+          "CueValue": 0,
+          "CueInfo": {
+            "CueName": "ST"
+          }
+        }
+      ]
+    }
+  ]
+}
