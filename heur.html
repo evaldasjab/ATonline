@@ -18,7 +18,7 @@
 
         <ul id="cues_list" class="sortable_area"> <!-- need this and #horiz_scroll to make the scroll work -->
 
-            <li ng-repeat="cue in cues_info" on-finish-render="ngRepeatFinished" id="{{cue.name}}" name="{{cue.name}}" class="widget">
+            <li ng-repeat="cue in cues_info" on-finish-render="ngRepeatFinished" id="{{cue.CueName}}" name="{{cue.CueName}}" class="widget">
                 <div class="widget_head">
                     <div title="Expand/Collapse the Cue">
                         <svg class="button_controls button_expand" height="20" width="20">
@@ -27,7 +27,7 @@
                         </svg>
                     </div>
                     <div class="widget_title" >
-                        <span title="{{cue.name}}">{{cue.name}}</span>
+                        <span title="{{cue.CueName}}">{{cue.CueName}}</span>
                     </div>
                     <div title="Shuffle Cues">
                         <svg class="button_controls button_shuffle" height="20" width="20">
@@ -90,7 +90,7 @@
              <table class="usage_table">
                  <tr><th class="table_title" colspan="3">ECOLOGICAL VALIDITIES</th></tr>
                 <tr><th>Cue</th><th>Eco.Validity</th><th>Is Flipped</th></tr>
-                 <tr ng-repeat="validObj in validArray">
+                 <tr ng-repeat="validObj in validities">
                     <td>{{validObj.cueId}}</td><td>{{validObj.validity | number:3}}</td><td>{{validObj.isFlipped}}</td></tr>
                  </tr>
              </table>
@@ -131,12 +131,12 @@
 
     <div id="info_container">
         <div class="titleblock">
-            <h3 class="title">{{heuristics_info.title}}</h3>
-            <h5 class="date_author">{{heuristics_info.date}} by {{heuristics_info.username}}</h5>
-            <h5 class="properties">{{heuristics_info.size_cues}} cues</h5>
-            <h5 class="usage">Used by {{heuristics_info.usage_users}} users with {{heuristics_info.usage_datasets}} datasets</h5>
+            <h3 class="title"><input ng-model="heuristic_info.Title" type="text"/></h3>
+            <h5 class="date_author">{{heuristic_info.Date | date:'yyyy-MM-dd, hh:mm'}} by {{heuristic_info.Username}}</h5>
+            <h5 class="properties">{{heuristic_info.SizeCues}} cues</h5>
+            <h5 class="usage">Used by {{heuristic_info.UsageUsers}} users with {{heuristic_info.UsageDatasets}} datasets</h5>
         </div>
-        <div class="infoblock">{{heuristics_info.description}}</div>
+        <div class="infoblock"><input ng-model="heuristic_info.Description" type="text"/></div>
 
         <table class="usage_table" >
             <tr><th class="table_title" colspan="3">USAGE</th></tr>
@@ -148,3 +148,5 @@
     </div>
 
 </div>
+
+

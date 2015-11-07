@@ -268,9 +268,13 @@ body {
     top: 36px;
 }
 
-/*#menu li {
-    padding-right: 20px;
-}*/
+#menu li {
+    margin-right: 20px;
+}
+
+#menu li.active a {
+    color: black;
+}
 
 .button_gray {
     cursor: pointer;
@@ -795,7 +799,7 @@ input[type=radio]:checked + label{
     background-color: #f6bb42;    /* ORANGE 50% */
 }
 
-input[type=text] {
+.cell_values input[type=text] {
     width: inherit;
     height: inherit;
     margin: 0px;
@@ -807,7 +811,8 @@ input[type=text] {
 input[type=text]:hover {
 //background: #e5e5e5;     /*lighter than LightGrey, b 90% */
     color: #50ADE1;  /* Special BLUE */
-    font-weight: bold;
+    /*font-weight: bold;*/
+    background: LightYellow;
 }
 
 .button_swap {

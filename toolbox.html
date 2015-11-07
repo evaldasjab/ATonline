@@ -35,10 +35,24 @@
     <a href="" ng-click="sortField ='uploader'; reverse = !reverse">Uploader</a>,
     <a href="" ng-click="sortField ='usage_users'; reverse = !reverse">Usage</a>
 
+    <div>MY DATASETS</div>
     <ul id ="view_tools" class="view-list">
         <li ng-repeat="entry in datasets | filter:query | orderBy:sortField:reverse" >
             <a class="image inline" href="#/datasets/{{entry.DatasetId}}"><img ng-src="img/{{entry.Image}}" width="96" height="96"></a>
             <div id="titleblock_id" class="titleblock inline">
+                <h2 class="title">{{entry.Title}}</h2>
+                <h4><span class="date">{{entry.Date}}</span> by <span class="username">{{entry.UserId}}</span></h4>
+                <h4 class="date_author"><span class="size_attributes">{{entry.SizeCues}}</span> variables x <span class="size_cases">{{entry.SizeCases}}</span> cases</h4>
+                <h4><span class="usage_users">{{entry.UsageUsers}}</span> users for <span class="usage_ffts">{{entry.UsageFfts}}</span> FFTs and <span class="usage_heuristics">{{entry.UsageHeuristics}}</span> heuristics</h4>
+            </div>
+            <div class="infoblock inline"><span class="description">{{entry.Description}}</span></div>
+        </li>
+    </ul>
+    <div>MY HEURISTICS</div>
+    <ul id ="view_tools" class="view-list">
+        <li ng-repeat="entry in heuristics | filter:query | orderBy:sortField:reverse" >
+            <a class="image inline" href="#/heuristics/{{entry.HeuristicId}}"><img ng-src="img/{{entry.Image}}" width="96" height="96"></a>
+            <div class="titleblock inline">
                 <h2 class="title">{{entry.Title}}</h2>
                 <h4><span class="date">{{entry.Date}}</span> by <span class="username">{{entry.UserId}}</span></h4>
                 <h4 class="date_author"><span class="size_attributes">{{entry.SizeCues}}</span> variables x <span class="size_cases">{{entry.SizeCases}}</span> cases</h4>

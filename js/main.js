@@ -90,12 +90,11 @@ function ShowTable(myDataset) {
 function GetSplitValues(myDataset) {
 
     var mySplitValuesArray = [];
-    var i = -1;
+
     // go through every attribute
-    for (myAttr in myDataset[0] ) {
+    for (var myAttr in myDataset[0] ) {
 
         //console.log('myAttr: '+myAttr);
-        i++;
 
         // initial values based on the first case
         var myAttrMin = myDataset[0][myAttr];
@@ -117,12 +116,11 @@ function GetSplitValues(myDataset) {
         var myAttrMean = (myAttrMax + myAttrMin) / 2;
 
         var mySplitObj = {};
-        mySplitObj.id = 'cue'+i;
-        mySplitObj.name = myAttr;
-        mySplitObj.min = myAttrMin;
-        mySplitObj.max = myAttrMax;
-        mySplitObj.split = myAttrMean;
-        mySplitObj.minisno_maxisyes = true;
+        mySplitObj.CueName = myAttr;
+        mySplitObj.MinValue = myAttrMin;
+        mySplitObj.MaxValue = myAttrMax;
+        mySplitObj.SplitValue = myAttrMean;
+        mySplitObj.IsFlipped = false;
         mySplitValuesArray.push(mySplitObj);
     }
 
@@ -139,14 +137,14 @@ function ConvertToBinary(myDataset, myOrigDataset, mySplitValuesArray) {
     //console.log('TRUE Dataset: '+JSON.stringify(myTrueSet, null, "  "));
 
     // go through every attribute
-    for (myAttr in mySplitValuesArray) {
+    for (var myAttr in mySplitValuesArray) {
         //console.log(i+'i LOOP! myAttrValues: '+JSON.stringify(myAttrValues, null, "  "));
 
         var myAttrValues = mySplitValuesArray[myAttr];
 
         // go through every object (case/row) in the ORIGINAL data array (results)
         // and replace value to 0 or 1, based on the split value in the BINARY data array (myDataset)
-        for (myCase in myDataset) {  //myDataset.forEach(function(myObj) {
+        for (var myCase in myDataset) {  //myDataset.forEach(function(myObj) {
 
             var myOrigObj = myOrigDataset[myCase];
             var myObj = myDataset[myCase];
@@ -154,29 +152,29 @@ function ConvertToBinary(myDataset, myOrigDataset, mySplitValuesArray) {
             //console.log(c+'c LOOP! myObj: '+JSON.stringify(myObj, null, "  "));
 
             // replace value to 0, if it's in range of MIN (included) and SPLIT (included)
-            if ( (myOrigObj[myAttrValues.name] >= myAttrValues.min) && (myOrigObj[myAttrValues.name] <= myAttrValues.split) ) {
+            if ( (myOrigObj[myAttrValues.CueName] >= myAttrValues.MinValue) && (myOrigObj[myAttrValues.CueName] <= myAttrValues.SplitValue) ) {
                 //console.log('MIN-SPLIT');
-                switch (myAttrValues.minisno_maxisyes) {
-                    case true:
-                        //console.log('TRUE, so 0');
-                        myObj[myAttrValues.name] = 0;
-                        break;
+                switch (myAttrValues.IsFlipped) {
                     case false:
-                        //console.log('FALSE, so 1');
-                        myObj[myAttrValues.name] = 1;
+                        //console.log('NOT FLIPPED, so 0');
+                        myObj[myAttrValues.CueName] = 0;
+                        break;
+                    case true:
+                        //console.log('FLIPPED, so 1');
+                        myObj[myAttrValues.CueName] = 1;
                         break;
                 }
                 // replace value to 1, if it's in range of SPLIT (excluded) and MAX (included)
-            } else if ( (myOrigObj[myAttrValues.name] > myAttrValues.split) && (myOrigObj[myAttrValues.name] <= myAttrValues.max) ) {
+            } else if ( (myOrigObj[myAttrValues.CueName] > myAttrValues.SplitValue) && (myOrigObj[myAttrValues.CueName] <= myAttrValues.MaxValue) ) {
                 //console.log('SPLIT-MAX');
-                switch (myAttrValues.minisno_maxisyes) {
-                    case true:
-                        //console.log('TRUE, so 1');
-                        myObj[myAttrValues.name] = 1;
-                        break;
+                switch (myAttrValues.IsFlipped) {
                     case false:
-                        //console.log('FALSE, so 0');
-                        myObj[myAttrValues.name] = 0;
+                        //console.log('NOT FLIPPED, so 1');
+                        myObj[myAttrValues.CueName] = 1;
+                        break;
+                    case true:
+                        //console.log('FLIPPED, so 0');
+                        myObj[myAttrValues.CueName] = 0;
                         break;
                 }
             }
@@ -184,13 +182,13 @@ function ConvertToBinary(myDataset, myOrigDataset, mySplitValuesArray) {
     }
 
     // add OR update the processed split_value to the dataset
-    if (myDataset.split_values == undefined) {
+    /*if (myDataset.split_values == undefined) {
         myDataset.split_values = mySplitValuesArray;
     } else {
         var mySplitId = mySplitValuesArray[0].id;
         var result = $.grep(mySet.split_values, function(e){ return e.id == mySplitId; });
         result[0] = mySplitValuesArray[0];
-    }
+    }*/
 
     //console.log('AFTER Dataset: '+JSON.stringify(myDataset, null, "  "));
     //console.log('Orig Dataset: '+JSON.stringify(myOrigSet, null, "  "));
@@ -250,8 +248,6 @@ function DragCues() {
 function DragCriterion(myHeuristic, myDataset) {
 
     console.log(myHeuristic);
-    console.log(myDataset);
-    debugger;
 
     $('.sortable_area').sortable({
         connectWith: '.sortable_area',
@@ -284,7 +280,7 @@ function DragCriterion(myHeuristic, myDataset) {
                         //console.log(myValidArray);
 
                         // display validities via scope and ng-repeat
-                        UpdateScope('validArray', myValidArray);   //UpdateScope(myScopeKey, myScopeValue)
+                        UpdateScope('validities', myValidArray);   //UpdateScope(myScopeKey, myScopeValue)
 
                         // depending on the heuristic, do the following
                         switch (myHeuristic) {
@@ -314,6 +310,12 @@ function DragCriterion(myHeuristic, myDataset) {
 
                                 // add validity tags
                                 UpdateValidityTags(myHeuristic, 'tree');
+
+                                // JSON from FFT
+                                UpdateCuesInfo();
+
+                                // activate the SAVE button
+                                ButtonSave(myHeuristic);
 
                                 break;
 
@@ -430,99 +432,156 @@ function MoveAllCuesToArea(myCuesArray, myToArea){
     });
 }
 
-function UpdateJsonTreeObj() {
 
-    // get the order of the cues in the trees
-    var myTreeCuesArray = $('#tree').sortable('toArray');
-    myTreeCuesArray = myTreeCuesArray.filter(function(n){ return n != "" });  // remove empty elements in array
+function UpdateCuesInfo() {
+
+    // get the order of the cues in the tree
+    var myTreeCuesArray = GetElementsArray('tree', 'widget');
 
     // get the criterion
-    var myCritCueArray = $('#criterion_place').sortable('toArray');
+    var myCritCueArray = GetElementsArray('criterion_place', 'widget');
     if (myCritCueArray.length > 0) {
         var myCritCueId = myCritCueArray[0]  // the first and only in the array
     } else {
         var myCritCueId = '';
     }
-    console.log('JSON UPDATE! myTreeCuesArray: ' + myTreeCuesArray.toString() +' myCritCueId: '+myCritCueId);
+    console.log(myTreeCuesArray);
+    console.log(myCritCueId);
 
-/*    if (myTreeCuesArray[0] != undefined) { //IF THERE IS AT LEAST ONE CUE IN THE TREE
+    // get the cues_info from scope
+    var scope = angular.element(document.querySelector('#ng_territory')).scope();
+    scope.$apply(function(){
+        var myCuesInfoArray = scope['cues_info'];
+        console.log(myCuesInfoArray);
 
-        // activate the EXPAND ALL button in the white area
-        buttonExpandAll('button_expand_all_white');
+        var treeCuesInfoArray = [];
 
-        // enable EXPORT TO SERVER buttons
-        $('#stat_'+myTreeId+' .button_export').removeClass('disabled');
-    } else {
+        // in array find object by key! another solution - filter (slow) or find (experimental)
+        // find the criterion
+        var myFind = $.grep(myCuesInfoArray, function(e){ return e.CueName == myCritCueId; });
+        var myCueObj = myFind[0];
 
-        // de-activate the EXPAND ALL button in the white area
-        deactivateButtonExpandAll('button_expand_all_white');
+        myCueObj.CueType = 'criterion';
+        myCueObj.BranchYes = 'exit';
+        myCueObj.BranchNo = 'exit';
 
-        // disable EXPORT TO SERVER buttons
-        $('#stat_'+myTreeId+' .button_export').addClass('disabled');
-    }*/
+        treeCuesInfoArray.push(myCueObj);
 
-    var myTreeObj = CreateTreeObj(myCritCueId, myTreeCuesArray);
+        // go through every cue in the tree
+        myTreeCuesArray.forEach(function(myCueId, myIndex) {    // "forEach" works for arrays only
+            console.log(myCueId);
 
-    //myJsonObj.trees[t] = myTreeObj;
-    //myJsonObj.trees.push(myTreeObj);
+            // find the cue
+            var myFind = $.grep(myCuesInfoArray, function(e){ return e.CueName == myCueId; });
+            var myCueObj = myFind[0];
 
-    console.log('JSON UPDATE! myTreeObj: ' + JSON.stringify(myTreeObj, null, "  "));
+            myCueObj.CueType = 'treecue';
 
-    // from uwe fftreeStatistics/fftree.js, now in calculatestatistics.js
-    //analyzeDataset(myTreeObj);
+            // check if Exit nodes exist
+            var myExitLeftTest = $('#'+myCueId).find('.exit_left').length;
+            var myExitRightTest = $('#'+myCueId).find('.exit_right').length;
 
-    return myTreeObj;
+            myCueObj.BranchYes = myExitRightTest == 0 ? 'continue' : 'exit';
+            myCueObj.BranchNo = myExitLeftTest == 0 ? 'continue' : 'exit';
+
+            treeCuesInfoArray.push(myCueObj);
+        });
+
+        // update cues_info in the scope
+        scope.treecues_info = treeCuesInfoArray;
+        console.log(scope);
+    });
 }
-function CreateTreeObj(myCritCueId, myTreeCuesArray) {
 
-    //console.log('CREATE TREE OBJ myTreeId: '+myTreeId+', myTreeCuesArray: '+JSON.stringify(myTreeCuesArray, null, "  ") );
 
-    var myTreeObj = new Object();
+function SaveHeuristic(myHeuristic) {
 
-    myTreeObj.criterion = myCritCueId;
+    // take the screenshot
+    html2canvas($("#tree"), {
+        onrendered: function (canvas) {
+            theCanvas = canvas;
 
-    myTreeObj.cues = [];
 
-    for(var e = 0; e < myTreeCuesArray.length; e++) {    // go through the tree's elements
-
-        var myCueObj = new Object();
-
-        var myCueId = myTreeCuesArray[e];
-        // check if Exit nodes exist
-        var myExitLeftTest = $('#'+myCueId).find('.exit_left').length;
-        var myExitRightTest = $('#'+myCueId).find('.exit_right').length;
-
-        myCueObj.id = myCueId;
-
-        //console.log('myCueId: ' + myCueId);
-
-        //var myExitValues = getExitValues(myCueId, 'from createTreeObject, loop in myTreeCuesArray');
-        //console.log('myExitValues.myLeft: ' + myExitValues.myLeft);
-        //console.log('myExitValues.myRight: ' + myExitValues.myRight);
-
-        if (myCueObj.id != undefined) { // if there is at least one cue
-
-            myCueObj.yes = myExitRightTest == 0 ? 'continue' : 'exit';
-            myCueObj.no = myExitLeftTest == 0 ? 'continue' : 'exit';
-            myCueObj.minValue = 0;
-            myCueObj.maxValue = 0;
-            myCueObj.splitValue = 0;
-            myCueObj.isFlipped = 0;
-            myCueObj.hits = 0;
-            myCueObj.miss = 0;
-            myCueObj.fals = 0;
-            myCueObj.corr = 0;
-            myCueObj.un_p = 0;
-            myCueObj.un_n = 0;
-            myCueObj.step = 0;
-
-            myTreeObj.cues.push(myCueObj);
+            canvas.toBlob(function (blob) {
+                saveAs(blob, "Tree.png");
+                debugger;
+            });
         }
-    }
-    //console.log('create myTreeObj: '+JSON.stringify(myTreeObj, null, "  "));
+    });
 
-    return myTreeObj;
+    var myHeurObj = {};
+    myHeurObj.DecisionAlgorithm = myHeuristic;
+    myHeurObj.Image = '';
 }
+
+/*
+    {
+        //"HeuristicId": 1,
+        "DecisionAlgorithm": "sample string 2",
+        "Image": "sample string 3",
+        "Title": "sample string 4",
+        "Date": "sample string 5",
+        "UserId": 4,
+        "SizeCues": 1,
+        "Description": "sample string 6",
+        "CueMapping": [
+        {
+            "MapId": 1,
+            "DatasetId": 2,
+            "HeuristicId": 3,
+            "DatasetCueName": "sample string 4",
+            "HeuristicCueName": "sample string 5",
+            "SplitValue": 1.1,
+            "IsFlipped": true,
+        },
+        {
+            "MapId": 1,
+            "DatasetId": 2,
+            "HeuristicId": 3,
+            "DatasetCueName": "sample string 4",
+            "HeuristicCueName": "sample string 5",
+            "SplitValue": 1.1,
+            "IsFlipped": true,
+        }
+    ],
+        "HeuristicStructure": [
+        {
+            "EntryId": 1,
+            "HeuristicId": 2,
+            "CueName": "sample string 3",
+            "CueType": "sample string 4",
+            "BranchYes": "sample string 5",
+            "BranchNo": "sample string 6"
+        },
+        {
+            "EntryId": 1,
+            "HeuristicId": 2,
+            "CueName": "sample string 3",
+            "CueType": "sample string 4",
+            "BranchYes": "sample string 5",
+            "BranchNo": "sample string 6"
+        }
+    ]
+    }
+
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ANGULAR START ////////////////////////////////////////////////////////
 
 
 // run angularjs, activate ngRepeatFinished when done (to run functions after Angularjs has finished)
@@ -535,8 +594,7 @@ var myApp = angular.module("myApp", ['ngRoute', 'evoApp.services'])
                     $timeout(function () {
                         scope.$emit('ngRepeatFinished');
 
-                        console.log('FIN');
-                        debugger;
+                        console.log('ngRepeatFinished');
                     });
                 }
             }
@@ -547,12 +605,28 @@ var myApp = angular.module("myApp", ['ngRoute', 'evoApp.services'])
 myApp.config(function($routeProvider) {
     $routeProvider.
         when('/', {
+            templateUrl: 'toolbox.html',
+            controller: 'ToolboxCtrl'
+        }).
+        when('/datasets', {
             templateUrl: 'dataset_list.html',
             controller: 'DatasetListCtrl'
         }).
-        when('/:dataset_id', {
+        when('/heuristics', {
+            templateUrl: 'heuristic_list.html',
+            controller: 'HeuristicListCtrl'
+        }).
+        when('/datasets/:dataset_id', {
             templateUrl: 'dataset_show.html',
             controller: 'DatasetShowCtrl'
+        }).
+        when('/heuristics/:heuristic_id', {
+            templateUrl: 'heur.html',
+            controller: 'HeuristicShowCtrl'
+        }).
+        when('/:dataset_id/new_ttb', {
+            templateUrl: 'heur.html',
+            controller: 'TakeTheBestCtrl'
         }).
         when('/:dataset_id/tree/:tree_id', {
             templateUrl: 'tree.html',
@@ -560,7 +634,7 @@ myApp.config(function($routeProvider) {
         }).
         when('/:dataset_id/ttb/:heur_id', {
             templateUrl: 'heur.html',
-            controller: 'TakeTheBestCtrl'
+            controller: 'OldTakeTheBestCtrl'
         }).
         when('/:dataset_id/mini/:heur_id', {
             templateUrl: 'heur.html',
@@ -579,25 +653,119 @@ myApp.config(function($routeProvider) {
         });
 });
 
-// angularjs for dataset_list.html
-myApp.controller("DatasetListCtrl", function($scope, $http, datasetInfoesService) {
+// get and cache the info from the server
+myApp.factory('getDatasetInfoFactory', function($http, datasetInfoesService){
+
+    function getData(callback){
+
+        // get data from the server using Web API for angularjs
+        datasetInfoesService.getDatasetInfo()
+            .success(callback)
+            .error(function (errdata, status, headers, config) {
+                console.log('FAIL getDatasetInfo:');
+                console.log(errdata);
+            });
+
+       /* $http({
+            method: 'GET',
+            url: 'json/trees_info.json',
+            cache: true
+        }).success(callback);*/
+    }
+
+    return {
+        list: getData,
+        find: function(myid, callback){
+            getData(function(data) {
+                var myDataInfo = data.filter(function(entry){
+                    return entry.DatasetId == myid;
+                })[0];
+                callback(myDataInfo);
+            });
+        }
+    };
+});
+
+// angularjs for toolbox.html
+myApp.controller("ToolboxCtrl", function($scope, $http, getDatasetInfoFactory, heuristicInfoesService) {
+//myApp.controller("DatasetListCtrl", function($scope, $http, datasetInfoesService) {
 
     // change the page's title
     $('#page_title').html('ADAPTIVE TOOLBOX Online');
+    // change the color of the active menu
+    $('#menu_mytoolbox').addClass('active');
+    $('#menu_datasets').removeClass('active');
+    $('#menu_heuristics').removeClass('active');
 
-    //datasets.list(function(datasets) {
-    //    $scope.datasets = datasets;
-    //});
+    getDatasetInfoFactory.list(function(data) {
+        $scope.datasets = data;
+    });
 
     // get data from the server using Web API for angularjs
-    datasetInfoesService.getDatasetInfo()
+    heuristicInfoesService.getHeuristicInfo()
         .success(function (data) {
-            console.log('SUCCESS getDatasetInfo:');
+            console.log('SUCCESS getHeuristicInfo:');
             console.log(data);
-            $scope.datasets = data;
+            $scope.heuristics = data;
 
         }).error(function (errdata, status, headers, config) {
-            console.log('FAIL getDatasetInfo:');
+            console.log('FAIL getHeuristicInfo:');
+            console.log(errdata);
+        });
+
+    console.log($scope);
+});
+
+// angularjs for dataset_list.html
+myApp.controller("DatasetListCtrl", function($scope, $http, getDatasetInfoFactory) {
+//myApp.controller("DatasetListCtrl", function($scope, $http, datasetInfoesService) {
+
+    // change the page's title
+    $('#page_title').html('ADAPTIVE TOOLBOX Online');
+    // change the color of the active menu
+    $('#menu_mytoolbox').removeClass('active');
+    $('#menu_datasets').addClass('active');
+    $('#menu_heuristics').removeClass('active');
+
+    getDatasetInfoFactory.list(function(datasets) {
+        $scope.datasets = datasets;
+    });
+
+        // get data from the server using Web API for angularjs
+        /*datasetInfoesService.getDatasetInfo()
+            .success(function (data) {
+                console.log('SUCCESS getDatasetInfo:');
+                console.log(data);
+                $scope.datasets = data;
+
+            }).error(function (errdata, status, headers, config) {
+                console.log('FAIL getDatasetInfo:');
+                console.log(errdata);
+            });*/
+
+    console.log($scope);
+});
+
+// angularjs for dataset_list.html
+myApp.controller("HeuristicListCtrl", function($scope, $http, heuristicInfoesService) {
+//myApp.controller("DatasetListCtrl", function($scope, $http, datasetInfoesService) {
+
+    // change the page's title
+    $('#page_title').html('ADAPTIVE TOOLBOX Online');
+    // change the color of the active menu
+    $('#menu_mytoolbox').removeClass('active');
+    $('#menu_datasets').removeClass('active');
+    $('#menu_heuristics').addClass('active');
+
+    // get data from the server using Web API for angularjs
+    heuristicInfoesService.getHeuristicInfo()
+        .success(function (data) {
+            console.log('SUCCESS getHeuristicInfo:');
+            console.log(data);
+            $scope.heuristics = data;
+
+        }).error(function (errdata, status, headers, config) {
+            console.log('FAIL getHeuristicInfo:');
             console.log(errdata);
         });
 
@@ -647,7 +815,152 @@ myApp.controller('DatasetShowCtrl', function ($scope, $routeParams, datasetInfoe
 
     console.log($scope);
 
+});
 
+// angularjs for dataset_show.html
+myApp.controller('HeuristicShowCtrl', function ($scope, $routeParams, $q, heuristicInfoesService, heuristicStructuresService, datasetFullsService){
+
+    // change the page's title
+    $('#page_title').html('Take The Best');
+
+    console.log($routeParams);
+    var myDatasetId = '';
+
+    $q.all([   // angular promise - when this is done, then do the next
+        // get data from the server using Web API for angularjs
+        heuristicInfoesService.getHeuristicInfo2($routeParams.heuristic_id)
+            .success(function (data) {
+                console.log('SUCCESS getHeuristicInfo:');
+                console.log(data);
+                $scope.heuristic_info = data;
+
+                myDatasetId = data.CueMapping[0].DatasetId;
+                $scope.dataset_id = myDatasetId;
+                $scope.cues_info = data.CueMapping;  // here are split values - in place of splitValuesArray
+
+            }).error(function (errdata, status, headers, config) {
+                console.log('FAIL getHeuristicInfo:');
+                console.log(errdata);
+            })
+    ]).then(function() {
+
+        // get data from the server using Web API for angularjs
+        datasetFullsService.getDatasetFullsByDatasetId(myDatasetId)
+            .success(function (data) {
+                console.log('SUCCESS getDatasetFULL:');
+                //console.log(data);
+
+                // convert the table to the format for the browser
+                var myDataset = ConvertDataset(data, 'forClient');
+                $scope.dataset_full = myDataset;
+
+                // DEEP COPY the original dataset!
+                var origDataset = jQuery.extend(true, {}, $scope.dataset_full);   //was GLOBAL VARIABLE!
+                $scope.dataset_original = origDataset;
+
+                // get split values - means (average of min and max) of every variable's values
+                //var splitValuesArray = GetSplitValues($scope.dataset_full);
+                //$scope.cues_info = splitValuesArray;
+
+                // convert values to binary
+                var binDataset = ConvertToBinary($scope.dataset_full, origDataset, $scope.cues_info);
+                $scope.dataset_binary = binDataset;
+
+                // add the empty array for validities
+                $scope.validities = [];
+
+                // activate drag'n'drop of cues
+                DragCriterion('Take The Best', $scope.dataset_binary);
+
+                // activate expand buttons
+                ButtonsExpand();
+
+                console.log($scope);
+
+            }).error(function (errdata, status, headers, config) {
+                console.log('FAIL getDatasetFULL:');
+                console.log(errdata);
+            });
+    })
+
+});
+
+// angularjs for ttb.html
+myApp.controller('TakeTheBestCtrl', function ($scope, $routeParams, datasetFullsService){
+
+    // change the page's title
+    $('#page_title').html('Take The Best');
+
+    // create heuristic_info with initial values
+    var myHeurInfoObj = {};
+    myHeurInfoObj.Title = 'Please Name Your Heuristic';
+    myHeurInfoObj.Image = '';
+    myHeurInfoObj.Date = 'NOT SAVED YET';  // FIX THIS!!!
+    myHeurInfoObj.Username = 'Steve Jobs'  // FIX THIS!!!
+    myHeurInfoObj.SizeCues = 0;            // FIX THIS!!! must be updated when there are cues in the tree
+    myHeurInfoObj.UsageUsers = 1;          // FIX THIS!!!
+    myHeurInfoObj.UsageDatasets = 1;       // FIX THIS!!!
+    myHeurInfoObj.Description = 'Please describe your heuristic';
+    $scope.heuristic_info = myHeurInfoObj;
+
+    console.log($routeParams);
+    $scope.dataset_id = $routeParams.dataset_id;
+    //$scope.heur_id = $routeParams.heur_id;
+
+    // get data from the server using Web API for angularjs
+    datasetFullsService.getDatasetFullsByDatasetId($routeParams.dataset_id)
+        .success(function (data) {
+            console.log('SUCCESS getDatasetFULL:');
+            //console.log(data);
+
+            // convert the table to the format for the browser
+            var myDataset = ConvertDataset(data, 'forClient');
+            $scope.dataset_full = myDataset;
+
+            // DEEP COPY the original dataset!
+            var origDataset = jQuery.extend(true, {}, $scope.dataset_full);   //was GLOBAL VARIABLE!
+            $scope.dataset_original = origDataset;
+
+            // get split values - means (average of min and max) of every variable's values
+            var splitValuesArray = GetSplitValues($scope.dataset_full);
+            $scope.cues_info = splitValuesArray;
+
+            // convert values to binary
+            var binDataset = ConvertToBinary($scope.dataset_full, origDataset, splitValuesArray);
+            $scope.dataset_binary = binDataset;
+
+            // add the empty array for validities
+            $scope.validities = [];
+
+            // activate drag'n'drop of cues
+            //DragCriterion('Take The Best', $scope.dataset_binary);
+
+            // activate expand buttons
+            //ButtonsExpand();
+
+        }).error(function (errdata, status, headers, config) {
+            console.log('FAIL getDatasetFULL:');
+            console.log(errdata);
+        });
+
+    console.log($scope);
+
+    // in array find object by key! another solution - grep or filter
+    //heuristics_info.find($routeParams.heur_id, function(my_heur) {
+    //    $scope.heuristics_info = my_heur;
+    //});
+
+    // execute function when ng-repeat is done
+    $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) { //you also get the actual event object
+
+        console.log('NGREPEAT FINISHED');
+
+        // activate drag'n'drop of cues
+        DragCriterion('Take The Best', $scope.dataset_binary);
+
+        // activate expand buttons
+        ButtonsExpand();
+     });
 
 });
 
@@ -655,7 +968,11 @@ function GetScope(myScopeKey) {
     var scope = angular.element(document.querySelector('#ng_territory')).scope();
     scope.$apply(function(){
         var myScopeValue = scope[myScopeKey];
-        return myScopeValue;
+
+        // DEEP COPY the variable
+        var origScopeValue = jQuery.extend(true, {}, myScopeValue);
+        console.log(origScopeValue);
+        return origScopeValue;
     });
 }
 function UpdateScope(myScopeKey, myScopeValue) {
@@ -718,8 +1035,10 @@ myApp.controller('TreeCtrl', function ($scope, $routeParams, $http, trees, cueIn
 
 });
 
+
+
 // angularjs for ttb.html
-myApp.controller('TakeTheBestCtrl', function ($scope, $routeParams, datasetFullsService){
+myApp.controller('OldTakeTheBestCtrl', function ($scope, $routeParams, datasetFullsService){
 
     console.log($scope);
     debugger;
@@ -751,14 +1070,14 @@ myApp.controller('TakeTheBestCtrl', function ($scope, $routeParams, datasetFulls
 
             // get split values - means (average of min and max) of every variable's values
             var splitValuesArray = GetSplitValues($scope.dataset_full);
-            $scope.cues_info = splitValuesArray;
+            $scope.cues = splitValuesArray;
 
             // convert values to binary
             var binDataset = ConvertToBinary($scope.dataset_full, origDataset, splitValuesArray);
             $scope.dataset_binary = binDataset;
 
             // add the empty array for validities
-            $scope.validArray = [];
+            $scope.validities = [];
 
             // activate drag'n'drop of cues
             DragCriterion('Take The Best', $scope.dataset_binary);
@@ -822,7 +1141,7 @@ myApp.controller('MinimalistCtrl', function ($scope, $routeParams, $http, heuris
             $scope.binDataset = binDataset;
 
             // add the empty array for validities
-            $scope.validArray = [];
+            $scope.validities = [];
 
             console.log($scope);
 
@@ -877,7 +1196,7 @@ myApp.controller('WeightedTallyingCtrl', function ($scope, $routeParams, $http, 
             $scope.binDataset = binDataset;
 
             // add the empty array for validities
-            $scope.validArray = [];
+            $scope.validities = [];
 
             console.log($scope);
 
@@ -935,7 +1254,7 @@ myApp.controller('TallyingCtrl', function ($scope, $routeParams, $http, heuristi
             $scope.binDataset = binDataset;
 
             // add the empty array for validities
-            $scope.validArray = [];
+            $scope.validities = [];
 
             console.log($scope);
 

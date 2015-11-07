@@ -118,3 +118,83 @@ function ButtonSwitchExit(myCueId) {
         return false;                                            // Return false, prevent default action
     })
 }
+
+function ButtonSave(myHeuristic) {
+
+    $('#save').mouseup(function (e) {
+        console.log('SAVE BUTTON!');
+
+        e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
+
+        // take the screenshot
+        /*html2canvas($("#tree"), {
+            onrendered: function (canvas) {
+                theCanvas = canvas;
+
+
+                canvas.toBlob(function (blob) {
+                    saveAs(blob, "Tree.png");
+                    debugger;
+                });
+            }
+        });*/
+
+        // get the treecues_info from scope
+        var scope = angular.element(document.querySelector('#ng_territory')).scope();
+        scope.$apply(function() {
+            var myTreeCuesInfoArray = scope['treecues_info'];
+            var myHeurInfoObj = scope['heuristic_info'];
+            myHeurInfoObj.Date = new Date();
+
+            var myObj = {};
+            myObj.DecisionAlgorithm = myHeuristic;
+            myObj.Image = 'img_TTB_512.jpg';
+            myObj.Title = myHeurInfoObj.Title;
+            myObj.Date = myHeurInfoObj.Date;
+            myObj.UserId = 4;  // FIX THIS!!!
+            myObj.SizeCues = myTreeCuesInfoArray.length - 1;  // minus criterion
+            myObj.Description = myHeurInfoObj.Description;
+
+            var myCueMapArray = [];
+            var myHeurStructArray = [];
+
+            myTreeCuesInfoArray.forEach(function (myCueObj, myIndex) {
+
+                var myMapObj = {};
+                myMapObj.DatasetId = scope['dataset_id'];
+                myMapObj.DatasetCueName = myCueObj.CueName;    // FIX THIS!!!
+                myMapObj.HeuristicCueName = myCueObj.CueName;  // FIX THIS!!!
+                myMapObj.SplitValue = myCueObj.SplitValue;
+                myMapObj.IsFlipped = myCueObj.IsFlipped;
+
+                myCueMapArray.push(myMapObj);
+
+                var myStructObj = {};
+                myStructObj.CueName = myCueObj.CueName;
+                myStructObj.CueType = myCueObj.CueType;
+                myStructObj.BranchYes = myCueObj.BranchYes;
+                myStructObj.BranchNo = myCueObj.BranchNo;
+
+                myHeurStructArray.push(myStructObj);
+            });
+
+            myObj.CueMapping = myCueMapArray;
+            myObj.HeuristicStructure = myHeurStructArray;
+
+            console.log(myObj);
+            debugger;
+
+            var myReturn = $.evoAppServices.heuristicInfoes.postHeuristicInfo(myObj);
+            console.log(myReturn);
+        });
+
+
+
+
+
+
+
+
+        return false;                                            // Return false, prevent default action
+    })
+}
