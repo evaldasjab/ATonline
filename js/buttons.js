@@ -47,17 +47,34 @@ function ButtonsExpand() {
 }
 
 // activates shuffle button-controls
-function ButtonsShuffle(myHeuristic) {
+function ButtonsShuffle(myHeuristicName) {
 
-    // hide icon UP by default
-    $('.button_shuffle').hide();
+    console.log('ACTIVATE SHUFFLE, heuristic '+ myHeuristicName);
 
-    //console.log('ACTIVATE EXPANSION!');
+    // show icon UP by default
+    $('.button_shuffle').hide(); // already in the html, FIX THIS!!!
+    //$('#tree').find('.button_shuffle').show();
+
+    // depending on the heuristic, show the button
+    switch (myHeuristicName) {
+        case 'Fast-and-Frugal Tree':
+        case 'Take The Best':
+            $('.button_shuffle').hide();
+            break;
+        case 'Minimalist':
+        case 'Tallying':
+        case 'Weighted Tallying':
+            // show the shuffle buttons
+            $('#tree').find('.button_shuffle').show();
+            console.log('SHOW SHUFFLE');
+            debugger;
+            break;
+    }
 
     $('.button_shuffle').mouseup(function (e) {
 
         // get the list of cues
-        var myTreeArray = GetWidgetsArray('tree');
+        var myTreeArray = GetElementsArray('widget','tree');
 
         // reorder randomly
         myTreeArray = ShuffleArray(myTreeArray);
@@ -65,18 +82,8 @@ function ButtonsShuffle(myHeuristic) {
         // rebuild the tree
         MoveAllCuesToArea(myTreeArray, 'tree');
 
-        switch (myHeuristic) {
-            case 'Minimalist':
-                // redraw the arrows and nodes
-                ArrowsAndExitsTTB('tree');
-                break;
-            case 'Weighted Tallying':
-                ArrowsAndExitsWT('tree');
-                break;
-        }
+        UpdateArrowsAndExits(myHeuristicName, 'tree');
     });
-
-
 }
 function ShuffleArray(myArray) {
 
@@ -103,98 +110,434 @@ function ShuffleArray(myArray) {
     }*/
 }
 
-function ButtonSwitchExit(myCueId) {
+function ButtonSwitchExit(myCueId, myExitClass) {
 
-    $('#'+myCueId+' .exit_widget .button_switch').mouseup(function (e) {
-        console.log('EXIT BUTTON! myCueId: '+myCueId);
+    $('#'+myCueId+' .'+myExitClass+' .button_switch').mouseup(function (e) {
+
+        console.log('SWITCH!');
 
         e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
 
-        // create EXIT node on another side
-        SwitchExitDirection(myCueId);
+        //var myExitClass = $(this).closest('.exit_widget').attr('id');
+        console.log('EXIT BUTTON! myCueId: '+myCueId+' myExitClass: '+myExitClass);
 
-        //updateJsonDataset(myTreeId); // update the changed exit direction
+        // create EXIT node on another side
+        SwitchExitDirection(myCueId, myExitClass);
+
+        // get heuristic structure for scope
+        var myHeurStr = GetHeuristicStructure();
+
+        // update scope to make ready for save
+        UpdateScope('heuristic_info.HeuristicStructure', myHeurStr);
 
         return false;                                            // Return false, prevent default action
     })
 }
 
-function ButtonSave(myHeuristic) {
+function ButtonSaveHeuristic() {
 
     $('#save').mouseup(function (e) {
         console.log('SAVE BUTTON!');
 
         e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
 
-        // take the screenshot
-        /*html2canvas($("#tree"), {
-            onrendered: function (canvas) {
-                theCanvas = canvas;
-
-
-                canvas.toBlob(function (blob) {
-                    saveAs(blob, "Tree.png");
-                    debugger;
-                });
-            }
-        });*/
-
-        // get the treecues_info from scope
+        // connect to angular's scope
         var scope = angular.element(document.querySelector('#ng_territory')).scope();
         scope.$apply(function() {
-            var myTreeCuesInfoArray = scope['treecues_info'];
-            var myHeurInfoObj = scope['heuristic_info'];
-            myHeurInfoObj.Date = new Date();
 
-            var myObj = {};
-            myObj.DecisionAlgorithm = myHeuristic;
-            myObj.Image = 'img_TTB_512.jpg';
-            myObj.Title = myHeurInfoObj.Title;
-            myObj.Date = myHeurInfoObj.Date;
-            myObj.UserId = 4;  // FIX THIS!!!
-            myObj.SizeCues = myTreeCuesInfoArray.length - 1;  // minus criterion
-            myObj.Description = myHeurInfoObj.Description;
+            // update the date
+            scope.heuristic_info.Date = new Date();
 
-            var myCueMapArray = [];
-            var myHeurStructArray = [];
+            // get heuristic info from scope
+            var myHeuristicInfo = scope.heuristic_info;
+            var myHeuristicStructure = scope.heuristic_info.HeuristicStructure;
 
-            myTreeCuesInfoArray.forEach(function (myCueObj, myIndex) {
+            console.log('myHeuristicInfo for PUT or POST:');
+            console.log(myHeuristicInfo);
 
-                var myMapObj = {};
-                myMapObj.DatasetId = scope['dataset_id'];
-                myMapObj.DatasetCueName = myCueObj.CueName;    // FIX THIS!!!
-                myMapObj.HeuristicCueName = myCueObj.CueName;  // FIX THIS!!!
-                myMapObj.SplitValue = myCueObj.SplitValue;
-                myMapObj.IsFlipped = myCueObj.IsFlipped;
+            console.log('scope:');
+            console.log(scope);
 
-                myCueMapArray.push(myMapObj);
+            // check if this heuristic already was saved on server before
+            var myHeuristicId = scope.heuristic_id;
 
-                var myStructObj = {};
-                myStructObj.CueName = myCueObj.CueName;
-                myStructObj.CueType = myCueObj.CueType;
-                myStructObj.BranchYes = myCueObj.BranchYes;
-                myStructObj.BranchNo = myCueObj.BranchNo;
+            console.log('myHeuristicId:');
+            console.log(myHeuristicId);
 
-                myHeurStructArray.push(myStructObj);
-            });
+            // POST if there is no heuristic_id (send to SQL server if doesn't exist) using AJAX
+            if (!myHeuristicId) {
 
-            myObj.CueMapping = myCueMapArray;
-            myObj.HeuristicStructure = myHeurStructArray;
+                $.evoAppServices.heuristicInfoes.postHeuristicInfo(myHeuristicInfo)
+                    .success(function (response) {
+                        console.log('AJAX SUCCESS! response:');
+                        console.log(response);
+                        scope.heuristic_id = response.HeuristicId;
+                        //scope.heuristic_info.HeuristicId = response.HeuristicId;
+                        //scope.heuristic_info = response;
 
-            console.log(myObj);
-            debugger;
+                        // go to page heuristics/heuristic_id
+                        document.location.href = '/HTML5Boilerplate/index.html#/heuristics/'+scope.heuristic_id; // FIX THIS!!!
 
-            var myReturn = $.evoAppServices.heuristicInfoes.postHeuristicInfo(myObj);
-            console.log(myReturn);
+                    }).error(function (data, status, headers, config) {
+                        console.log('AJAX FAIL');
+                    });
+
+            } else {   // PUT if there is heuristic_id (update in SQL) using AJAX
+
+                console.log('PUT!');
+                console.log(myHeuristicStructure);
+                debugger;
+
+                /*angular.injector(['ng']).invoke(['$q', function($q) {
+
+                    $q.all([   // angular promise - when this is done, then do the next
+                        // get old HeuristicStructure entries
+                        $.evoAppServices.heuristicStructures.getHeuristicStructuresByHeuristicId(myHeuristicId)
+                            .success(function (response) {
+                                console.log('AJAX SUCCESS getHeuristicStructuresByHeuristicId! response:');
+                                console.log(response);
+
+                                // delete old entries
+                                var myOldHeuristicStructure = response;
+
+                                myOldHeuristicStructure.forEach(function(myEntry, myIndex) {
+                                    $.evoAppServices.heuristicStructures.deleteHeuristicStructure(myEntry.EntryId)
+                                        .success(function (response) {
+                                            console.log('AJAX SUCCESS deleteHeuristicStructure! response:');
+                                            //console.log(response);
+                                        }).error(function (response, status, headers, config) {
+                                            console.log('AJAX FAIL deleteHeuristicStructure');
+                                            console.log(response);
+                                        });
+                                });
+
+                            }).error(function (response, status, headers, config) {
+                                console.log('AJAX FAIL getHeuristicStructuresByHeuristicId');
+                                console.log(response);
+                            })
+
+                    ]).then(function() {
+
+                        // post new HeuristicStructure entries
+                        myHeuristicStructure.forEach(function(myEntry, myIndex) {
+                            console.log(myIndex);
+                            console.log(myEntry);
+                            $.evoAppServices.heuristicStructures.postHeuristicStructure(myEntry)
+                                .success(function (response) {
+                                    console.log('AJAX SUCCESS postHeuristicStructure! response:');
+                                    //console.log(response);
+                                }).error(function (response, status, headers, config) {
+                                    console.log('AJAX FAIL postHeuristicStructure');
+                                    console.log(response);
+                                });
+                        });
+                    });
+
+                }]);*/
+
+
+
+                //delete myHeuristicInfo[CueMapping];
+                //delete myHeuristicInfo[HeuristicStructure];
+
+                $.evoAppServices.heuristicInfoes.putHeuristicInfo(myHeuristicId, myHeuristicInfo)
+                    .success(function (response) {
+                        console.log('AJAX SUCCESS putHeuristicInfo! response:');
+                        //console.log(response);
+                    }).error(function (response, status, headers, config) {
+                        console.log('AJAX FAIL putHeuristicInfo');
+                        console.log(response);
+
+                    });
+
+
+                // update HeuristicStructure entries separately one by one, doesn't update with heuristic_info...
+                var myHeurStructArray = myHeuristicInfo.HeuristicStructure;
+                myHeurStructArray.forEach(function(myEntry, myIndex) {
+                    $.evoAppServices.heuristicStructures.putHeuristicStructure(myEntry.EntryId, myEntry)
+                        .success(function (response) {
+                            console.log('ADDITIONAL AJAX SUCCESS! response:');
+                            //console.log(response);
+                        }).error(function (response, status, headers, config) {
+                            console.log('AJAX FAIL');
+                            console.log(response);
+
+                        });
+                });
+            }
         });
 
+        return false;                                            // Return false, prevent default action
+    })
+}
+
+function ButtonPublishHeuristic() {
+
+    $('#publish').mouseup(function (e) {
+        console.log('PUBLISH BUTTON!');
+
+        e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
+
+        // connect to angular's scope
+        var scope = angular.element(document.querySelector('#ng_territory')).scope();
+        scope.$apply(function() {
+
+            // update date
+            scope.heuristic_info.Date = new Date();
+
+            // update access
+            scope.heuristic_info.Access = 'public';
+
+            // remove CueMapping, otherwise the server gives an error
+            var myHeuristicInfo = scope.heuristic_info;
+            delete myHeuristicInfo.CueMapping;
+            delete myHeuristicInfo.HeuristicStructure;
+
+            // update the heuristic_info on server
+            $.evoAppServices.heuristicInfoes.putHeuristicInfo(scope.heuristic_id, myHeuristicInfo)
+                .success(function (response) {
+                    console.log('AJAX SUCCESS putHeuristicInfo!');
+                    //console.log(response) <-- server doesn't send any response;
+                }).error(function (response, status, headers, config) {
+                    console.log('AJAX FAIL putHeuristicInfo');
+                    console.log(response);
+                });
+        });
+
+        return false;                                            // Return false, prevent default action
+    })
+}
+
+function ButtonChooseDataset(myHeurId) {
+
+    $('#choose_dataset').mouseup(function (e) {
+        console.log('PUBLISH BUTTON!');
+
+        e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
+
+        // go to page heuristics/heuristic_id/choose_data
+        document.location.href = '/HTML5Boilerplate/index.html#/heuristics/'+myHeurId+'/choose_data';
+
+        // connect to angular's scope
+        /*var scope = angular.element(document.querySelector('#ng_territory')).scope();
+        scope.$apply(function() {
+
+            // go to page heuristics/heuristic_id/choose_data
+            document.location.href = '/HTML5Boilerplate/index.html#/heuristics/'+scope.heuristic_id+'/choose_data';
+        });*/
+
+        return false;                                            // Return false, prevent default action
+    })
+}
+
+function ButtonRemove(myHeuristicId) {
+
+    $('#remove').mouseup(function (e) {
+        console.log('REMOVE BUTTON!');
+
+        e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
+
+        // connect to angular's scope
+        var scope = angular.element(document.querySelector('#ng_territory')).scope();
+        scope.$apply(function() {
+
+            $.evoAppServices.heuristicInfoes.deleteHeuristicInfo(myHeuristicId)
+                .success(function (response) {
+                    console.log('AJAX SUCCESS! response:');
+                    console.log(response);
+                    //scope.heuristic_info = response;
+
+                    // go to the parent page - FIX THIS!!!
+                    window.location.href = window.location.pathname+'#/heuristics';
+
+                }).error(function (data, status, headers, config) {
+                    console.log('AJAX FAIL');
+                });
+        });
+            return false;                                            // Return false, prevent default action
+    })
+}
+
+function ButtonClone() {
+
+    $('#clone').mouseup(function (e) {
+        console.log('CLONE BUTTON!');
+
+        e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
+
+        var printWindow = window.open(''),
+            html = $('html').clone(true, true);
+
+        printWindow.document.write("<!DOCTYPE html><html><head></head><body></body></html>");
+
+        $(printWindow.document).find('html').replaceWith(html);
+
+        return false;                                            // Return false, prevent default action
+    })
+}
+
+/*function ButtonUpload(){
+
+    $('#button_upload_csv_file').mouseup(function (e) {
+        // get the file
+        document.getElementById('csv-file').click();
+    });
+
+    $("#csv-file").change(HandleFileSelect);
+
+}
+function HandleFileSelect(evt) {
+
+    // activate select data buttons
+    //buttonsAllcasesTrainingTesting();
+
+    var myFile = evt.target.files[0];
+
+    Papa.parse(myFile, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+            console.log('UPLOADED CSV FILE:');
+            console.log(results);
+
+            // go to page dataset_show
+            document.location.href = '/HTML5Boilerplate/index.html#/new_dataset'; // FIX THIS!!!
+
+            // put the dataset to scope
+            UpdateScope('dataset_full', results.data);
+
+            // connect to angular's scope
+            //var scope = angular.element(document.querySelector('#ng_territory')).scope();
+            //scope.$apply(function (sharedProperties) {
+            //    sharedProperties.setShared(results.data);
+            //});
+        }
+    });
+    // mark the button as selected
+    //$('#button_upload_csv_file').toggleClass('button_on', true);
+    //$('#button_load_csv_sample').toggleClass('button_on', false);
+}*/
+
+function ButtonSaveDataset() {
+
+    $('#save').mouseup(function (e) {
+        console.log('SAVE BUTTON!');
+
+        e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
+
+        // connect to angular's scope
+        var scope = angular.element(document.querySelector('#ng_territory')).scope();
+        scope.$apply(function() {
+
+            // update the date
+            scope.dataset_info.Date = new Date();
+
+            // get dataset info from scope
+            var myObj = scope.dataset_info;
+
+            console.log('myObj for PUT or POST:');
+            console.log(myObj);
+
+            console.log('scope:');
+            console.log(scope);
+
+            // check if this dataset already was saved on server before
+            var myDatasetId = scope.dataset_id;
+
+            console.log('myDatasetId:');
+            console.log(myDatasetId);
+
+            // POST if there is no heuristic_id (send to SQL if doesn't exist) using AJAX
+            if (!myDatasetId) {
+
+                console.log('Posting to server, PLEASE WAIT...');
+                debugger;
+
+                $.evoAppServices.datasetInfoes.postDatasetInfo(myObj)
+                    .success(function (response) {
+                        console.log('AJAX SUCCESS! response:');
+                        console.log(response);
+                        scope.dataset_id = response.DatasetId;
+                        scope.dataset_info = response;
+
+                        debugger;
+
+                        // go to page datasets/dataset_id
+                        document.location.href = '/HTML5Boilerplate/index.html#/datasets/'+scope.dataset_id; // FIX THIS!!!
+
+                    }).error(function (data, status, headers, config) {
+                        console.log('AJAX FAIL');
+                    });
+
+            } else {   // PUT if there is dataset_id (update in SQL) using AJAX
+
+                console.log(myDatasetId);
+                console.log('Updating to server, PLEASE WAIT...');
+                debugger;
+
+                $.evoAppServices.datasetInfoes.putDatasetInfo(myDatasetId, myObj)
+                    .success(function (response) {
+                        console.log('AJAX SUCCESS! response:');
+                        //console.log(response);
+                    }).error(function (response, status, headers, config) {
+                        console.log('AJAX FAIL');
+                        console.log(response);
+
+                    });
+
+                //console.log(myObj.DatasetFull);
+                //debugger;
+
+                // update HeuristicStructure entries separately one by one, doesn't update with heuristic_info...
+                /*var myHeurStructArray = myObj.HeuristicStructure;
+                myHeurStructArray.forEach(function(myEntry, myIndex) {
+                    $.evoAppServices.heuristicStructures.putHeuristicStructure(myEntry.EntryId, myEntry)
+                        .success(function (response) {
+                            console.log('ADDITIONAL AJAX SUCCESS! response:');
+                            //console.log(response);
+                        }).error(function (response, status, headers, config) {
+                            console.log('AJAX FAIL');
+                            console.log(response);
+
+                        });
+
+                });*/
 
 
 
 
+            }
+        });
 
+        return false;                                            // Return false, prevent default action
+    })
+}
 
+function ButtonRemoveDataset(myDatasetId) {
 
+    $('#remove').mouseup(function (e) {
+        console.log('REMOVE BUTTON!');
+
+        e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
+
+        // connect to angular's scope
+        var scope = angular.element(document.querySelector('#ng_territory')).scope();
+        scope.$apply(function() {
+
+            $.evoAppServices.datasetInfoes.deleteDatasetInfo(myDatasetId)
+                .success(function (response) {
+                    console.log('AJAX SUCCESS! response:');
+                    console.log(response);
+                    //scope.dataset_info = response;
+
+                    // go to the parent page - FIX THIS!!!
+                    window.location.href = window.location.pathname+'#/datasets';
+
+                }).error(function (data, status, headers, config) {
+                    console.log('AJAX FAIL');
+                });
+        });
         return false;                                            // Return false, prevent default action
     })
 }

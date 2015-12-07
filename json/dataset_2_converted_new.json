@@ -2,7 +2,7 @@
     "Image": "icon_CSV_2.jpg",
     "Title": "Data_CMC_400_reordered.csv",
     "Date": "30.10.2015, 14:00",
-    "UserId": 4,
+    "UserName": 4,
     "SizeCues": 9,
     "SizeCases": 400,
     "Description": "Obtained from the UCI Machine Learning Repository and is a subset of the 1987 National Indonesia Contraceptive Survey. Cases are samples of married women who were either not pregnant or did not know if they were pregnant at the time of the interview.",

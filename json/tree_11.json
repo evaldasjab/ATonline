@@ -8,7 +8,7 @@
         "NoOfCues": 3,
         "Description": "This is description of my favorite Fast and Frugal Tree.",
         "Owner": {
-            "UserId": 1,
+            "UserName": 1,
             "UserName": "evaldasjab",
             "FirstName": "Evaldas",
             "LastName": "Jablonskis",

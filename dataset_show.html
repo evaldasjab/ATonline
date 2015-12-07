@@ -5,18 +5,21 @@
 <div id="blue_area">
 
     <div>
-        <button id="download" class="button_gray">Download</button>
-        <a href="#/{{dataset_info.dataset_id}}/fft/1"><button id="create_fft" class="button_gray">Create FFT</button></a>
-        <!--<a href="#/{{dataset_info.dataset_id}}/ttb/1"><button id="apply_heuristic" class="button_gray">Apply Heuristic</button></a>-->
+        <button id="save" class="button_gray">Save</button>
+
+        <!--<a href="#/{{dataset_info.dataset_id}}/fft/1"><button id="create_fft" class="button_gray">Create FFT</button></a>-->
+        <a href="#/{{dataset_info.DatasetId}}/new_fft"><button id="create_fft" class="button_gray">Create FFT</button></a>
 
         <select id="apply_heuristic" class="button_gray" onChange="window.location.href=this.value">
             <option>Apply Heuristic:</option>
             <option value="#/{{dataset_info.DatasetId}}/new_ttb">Take The Best</option>
-            <option value="#/{{dataset_info.DatasetId}}/mini/2">Minimalist</option>
-            <option value="#/{{dataset_info.DatasetId}}/tall/4">Tallying</option>
-            <option value="#/{{dataset_info.DatasetId}}/weta/3">Weighted Tallying</option>
+            <option value="#/{{dataset_info.DatasetId}}/new_mini">Minimalist</option>
+            <option value="#/{{dataset_info.DatasetId}}/new_tall">Tallying</option>
+            <option value="#/{{dataset_info.DatasetId}}/new_weta">Weighted Tallying</option>
             </optgroup>
         </select>
+
+        <button id="download" class="button_gray">Download</button>
 
         <button id="remove" class="button_gray">Remove</button>
     </div>
@@ -30,12 +33,15 @@
 
     <div id="info_container" class="inline">
         <div class="titleblock">
-            <h3 class="title">{{dataset_info.Title}}</h3>
-            <h5 class="date_author">{{dataset_info.Date}} by {{dataset_info.UserId}}</h5>
+            <h3 class="title"><input ng-model="dataset_info.Title" type="text"/></h3>
+            <h5 class="date_author">{{dataset_info.Date | date:'yyyy-MM-dd, hh:mm'}} by {{dataset_info.UserName}}</h5>
             <h5 class="properties">{{dataset_info.SizeCues}} attributes x {{dataset_info.SizeCases}} cases</h5>
             <h5 class="usage">Used by {{dataset_info.UsageUsers}} users for {{dataset_info.UsageFfts}} FFTs and {{dataset_info.UsageHeuristics}} heuristics</h5>
         </div>
-        <div class="infoblock">{{dataset_info.Description}}</div>
+        <div class="infoblock">
+            <h5 class="access">{{dataset_info.Access}} access</h5>
+            <input ng-model="dataset_info.Description" type="text"/>
+        </div>
 
         <table class="usage_table" >
             <tr><th class="table_title" colspan="3">USAGE</th></tr>

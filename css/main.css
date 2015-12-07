@@ -147,7 +147,7 @@ body {
     padding-right: 20px;
 }
 .view-list .titleblock {
-    width: 30%;
+    /*width: 30%;*/
     overflow: hidden;
 }
 .view-list h3 {
@@ -312,6 +312,10 @@ body {
 }
 #csv-file {
     display: none;
+}
+
+.click_me {
+    background: green;
 }
 
 .noselect {
@@ -504,6 +508,12 @@ li:not(.ui-draggable-disabled) .widget_head {
 #tree .widget_head, #criterion_place .widget_head {
     background: #50ADE1;   /* Special BLUE */
 }
+#criterion_place .cue_no_match, #tree .cue_no_match {
+    background: red !important;
+}
+.widget_head.cue_selected {
+    opacity: 0.5;
+}
 
 .widget_title {
     width: 60px;
@@ -529,27 +539,24 @@ li:not(.ui-draggable-disabled) .widget_title {
     width: 38px;
     height: 38px;
     border-radius: 38px;
-    border: 0px solid black;
     background: White;
-    position: absolute;
+    /*position: absolute;
     right: 0px;
-    top: 0px;
+    top: 0px;*/
     font-size: 20px;
     text-align: center;
     line-height: 38px; /* for vertical align of the text */
-}
-.widget_validity_weta {
-    width: 38px;
-    height: 38px;
-    border-radius: 38px;
-    border: 1px solid #50ADE1;  /* Special BLUE */
-    background: White;
     position: absolute;
+}
+.widget_validity.validity_ttb {
+    border: 0px solid black;
+    left: 0px;
+    top: 0px;
+}
+.widget_validity.validity_weta {
+    border: 1px solid #50ADE1;  /* Special BLUE */
     right: -60px;
     top: -1px;
-    font-size: 20px;
-    text-align: center;
-    line-height: 38px; /* for vertical align of the text */
 }
 
 .widget_multiply {
@@ -681,12 +688,12 @@ li:not(.ui-draggable-disabled) .widget_title {
 
 .button_expand {
     position: absolute;
-    left: 6px;
+    right: 6px;
     top: 10px;
 }
 .button_shuffle {
     position: absolute;
-    right: 8px;
+    left: 8px;
     top: 9px;
 }
 #white_area .button_controls{
@@ -732,6 +739,27 @@ input[type=radio] + label {
 input[type=radio]:checked + label{
     fill: grey;
 }
+
+select.cue_dropdown {
+    width: 100px;
+    height: 40px;
+}
+option.change_my_font {
+    font-family: 'Offside', Arial, Sans-Serif;
+}
+
+.styled-select select {
+    background: transparent;
+    position: relative;
+    left: 30px;
+    top: 0px;
+    font-family: 'Offside', Arial, Sans-Serif;
+    font-size: 20px;
+    border: 0;
+    /*border-radius: 0;*/
+    /*-webkit-appearance: none;*/
+}
+
 
 /* Button Controls End ***************/
 

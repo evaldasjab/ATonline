@@ -10,7 +10,7 @@
     "NoOfCases": 89,
     "Description": "Developed by Green & Mehr (1997), the dataset was used in a Fast-and-Frugal tree, which an emergency-room doctor could use to decide whether a patient concerned about a possible heart attack should be sent to the coronary care unit (CCU) or a regular nursing-bed.",
     "Owner": {
-      "UserId": 10,
+      "UserName": 10,
       "UserName": "evaldasjab",
       "FirstName": "Evaldas",
       "LastName": "Jablonskis",

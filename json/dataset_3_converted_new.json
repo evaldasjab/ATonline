@@ -2,7 +2,7 @@
     "Image": "icon_CSV_3.jpg",
     "Title": "Data_CCU_89.csv",
     "Date": "30.10.2015, 14:00",
-    "UserId": 3,
+    "UserName": 3,
     "SizeCues": 4,
     "SizeCases": 89,
     "Description": "Obtained from the UCI Machine Learning Repository and is a subset of the 1987 National Indonesia Contraceptive Survey. Cases are samples of married women who were either not pregnant or did not know if they were pregnant at the time of the interview.",
