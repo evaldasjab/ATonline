@@ -93,7 +93,7 @@ html,body,blockquote,code,h1,h2,h3,h4,h5,h6,ul,ol,p,pre{margin:0;padding:0;list-
 button,fieldset,form,input,legend,textarea,select{margin:0;padding:0}
 fieldset{border:0}
 a,a *{cursor:pointer}
-div{margin:0;padding:0;background-color:transparent;text-align:left}
+div{margin:0;padding:0;background-color:transparent}
 img{border:0}
 applet,iframe,object{border:0;margin:0;padding:0}
 button,input[type=button],input[type=image],input[type=reset],input[type=submit],label{cursor:pointer;}
@@ -198,6 +198,7 @@ body {
     width: 600px;
     height: 400px;
     overflow: auto;
+    margin-left: 20px;
 }
 .handsontable col {
     width: 80px;
@@ -207,12 +208,6 @@ body {
     text-align: center;
 }
 
-#info_container {
-    width: 340px;
-    padding-left: 30px;
-    vertical-align: top;
-    display: table-cell;
-}
 #info_container .usage {
     height: 20px;
     background: #EEE;
@@ -248,8 +243,10 @@ body {
 .blue_area {
     background: #50ADE1;  /* Special BLUE */
     padding: 20px 0px 0px 20px;
+    min-width: 1200px;
 }
 .blue_area h1 {
+    padding-top: 0px;
     font-size: 44px;
     white-space: nowrap;
     color: white;
@@ -276,7 +273,7 @@ body {
     color: black;
 }
 
-.button_gray {
+.button_grey {
     cursor: pointer;
     /*width: 120px;*/
     height: 20px;
@@ -290,13 +287,13 @@ body {
     color: Black;
     z-index: 0;
     transition: color 1s;
-    margin-right: 20px;
+    margin: 0px 20px 20px 0px;
     padding: 0px 20px 0px 20px;
 }
-.button_gray:disabled {
+.button_grey:disabled {
     opacity: 0.2;
 }
-.button_gray:hover {
+.button_grey:hover {
     background: #e5e5e5;     /*lighter than LightGrey, b 90% */
     color: Black;
     z-index: 1;
@@ -337,19 +334,19 @@ body {
 .blue_area .button_expand_all {
     stroke: White;
     position: relative;
-    top: -20px;
-    left: -21px;
+    top: 0px;
+    left: 0px;
 }
 #white_area .button_expand_all {
     stroke: Grey;
     vertical-align: top;
     position: relative;
     top: -20px;
-    left: 4px;
+    left: 0px;
 }
 
 /*****************/
-/* #cues_list is defined under WIDGETS*/
+/* #drag_cues_list is defined under WIDGETS*/
 /*****************/
 
 /* BLUE AREA End ***************/
@@ -361,13 +358,17 @@ body {
     background: white;
     padding: 20px 0px 20px 20px;
     /*width: 1200px;*/
-    display: inline-table;
 }
 
 #stats_column {
+    display: inline-block;
     width:230px;
-    display: table-cell;
-    /*background-color: yellow;*/
+    position: relative;
+    left: -20px;
+}
+
+#button_stepinfo {
+    font-size: 10px;
 }
 
 #criterion_area {
@@ -392,21 +393,36 @@ body {
 }
 
 #tree {
+    display: inline-block;
     width: 160px;
-    display: table-cell;
     height: 455px;
+    position: absolute;
+    left: 430px;
+    margin-top: 10px;
     vertical-align: top;
 }
 
-.columns {
+/*.columns {
     width:200px;
     display: table-cell;
     background-color: white;
-    /*position: relative;*/
+    position: relative;
+    vertical-align: top;
+}*/
+
+#info_column {
+    display: inline-block;
+    width: 340px;
+    position: absolute;
+    left: 765px;
+    padding-left: 0px;
+    padding-top: 8px;
     vertical-align: top;
 }
 
-
+#info_column .titleblock {
+    margin-top: 20px;
+}
 
 .drophere {
     width: 120px;
@@ -441,7 +457,7 @@ footer {
 
 /* This container element gives us the scrollbars we want.*/
 #horiz_scroll {
-    margin: 20px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
     padding-bottom: 20px;
     width: 100%;
     height: 100%;
@@ -449,20 +465,20 @@ footer {
 }
 
 /* table-layout: fixed does a lot of the magic, here. It makes sure that the "table cells" retain the pixel dimensions you want.*/
-/*.cues_list {
+/*.drag_cues_list {
     display: table;
     table-layout: fixed;
     width: 100%;
 }*/
 
-#cues_list {
+#drag_cues_list {
     display: inline-table; /* doesn't let cues to jump vertically */
     min-width: 160px;      /* holds a place to drag the criterion back, when the list is empty */
     min-height: 40px;      /* holds a place to drag the criterion back, when the list is empty */
 }
 
 /* Arranging your content inside the "cells" is as simple as using the vertical-align and text-align properties. Floats work, too.*/
-#cues_list .widget {
+#drag_cues_list .widget {
     width: auto;
     height: auto;
     display: table-cell; /* makes cues be inline with overflow:auto in #horiz_scroll */
@@ -484,7 +500,7 @@ footer {
     width: 156px;
     height: 36px;
     border-radius: 36px;
-    /*margin: 0px 0px 40px 0px;*/
+    margin: 0px 20px 0px 0px;
 }
 
 .ui-sortable-placeholder { /* fixes vertically jumping cues in the list */
@@ -499,9 +515,11 @@ footer {
     border: 1px solid #50ADE1;   /* Special BLUE */;
     background: White;
     position: relative;
+}
+/*.blue_area .widget_head {
     margin-left: auto;
     margin-right: auto;
-}
+}*/
 li:not(.ui-draggable-disabled) .widget_head {
     border: 1px solid #50ADE1;   /* Special BLUE */;
 }
@@ -516,7 +534,7 @@ li:not(.ui-draggable-disabled) .widget_head {
 }
 
 .widget_title {
-    width: 60px;
+    width: 83px;
     line-height: 40px;
     margin-left: auto;
     margin-right: auto;
@@ -569,14 +587,14 @@ li:not(.ui-draggable-disabled) .widget_title {
 }
 
 .blue_area .widget_content {
-    width: 220px;
+    width: 200px;
     position: relative;
-    left: 0px;
+    /*left: -10px;*/
 }
 #white_area .widget_content {
-    width: 220px;
+    width: 420px;
     position: relative;
-    left: -47px;
+    left: -130px;
 }
 
 .exit_widget {
@@ -604,7 +622,7 @@ li:not(.ui-draggable-disabled) .widget_title {
 }
 .exit_left {
     position: absolute;
-    left: -130px;
+    left: -132px;
     bottom: -80px;
     /*background: #edaf8a; /*  ORANGE 50% */
 }
@@ -619,7 +637,7 @@ li:not(.ui-draggable-disabled) .widget_title {
 }
 .exit_right {
     position: absolute;
-    left: 180px;
+    left: 182px;
     bottom: -80px;
     /*background: #edaf8a;  /*  ORANGE 50% */
 }
@@ -770,7 +788,7 @@ option.change_my_font {
     border: 0px solid black;
     width: 200px;
     position: relative;
-    left: 10px;
+    /*left: 10px;*/
 }
 
 .ui-slider-horizontal {
@@ -878,16 +896,26 @@ input[type=text]:hover {
 /* Statistics ***************/
 
 .button_stat {
-    cursor: pointer;
-    width: 230px;
     height: 20px;
+    width: 30px;
     border-radius: 10px;
-    border: 0px solid black;
-    background: LightGrey;
-    font-family: 'Offside', Arial, Sans-Serif;
-    font-size: 12px;
-    color: Black;
-    text-align: center;
+    cursor: pointer;
+    background: transparent;
+    border: none !important;
+    fill: none;
+    stroke-width: 1;
+    transition: background 1s, stroke 1s, stroke-width 1s;
+}
+#white_area .button_stat {
+    stroke: Grey;
+}
+#white_area .button_stat:hover {
+    background: #e5e5e5;     /*lighter than LightGrey, b 90% */
+    transition: background 0s;
+}
+.button_stat:active {
+    stroke-width: 2;
+    transition: background 0s, stroke 0s, stroke-width 0s;
 }
 
 .stat_cue_header {
@@ -1010,11 +1038,19 @@ th {
 
 /* Statistics End ***************/
 
+/* INFO CONTAINER ***************/
+
+.input_title {
+    width: 100%;
+}
+
+.input_description {
+    width: 100%;
+    height: 100px;
+}
 
 
-
-
-
+/* Info Container End ***************/
 
 
 

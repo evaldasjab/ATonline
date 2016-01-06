@@ -1,31 +1,31 @@
 <!--Here is FFT for the dataset no.: {{dataset_id}}-->
 
 
-<div class="blue_area">
+<div id="blue_area" class="blue_area page_area">
 
     <div>
-        <button id="save" class="button_gray">Save To My Toolbox</button>
-        <button id="publish" class="button_gray">Publish To All Users</button>
-        <button id="choose_dataset" class="button_gray">Choose Different Dataset</button>
-        <button id="remove" class="button_gray">Remove From My Toolbox</button>
+        <button id="save" class="button_grey">Save To My Toolbox</button>
+        <button id="publish" class="button_grey">Publish To All Users</button>
+        <button id="choose_dataset" class="button_grey">Choose Different Dataset</button>
+        <button id="remove" class="button_grey">Remove From My Toolbox</button>
 
-<!--        <button class="button_gray button_selectdata button_on disabled" id="button_allcases">All Cases</button>
-        <button class="button_gray button_selectdata disabled" id="button_training">Training</button>
-        <button class="button_gray button_selectdata disabled" id="button_testing"> Testing</button>-->
+<!--        <button class="button_grey button_selectdata button_on disabled" id="button_allcases">All Cases</button>
+        <button class="button_grey button_selectdata disabled" id="button_training">Training</button>
+        <button class="button_grey button_selectdata disabled" id="button_testing"> Testing</button>-->
     </div>
 
 
-    <div id="horiz_scroll"> <!-- need this and #cues_list to make the scroll work -->
+    <div id="horiz_scroll"> <!-- need this and #drag_cues_list to make the scroll work -->
 
-        <ul id="cues_list" class="sortable_area"> <!-- need this and #horiz_scroll to make the scroll work -->
+        <ul ui-sortable="sortableOptions" ng-model="drag_cues_list" id="drag_cues_list" class="sortable_area"> <!-- need this and #horiz_scroll to make the scroll work -->
 
-            <li ng-repeat="cue in cues_list" on-finish-render="ngFinishedCuesList" id="{{cue.CueName}}" name="{{cue.CueName}}" class="widget">
+            <li ng-repeat="cue in drag_cues_list" on-finish-render="ngFinishedCuesList" id="{{cue.CueName}}" name="{{cue.CueName}}" class="widget">
                 <div class="widget_head">
                     <div class="widget_tags">
                         <!--here will be added the validity tag, multiply icons etc.-->
                     </div>
                     <div title="Shuffle Cues">
-                        <svg class="button_controls button_shuffle" height="20" width="20">
+                        <svg class="button_controls button_shuffle" height="20" width="20" style="display: none;">
                             <polyline points="4 17, 17 4"/>
                             <polyline points="4 4, 9 9"/>
                             <polyline points="12 12, 17 17"/>
@@ -44,114 +44,75 @@
                     </div>
 
                 </div>
-                <div class="widget_content" style="display: none;">
+                <!--<div class="widget_content" style="display: none;">-->
+                <div class="widget_content">
                     <div class="unsortable">
                         <table class="split_table">
                             <tr><td class="table_title" colspan="5">SPLIT OF CUE VALUES</td></tr>
                             <tr><th>min</th><td class="stats_slider" colspan="3"><div class="split_slider" title="Change the Split Value"></div></td><th>max</th></tr>
-                            <tr><td class="cell_values" id="min_value" title="Minimum Value">0</td><th class="cell_exit" id="split_label_left" title="Values between MIN (included) and SPLIT (included) are...">no</th><td class="cell_values"><input type="text" id="split_value" value="0" title="Split Value"></input></td><th class="cell_exit" id="split_label_right" title="Values between SPLIT (excluded) and MAX (included) are...">yes</th><td class="cell_values" id="max_value" title="Maximum Value">0</td></tr>
+                            <tr><td class="cell_values" id="min_value" title="Minimum Value">{{cue.MinValue}}</td><th class="cell_exit" id="split_label_left" title="Values between MIN (included) and SPLIT (included) are...">{{cue.IsFlipped?'yes':'no'}}</th><td class="cell_values"><input type="text" id="split_value" value="{{cue.SplitValue}}" title="Split Value"></input></td><th class="cell_exit" id="split_label_right" title="Values between SPLIT (excluded) and MAX (included) are...">{{cue.IsFlipped?'no':'yes'}}</th><td class="cell_values" id="max_value" title="Maximum Value">{{cue.MaxValue}}</td></tr>
                             <tr><th></th><td class="swap" colspan="3" title="Swap YES and NO Ranges"><svg class="button_swap" height="20" width="40"><polyline class="left" points="9 3,2 10,9 17"/><polyline class="right" points="31 3,38 10,31 17"/><line x1="2" y1="10" x2="38" y2="10"/></svg></td><th></th></tr>
                         </table>
                     </div>
                     <ul class="stat_cue_header unsortable">
                         <li class="stat_inline stat_cue unsortable">
                             <table class="eval_table">
-                                <tr><td class="stats_header table_title" colspan="6">STATS OF SINGLE CUE TREE</td></tr>
+                                <tr><td class="stats_header table_title" colspan="6">STATS OF ONE-CUE-TREE</td></tr>
                                 <tr><td class="cell_narrow"></td><td></td><td class="table_header" colspan="4">PREDICTION</td></tr>
                                 <tr><td></td><td></td><th>yes</th><th>no</th><th>und</th><th>sum</th></tr>
-                                <tr><td class="table_header_rotated" rowspan="3"><div class="rotate">CRITERION</div></td><th class="cell_narrow">yes</td><td class="success" id="hits" title="Hits">Hit</td><td class="fail" id="misses" title="Misses">Miss</td><td class="undecided" id="undecided_pos" title="Undecided Positive">0</td><td class="cell_values" id="crit_yes_sum">0</td></tr>
-                                <tr><th class="cell_narrow">no</th><td class="fail" id="falsealarms" title="False Alarms">FA</td><td class="success" id="correctrejections" title="Correct Rejections">CR</td><td class="undecided" id="undecided_neg" title="Undecided Negative">0</td><td class="cell_values" id="crit_no_sum">0</td></tr>
-                                <tr><th class="cell_narrow">sum</th><td class="cell_values" id="pred_yes_sum">0</td><td class="cell_values" id="pred_no_sum">0</td><td class="cell_values" id="pred_und_sum">0</td><td class="cell_values" id="pred_sum_sum">0</td></tr>
+                                <tr><td class="table_header_rotated" rowspan="3"><div class="rotate">CRITERION</div></td><th class="cell_narrow">yes</td><td class="success" id="hits" title="Hits">{{cue.HITS}}</td><td class="fail" id="misses" title="Misses">{{cue.MISSES}}</td><td class="undecided" id="undecided_pos" title="Undecided Positive">{{cue.UNDECIDED_POS}}</td><td class="cell_values" id="crit_yes_sum">{{cue.CRIT_YES_SUM}}</td></tr>
+                                <tr><th class="cell_narrow">no</th><td class="fail" id="falsealarms" title="False Alarms">{{cue.FALSE_ALARMS}}</td><td class="success" id="correctrejections" title="Correct Rejections">{{cue.CORRECT_REJECTIONS}}</td><td class="undecided" id="undecided_neg" title="Undecided Negative">{{cue.UNDECIDED_NEG}}</td><td class="cell_values" id="crit_no_sum">{{cue.CRIT_NO_SUM}}</td></tr>
+                                <tr><th class="cell_narrow">sum</th><td class="cell_values" id="pred_yes_sum">{{cue.PRED_YES_SUM}}</td><td class="cell_values" id="pred_no_sum">{{cue.PRED_NO_SUM}}</td><td class="cell_values" id="pred_und_sum">{{cue.PRED_UND_SUM}}</td><td class="cell_values" id="pred_sum_sum">{{cue.PRED_SUM_SUM}}</td></tr>
                                 <tr><th></th></tr>
                             </table>
                             <table class="eval_table">
                                 <tr><th colspan="2" title="Probability of Hits">p(H)</th><th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th><th title="D prime">d&#8242</th><th title="Frugality">Frug</th><th title="C or Bias">Bias</th></tr>
-                                <tr><td colspan="2" class="cell_values" id="pHits" title="Probability of Hits">0</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">0</td><td class="cell_values" id="dprime" title="D prime">0</td><td class="cell_values" id="frugality" title="Frugality">0</td><td class="cell_values" id="bias" title="C or Bias">0</td></tr>
+                                <tr><td colspan="2" class="cell_values" id="pHits" title="Probability of Hits">{{cue.PHITS}}</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">{{cue.PHITSMINUSPFA}}</td><td class="cell_values" id="dprime" title="D prime">{{cue.DPRIME}}</td><td class="cell_values" id="frugality" title="Frugality">{{cue.FRUGALITY}}</td><td class="cell_values" id="bias" title="C or Bias">{{cue.BIAS}}</td></tr>
                             </table>
-                        </li
+                        </li>
                     </ul>
                 </div>
                 <ul class="arrows_exits">
                     <!--here will be added all arrows and exits-->
                 </ul>
             </li>
-
-            <li ng-repeat="cue in cues_list_new" on-finish-render="ngFinishedCuesListNew" id="{{cue.CueName}}" name="{{cue.CueName}}" class="widget">
-                <div class="widget_head">
-                    <div class="widget_tags">
-                        <!--here will be added the validity tag, multiply icons etc.-->
-                    </div>
-                    <div title="Shuffle Cues">
-                        <svg class="button_controls button_shuffle" height="20" width="20">
-                            <polyline points="4 17, 17 4"/>
-                            <polyline points="4 4, 9 9"/>
-                            <polyline points="12 12, 17 17"/>
-                            <polyline points="13 4, 17 4, 17 8"/>
-                            <polyline points="13 17, 17 17, 17 13"/>
-                        </svg>
-                    </div>
-                    <div class="widget_title" >
-                        <span title="{{cue.CueName}}">{{cue.CueName}}</span>
-                    </div>
-                    <div title="Expand/Collapse the Cue">
-                        <svg class="button_controls button_expand" height="20" width="20">
-                            <polyline class="down" points="3 7,10 14,17 7"/>
-                            <polyline class="up" points="3 13,10 6,17 13"/>
-                        </svg>
-                    </div>
-                </div>
-                <div class="widget_content" style="display: none;">
-                    <div class="unsortable">
-                        <table class="split_table">
-                            <tr><td class="table_title" colspan="5">SPLIT OF CUE VALUES</td></tr>
-                            <tr><th>min</th><td class="stats_slider" colspan="3"><div class="split_slider" title="Change the Split Value"></div></td><th>max</th></tr>
-                            <tr><td class="cell_values" id="min_value" title="Minimum Value">0</td><th class="cell_exit" id="split_label_left" title="Values between MIN (included) and SPLIT (included) are...">no</th><td class="cell_values"><input type="text" id="split_value" value="0" title="Split Value"></input></td><th class="cell_exit" id="split_label_right" title="Values between SPLIT (excluded) and MAX (included) are...">yes</th><td class="cell_values" id="max_value" title="Maximum Value">0</td></tr>
-                            <tr><th></th><td class="swap" colspan="3" title="Swap YES and NO Ranges"><svg class="button_swap" height="20" width="40"><polyline class="left" points="9 3,2 10,9 17"/><polyline class="right" points="31 3,38 10,31 17"/><line x1="2" y1="10" x2="38" y2="10"/></svg></td><th></th></tr>
-                        </table>
-                    </div>
-                    <ul class="stat_cue_header unsortable">
-                        <li class="stat_inline stat_cue unsortable">
-                            <table class="eval_table">
-                                <tr><td class="stats_header table_title" colspan="6">STATS OF SINGLE CUE TREE</td></tr>
-                                <tr><td class="cell_narrow"></td><td></td><td class="table_header" colspan="4">PREDICTION</td></tr>
-                                <tr><td></td><td></td><th>yes</th><th>no</th><th>und</th><th>sum</th></tr>
-                                <tr><td class="table_header_rotated" rowspan="3"><div class="rotate">CRITERION</div></td><th class="cell_narrow">yes</td><td class="success" id="hits" title="Hits">Hit</td><td class="fail" id="misses" title="Misses">Miss</td><td class="undecided" id="undecided_pos" title="Undecided Positive">0</td><td class="cell_values" id="crit_yes_sum">0</td></tr>
-                                <tr><th class="cell_narrow">no</th><td class="fail" id="falsealarms" title="False Alarms">FA</td><td class="success" id="correctrejections" title="Correct Rejections">CR</td><td class="undecided" id="undecided_neg" title="Undecided Negative">0</td><td class="cell_values" id="crit_no_sum">0</td></tr>
-                                <tr><th class="cell_narrow">sum</th><td class="cell_values" id="pred_yes_sum">0</td><td class="cell_values" id="pred_no_sum">0</td><td class="cell_values" id="pred_und_sum">0</td><td class="cell_values" id="pred_sum_sum">0</td></tr>
-                                <tr><th></th></tr>
-                            </table>
-                            <table class="eval_table">
-                                <tr><th colspan="2" title="Probability of Hits">p(H)</th><th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th><th title="D prime">d&#8242</th><th title="Frugality">Frug</th><th title="C or Bias">Bias</th></tr>
-                                <tr><td colspan="2" class="cell_values" id="pHits" title="Probability of Hits">0</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">0</td><td class="cell_values" id="dprime" title="D prime">0</td><td class="cell_values" id="frugality" title="Frugality">0</td><td class="cell_values" id="bias" title="C or Bias">0</td></tr>
-                            </table>
-                        </li
-                    </ul>
-                </div>
-                <ul class="arrows_exits">
-                    <!--here will be added all arrows and exits-->
-                </ul>
-            </li>
-
-
         </ul>
 
     </div>
 
+    <svg id="button_expand_all_blue" class="buttons_controls button_expand_all" height="20" width="20">
+        <polyline class="down" points="3 7,10 14,17 7"/>
+        <polyline class="up" points="3 13,10 6,17 13"/>
+    </svg>
+
 </div>
 
-<div id="white_area">
+<div id="white_area" class="page_area">
+
+    <svg id="button_expand_all_white" class="buttons_controls button_expand_all"  height="20" width="20">
+        <polyline class='down' points="3 7,10 14,17 7"/>
+        <polyline class="up" points="3 13,10 6,17 13"/>
+    </svg>
 
     <div id="stats_column">
         <div id="criterion_area"> Criterion:
-            <ul id="criterion_place" class="sortable_area"></ul>
+            <ul ui-sortable="sortableOptions" ng-model="drag_criterion" id="criterion_place" class="sortable_area">
+                <li ng-repeat="cue in drag_criterion" on-finish-render="ngFinishedCriterion" id="{{cue.CueName}}" name="{{cue.CueName}}" class="widget">
+                    <div class="widget_head">
+                        <div class="widget_title" >
+                            <span title="{{cue.CueName}}">{{cue.CueName}}</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
 
         <div id="valid_container">
              <table class="usage_table">
-                 <tr><th class="table_title" colspan="3">ECOLOGICAL VALIDITIES</th></tr>
+                 <tr><th class="table_title" colspan="4">ECOLOGICAL VALIDITIES</th></tr>
                 <tr><th>No.</th><th>Cue</th><th>Eco.Validity</th><th>Is Flipped</th></tr>
                  <tr ng-repeat="validObj in validities">
-                     <td>v{{validObj.index+1}}</td><td>{{validObj.cueId}}</td><td>{{validObj.validity | number:3}}</td><td>{{validObj.isFlipped}}</td></tr>
+                     <td>v{{validObj.index+1}}</td><td>{{validObj.CueName}}</td><td>{{validObj.validity | number:3}}</td><td>{{validObj.isFlipped}}</td></tr>
                  </tr>
              </table>
         </div>
@@ -160,14 +121,15 @@
             <table class="eval_table" >
                 <tr><th class="cell_narrow"></th><th></th><td class="table_header" colspan="4">PREDICTION</td></tr>
                 <tr><th></th><th></th><th>yes</th><th>no</th><th>und</th><th>sum</th></tr>
-                <tr><td class="table_header_rotated" rowspan="3"><div class="rotate">CRITERION</div></td><th class="cell_narrow">yes</td><td class="success" id="hits" title="Hits">Hit</td><td class="fail" id="misses" title="Misses">Miss</td><td class="undecided" id="undecided_pos" title="Undecided Positive">0</td><td class="cell_values" id="crit_yes_sum">0</td></tr>
-                <tr><th class="cell_narrow">no</td><td class="fail" id="falsealarms" title="False Alarms">FA</td><td class="success" id="correctrejections" title="Correct Rejections">CR</td><td class="undecided" id="undecided_neg" title="Undecided Negative">0</td><td class="cell_values" id="crit_no_sum">0</td></tr>
-                <tr><th class="cell_narrow">sum</th><td class="cell_values" id="pred_yes_sum">0</td><td class="cell_values" id="pred_no_sum">0</td><td class="cell_values" id="pred_und_sum">0</td><td class="cell_values" id="pred_sum_sum">0</td></tr>
+                <tr><td class="table_header_rotated" rowspan="3"><div class="rotate">CRITERION</div></td><th class="cell_narrow">yes</td><td class="success" id="hits" title="Hits">{{general_stats.HITS}}</td><td class="fail" id="misses" title="Misses">{{general_stats.MISSES}}</td><td class="undecided" id="undecided_pos" title="Undecided Positive">{{general_stats.UNDECIDED_POS}}</td><td class="cell_values" id="crit_yes_sum">{{general_stats.CRIT_YES_SUM}}</td></tr>
+                <tr><th class="cell_narrow">no</th><td class="fail" id="falsealarms" title="False Alarms">{{general_stats.FALSE_ALARMS}}</td><td class="success" id="correctrejections" title="Correct Rejections">{{general_stats.CORRECT_REJECTIONS}}</td><td class="undecided" id="undecided_neg" title="Undecided Negative">{{general_stats.UNDECIDED_NEG}}</td><td class="cell_values" id="crit_no_sum">{{general_stats.CRIT_NO_SUM}}</td></tr>
+                <tr><th class="cell_narrow">sum</th><td class="cell_values" id="pred_yes_sum">{{general_stats.PRED_YES_SUM}}</td><td class="cell_values" id="pred_no_sum">{{general_stats.PRED_NO_SUM}}</td><td class="cell_values" id="pred_und_sum">{{general_stats.PRED_UND_SUM}}</td><td class="cell_values" id="pred_sum_sum">{{general_stats.PRED_SUM_SUM}}</td></tr>
                 <tr><th></th></tr>
             </table>
-            <table class="eval_table" >
-                <tr><th colspan="2" title="Probability of Hits">p(H)</th><th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th><th title="D prime">d'</th><th title="Frugality">Frug</th><th title="C or Bias">Bias</th></tr>
-                <tr><td colspan="2" class="cell_values" id="pHits" title="Probability of Hits">0</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">0</td><td class="cell_values" id="dprime" title="D prime">0</td></tr>
+
+            <table class="eval_table">
+                <tr><th colspan="2" title="Probability of Hits">p(H)</th><th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th><th title="D prime">d&#8242</th><th title="Frugality">Frug</th><th title="C or Bias">Bias</th></tr>
+                <tr><td colspan="2" class="cell_values" id="pHits" title="Probability of Hits">{{general_stats.PHITS}}</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">{{general_stats.PHITSMINUSPFA}}</td><td class="cell_values" id="dprime" title="D prime">{{general_stats.DPRIME}}</td><td class="cell_values" id="frugality" title="Frugality">{{general_stats.FRUGALITY}}</td><td class="cell_values" id="bias" title="C or Bias">{{general_stats.BIAS}}</td></tr>
                 <tr><th></th></tr>
             </table>
             <table class="eval_table" >
@@ -180,26 +142,113 @@
         </div>
     </div>
 
-    <div class="columns">
-        <!--<div class="drophere disabled" id="drophere_tree0">Drop the cues here!</div>-->
-    </div>
-    <ul id="tree" class="sortable_area">
-        <!-- here will go the cues -->
-    </ul>
-    <div class="columns">
-    </div>
+<!--    <div class="columns">
+        &lt;!&ndash;<div class="drophere disabled" id="drophere_tree0">Drop the cues here!</div>&ndash;&gt;
+    </div>-->
+    <ul ui-sortable="sortableOptions" ng-model="drag_tree" id="tree" class="">
+        <li ng-repeat="cue in drag_tree" on-finish-render="ngFinishedTree" id="{{cue.CueName}}" name="{{cue.CueName}}" class="widget">
+            <div class="widget_head">
+                <div class="widget_tags">
+                    <!--here will be added the validity tag, multiply icons etc.-->
+                </div>
+                <div title="Shuffle Cues">
+                    <svg class="button_controls button_shuffle" height="20" width="20" style="display: none;">
+                        <polyline points="4 17, 17 4"/>
+                        <polyline points="4 4, 9 9"/>
+                        <polyline points="12 12, 17 17"/>
+                        <polyline points="13 4, 17 4, 17 8"/>
+                        <polyline points="13 17, 17 17, 17 13"/>
+                    </svg>
+                </div>
+                <div class="widget_title" >
+                    <span title="{{cue.CueName}}">{{cue.CueName}}</span>
+                </div>
+                <div title="Expand/Collapse the Cue">
+                    <svg class="button_controls button_expand" height="20" width="20">
+                        <polyline class="down" points="3 7,10 14,17 7"/>
+                        <polyline class="up" points="3 13,10 6,17 13"/>
+                    </svg>
+                </div>
 
-    <div id="info_container">
+            </div>
+            <!--<div class="widget_content" style="display: none;">-->
+            <div class="widget_content">
+                <div class="unsortable stat_inline">
+
+                    <table class="split_table">
+                        <tr><td class="table_title" colspan="5">SPLIT OF CUE VALUES</td></tr>
+                        <tr><th>min</th><td class="stats_slider" colspan="3"><div class="split_slider" title="Change the Split Value"></div></td><th>max</th></tr>
+                        <tr><td class="cell_values" id="min_value" title="Minimum Value">{{cue.MinValue}}</td><th class="cell_exit" id="split_label_left" title="Values between MIN (included) and SPLIT (included) are...">{{cue.IsFlipped?'yes':'no'}}</th><td class="cell_values"><input type="text" id="split_value" value="{{cue.SplitValue}}" title="Split Value"></input></td><th class="cell_exit" id="split_label_right" title="Values between SPLIT (excluded) and MAX (included) are...">{{cue.IsFlipped?'no':'yes'}}</th><td class="cell_values" id="max_value" title="Maximum Value">{{cue.MaxValue}}</td></tr>
+                        <tr><th></th><td class="swap" colspan="3" title="Swap YES and NO Ranges"><svg class="button_swap" height="20" width="40"><polyline class="left" points="9 3,2 10,9 17"/><polyline class="right" points="31 3,38 10,31 17"/><line x1="2" y1="10" x2="38" y2="10"/></svg></td><th></th></tr>
+                    </table>
+
+                    <div class="stat_cue">
+                        <table class="eval_table">
+                            <tr><td class="stats_header table_title" colspan="6">STATS OF THIS CUE</td></tr>
+                            <tr><th colspan="2" title="Probability of Hits">p(H)</th><th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th><th title="D prime">d&#8242</th><th title="Frugality">Frug</th><th title="C or Bias">Bias</th></tr>
+                            <tr><td colspan="2" class="cell_values" id="pHits" title="Probability of Hits">{{cue.PHITS}}</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">{{cue.PHITSMINUSPFA}}</td><td class="cell_values" id="dprime" title="D prime">{{cue.DPRIME}}</td><td class="cell_values" id="frugality" title="Frugality">{{cue.FRUGALITY}}</td><td class="cell_values" id="bias" title="C or Bias">{{cue.BIAS}}</td></tr>
+                        </table>
+                    </div>
+                    <div class="stat_tree">
+                        <table class="eval_table">
+                            <tr><td class="stats_header table_title" colspan="6">STATS OF TREE UP TO THIS CUE</td></tr>
+                            <tr><th colspan="2" title="Probability of Hits">p(H)</th><th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th><th title="D prime">d&#8242</th><th title="Frugality">Frug</th><th title="C or Bias">Bias</th></tr>
+                            <tr><td colspan="2" class="cell_values" id="pHits" title="Probability of Hits">{{cue.treePHITS}}</td><td class="cell_values" id="pHitsMinuspFA" title="Probability of Hits - Probability of False Alarms">{{cue.treePHITSMINUSPFA}}</td><td class="cell_values" id="dprime" title="D prime">{{cue.treeDPRIME}}</td><td class="cell_values" id="frugality" title="Frugality">{{cue.treeFRUGALITY}}</td><td class="cell_values" id="bias" title="C or Bias">{{cue.treeBIAS}}</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="unsortable stat_inline">
+                    <div class="conting_cue">
+                        <table class="eval_table">
+                            <tr><td class="stats_header table_title" colspan="5">CUE'S CONTINGENCY TABLE</td><td><svg class="button_stat" height="20" width="40"><polyline class="up" points="8 9,15 2,22 9"/><line x1="15" y1="2" x2="15" y2="18"/></svg></td></tr>
+                            <tr><td class="cell_narrow"></td><td></td><td class="table_header" colspan="4">PREDICTION</td></tr>
+                            <tr><td></td><td></td><th>yes</th><th>no</th><th>und</th><th>sum</th></tr>
+                            <tr><td class="table_header_rotated" rowspan="3"><div class="rotate">CRITERION</div></td><th class="cell_narrow">yes</td><td class="success" id="hits" title="Hits">{{cue.HITS}}</td><td class="fail" id="misses" title="Misses">{{cue.MISSES}}</td><td class="undecided" id="undecided_pos" title="Undecided Positive">{{cue.UNDECIDED_POS}}</td><td class="cell_values" id="crit_yes_sum">{{cue.CRIT_YES_SUM}}</td></tr>
+                            <tr><th class="cell_narrow">no</th><td class="fail" id="falsealarms" title="False Alarms">{{cue.FALSE_ALARMS}}</td><td class="success" id="correctrejections" title="Correct Rejections">{{cue.CORRECT_REJECTIONS}}</td><td class="undecided" id="undecided_neg" title="Undecided Negative">{{cue.UNDECIDED_NEG}}</td><td class="cell_values" id="crit_no_sum">{{cue.CRIT_NO_SUM}}</td></tr>
+                            <tr><th class="cell_narrow">sum</th><td class="cell_values" id="pred_yes_sum">{{cue.PRED_YES_SUM}}</td><td class="cell_values" id="pred_no_sum">{{cue.PRED_NO_SUM}}</td><td class="cell_values" id="pred_und_sum">{{cue.PRED_UND_SUM}}</td><td class="cell_values" id="pred_sum_sum">{{cue.PRED_SUM_SUM}}</td></tr>
+                            <tr><th></th></tr>
+                        </table>
+                    </div>
+                    <div class="conting_tree">
+                        <table class="eval_table">
+                            <tr><td class="stats_header table_title" colspan="5">TREE'S CONTINGENCY TABLE</td><td><svg class="button_stat" height="20" width="40"><polyline class="down" points="8 11,15 18,22 11"/><line x1="15" y1="2" x2="15" y2="18"/></svg></td></tr>
+                            <tr><td class="cell_narrow"></td><td></td><td class="table_header" colspan="4">PREDICTION</td></tr>
+                            <tr><td></td><td></td><th>yes</th><th>no</th><th>und</th><th>sum</th></tr>
+                            <tr><td class="table_header_rotated" rowspan="3"><div class="rotate">CRITERION</div></td><th class="cell_narrow">yes</td><td class="success" id="hits" title="Hits">{{cue.treeHITS}}</td><td class="fail" id="misses" title="Misses">{{cue.treeMISSES}}</td><td class="undecided" id="undecided_pos" title="Undecided Positive">{{cue.treeUNDECIDED_POS}}</td><td class="cell_values" id="crit_yes_sum">{{cue.treeCRIT_YES_SUM}}</td></tr>
+                            <tr><th class="cell_narrow">no</th><td class="fail" id="falsealarms" title="False Alarms">{{cue.treeFALSE_ALARMS}}</td><td class="success" id="correctrejections" title="Correct Rejections">{{cue.treeCORRECT_REJECTIONS}}</td><td class="undecided" id="undecided_neg" title="Undecided Negative">{{cue.treeUNDECIDED_NEG}}</td><td class="cell_values" id="crit_no_sum">{{cue.treeCRIT_NO_SUM}}</td></tr>
+                            <tr><th class="cell_narrow">sum</th><td class="cell_values" id="pred_yes_sum">{{cue.treePRED_YES_SUM}}</td><td class="cell_values" id="pred_no_sum">{{cue.treePRED_NO_SUM}}</td><td class="cell_values" id="pred_und_sum">{{cue.treePRED_UND_SUM}}</td><td class="cell_values" id="pred_sum_sum">{{cue.treePRED_SUM_SUM}}</td></tr>
+                            <tr><th></th></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <ul class="arrows_exits">
+                <!--here will be added all arrows and exits-->
+            </ul>
+        </li>
+    </ul>
+    <!--<div class="columns">
+        </div>-->
+
+    <div id="info_column">
+
+        <button id="button_stepinfo" class="button_grey">Step-By-Step Decisions <svg class="button_stat" height="20" width="40"><polyline class="up" points="8 9,15 2,22 9"/><polyline class="down" points="8 11,15 18,22 11"/><line x1="15" y1="2" x2="15" y2="18"/></svg></button>
+        <div id="dataset_container">
+            <!--<div id="dataset_container"></div>-->
+            <hot-table datarows="dataset_stepinfo" col-headers="dataset_stepinfo_colheads" row-headers="true" settings=""></hot-table>
+
+        </div>
+
         <div class="titleblock">
-            <h3 class="title"><input ng-model="heuristic_info.Title" type="text"/></h3>
-            <h5 class="strategy">{{heuristic_info.DecisionAlgorithm}} heuristic</h5>
+            <h3 class="title"><input ng-model="heuristic_info.Title" class="input_title" type="text"/></h3>
+            <h5 class="strategy">{{heuristic_info.heuristic_name}} heuristic</h5>
             <h5 class="date_author">{{heuristic_info.Date | date:'yyyy-MM-dd, hh:mm'}} by {{heuristic_info.UserName}}</h5>
             <h5 class="properties">{{heuristic_info.SizeCues}} cues</h5>
             <h5 class="usage">Used by {{heuristic_info.UsageUsers}} users with {{heuristic_info.UsageDatasets}} datasets</h5>
         </div>
         <div class="infoblock">
             <h5 class="access">{{heuristic_info.Access}} access</h5>
-            <input ng-model="heuristic_info.Description" type="text"/>
+            <input ng-model="heuristic_info.Description" class="input_description" type="text"/>
         </div>
 
         Dataset:

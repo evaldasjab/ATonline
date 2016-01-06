@@ -5,6 +5,11 @@
 // activates expand button-controls
 function ButtonsExpand() {
 
+    //console.log('ACTIVATE EXPAND');
+
+    // reset previous expand event everywhere FIX THIS!!!
+    $('.button_expand').unbind('mouseup');
+
     // hide icon UP by default
     $('.button_expand .up').hide();
 
@@ -16,19 +21,20 @@ function ButtonsExpand() {
         if ( $(this).closest('.widget').find('.widget_content').is(':hidden') ) {
             //console.log('EXPAND!');
 
-            $(this).closest('.widget').find('.widget_content').animate({height:'show',width:'show'});
+            //$(this).closest('.widget').find('.widget_content').animate({height:'show',width:'show'});
+            $(this).closest('.widget').find('.widget_content').animate({height:'show'});
 
             // change the icons - individual and 'expand all'
             $(this).find('.up').show(300);
             $(this).find('.down').hide();
-            //$(this).closest('.page_area').find('.button_expand_all .up').show(300);
-            //$(this).closest('.page_area').find('.button_expand_all .down').hide();
+            $(this).closest('.page_area').find('.button_expand_all .up').show(300);
+            $(this).closest('.page_area').find('.button_expand_all .down').hide();
 
         // if the widget content is shown, collapse
         } else {
             //console.log('COLLAPSE!');
 
-            $(this).closest('.widget').find('.widget_content').animate({height:'hide',width:'hide'});
+            $(this).closest('.widget').find('.widget_content').animate({height:'hide'});
 
             // change the icons - individual and 'expand all'
             $(this).find('.up').hide();
@@ -39,21 +45,57 @@ function ButtonsExpand() {
     });
 
     // hide the content by default
-    $('#cues_list').find('.widget_content').hide();  // DISABLE FOR TESTING!!!
+    $('.page_area').find('.widget_content').hide();  // DISABLE FOR TESTING!!!
 
-    //$('.horiz_scroll, .trees').on('click', '.button_expand', function (e) {
-    //    $(this).parents('.widget').find('.widget_content').slideToggle('slow');
-    //});
+}
+
+function ButtonExpandAll(myAreaId) {
+
+    //console.log('ACTIVATE EXPAND ALL!');
+
+    // remove event if already was activated
+    $('#'+myAreaId+' .button_expand_all').unbind('mouseup');
+
+    // remove class 'disabled'
+    //$('#'+myAreaId+' .button_expand_all').attr('class', 'buttons_controls button_expand_all');
+
+    // hide icon UP by default
+    $('#'+myAreaId+' .button_expand_all .up').hide();
+    $('#'+myAreaId+' .button_expand_all .udown').show();
+
+    $('#'+myAreaId+' .button_expand_all').mouseup(function (e) {
+
+        // if there is no cue with expanded stats, expand all
+        if ($(this).parent('.page_area').find('.widget_content:visible').length == 0) {
+
+            //$(this).parent('.page_area').find('.widget_content').animate({height:'show',width:'show'});
+            $(this).parent('.page_area').find('.widget_content').slideDown();
+
+            // change the icons - individual and 'expand all'
+            $(this).parent('.page_area').find('.button_expand .up').show(300);
+            $(this).parent('.page_area').find('.button_expand .down').hide();
+            $(this).find('.up').show(300);
+            $(this).find('.down').hide();
+
+            // if there is at least one expanded, collapse all
+        } else {
+            //$(this).parent('.page_area').find('.widget_content').animate({height:'hide',width:'hide'});
+            $(this).parent('.page_area').find('.widget_content').slideUp();
+
+            // change the icons - individual and 'expand all'
+            $(this).parent('.page_area').find('.button_expand .up').hide();
+            $(this).parent('.page_area').find('.button_expand .down').show(300);
+            $(this).find('.up').hide();
+            $(this).find('.down').show(300);
+
+        }
+    });
 }
 
 // activates shuffle button-controls
 function ButtonsShuffle(myHeuristicName) {
 
-    console.log('ACTIVATE SHUFFLE, heuristic '+ myHeuristicName);
-
-    // show icon UP by default
-    $('.button_shuffle').hide(); // already in the html, FIX THIS!!!
-    //$('#tree').find('.button_shuffle').show();
+    //console.log('ACTIVATE SHUFFLE, heuristic '+ myHeuristicName);
 
     // depending on the heuristic, show the button
     switch (myHeuristicName) {
@@ -66,23 +108,24 @@ function ButtonsShuffle(myHeuristicName) {
         case 'Weighted Tallying':
             // show the shuffle buttons
             $('#tree').find('.button_shuffle').show();
-            console.log('SHOW SHUFFLE');
-            debugger;
             break;
     }
 
     $('.button_shuffle').mouseup(function (e) {
 
-        // get the list of cues
-        var myTreeArray = GetElementsArray('widget','tree');
+        // change branch values in scope
+        var scope = angular.element(document.querySelector('#ng_territory')).scope();
+        scope.$apply(function () {
 
-        // reorder randomly
-        myTreeArray = ShuffleArray(myTreeArray);
+            // reorder tree cues randomly
+            scope.drag_tree = ShuffleArray(scope.drag_tree);
 
-        // rebuild the tree
-        MoveAllCuesToArea(myTreeArray, 'tree');
+            // manually trigger sortable
+            //angular.element('ui-sortable').sortable('stop');
 
-        UpdateArrowsAndExits(myHeuristicName, 'tree');
+            // rebuild arrows and exits
+            UpdateArrowsAndExits(myHeuristicName, scope.drag_tree);
+        });
     });
 }
 function ShuffleArray(myArray) {
@@ -118,6 +161,31 @@ function ButtonSwitchExit(myCueId, myExitClass) {
 
         e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
 
+        // change branch values in scope
+        var scope = angular.element(document.querySelector('#ng_territory')).scope();
+        scope.$apply(function () {
+
+            // get object from scope
+            var myFind = $.grep(scope.drag_tree, function (e) {return e.CueName == myCueId;});
+            var myCueObj = myFind[0];
+            var myIndex = scope.drag_tree.indexOf(myCueObj);
+
+            // swap branch values
+            //b = [a, a = b][0];
+            var myTemp = myCueObj.BranchNo;
+            myCueObj.BranchNo = myCueObj.BranchYes;
+            myCueObj.BranchYes = myTemp;
+
+            // update object in scope
+            scope.drag_tree[myIndex] = myCueObj;
+
+            // update statistics
+            var myAnalysis = AnalyzeDataset(scope.dataset_binary, scope.drag_criterion[0].CueName, scope.drag_tree);
+            //console.log(myAnalysis);
+            scope.general_stats = myAnalysis.general_stats;
+            scope.drag_tree = myAnalysis.cues_stats;
+        });
+
         //var myExitClass = $(this).closest('.exit_widget').attr('id');
         console.log('EXIT BUTTON! myCueId: '+myCueId+' myExitClass: '+myExitClass);
 
@@ -134,29 +202,154 @@ function ButtonSwitchExit(myCueId, myExitClass) {
     })
 }
 
+function SplitValueSliderChangeSwap(myCuesList) {
+
+    myCuesList.forEach(function(mySplitObj) {
+
+        var myCueId = mySplitObj.CueName;
+
+        $('#'+myCueId+' .split_slider').slider({
+            min: mySplitObj.MinValue,
+            max: mySplitObj.MaxValue,
+            value: mySplitObj.SplitValue,
+            step: 0.5,
+            slide: function(event, ui) {
+                $(this).closest('.widget').find('#split_value').val(ui.value);
+                //$( "input" ).val( "$" + ui.value );
+                //$('li[id^='+myTrueCueId+']').find('.split_slider').slider('refresh');
+            },
+            change: function( event, ui ) {
+
+                // change binary values of this cue/field in the dataset
+                mySplitObj.SplitValue = ui.value;
+
+                // in scope, update cue mapping, binary dataset, cues_list, treecues and general analysis
+                UpdateScopeModels();
+
+            }
+        });
+
+        $('li[id^='+myCueId+'] #split_value').change(function () {
+            //var value = this.value.substring(1);
+            var myValue = $(this).val();
+            $('li[id^='+myCueId+'] .split_slider').slider("value", parseFloat(myValue));
+        });
+
+        // reset previous swap button event
+        $('#'+myCueId+' .button_swap').unbind('mouseup');
+
+        // activate yes-no swap button (changes isFlipped value)
+        $('#'+myCueId+' .button_swap').mouseup(function () {
+
+            // change the direction in the mySplitValuesArray
+            mySplitObj.IsFlipped = !mySplitObj.IsFlipped;  // if true then false, if false then true
+
+            // in scope, update cue mapping, binary dataset, cues_list, treecues and general analysis
+            UpdateScopeModels();
+
+        });
+        $.fn.toggleText = function(t1, t2){
+            if (this.text() == t1) this.text(t2);
+            else                   this.text(t1);
+            return this;
+        };
+    });
+}
+function UpdateScopeModels() {
+
+    var scope = angular.element(document.querySelector('#ng_territory')).scope();
+    scope.$apply(function () {
+
+        // merge drag lists for cue mapping update
+        var myDragListsArray = $.merge([], scope.drag_cues_list);  // make copy of cues list array
+        $.merge( myDragListsArray, scope.drag_tree );  // add tree array
+        $.merge( myDragListsArray, scope.drag_criterion );  // add criterion array
+
+        // update cue mapping
+        scope.heuristic_info.CueMapping = UpdateCueMapping(scope.heuristic_info.CueMapping, myDragListsArray);
+
+        // update the dataset
+        scope.dataset_binary = ConvertToBinary(scope.dataset_full, scope.dataset_original, scope.heuristic_info.CueMapping);
+
+        // if criterion is already selected
+        if (scope.drag_criterion.length >0) {
+            // analyse every cue in cues_list as one-cue-tree
+            scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
+                var myAnalysis = AnalyzeDataset(scope.dataset_binary, scope.drag_criterion[0].CueName, [myCueObj]);
+                scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
+            });
+
+            // update statistics
+            var myAnalysis = AnalyzeDataset(scope.dataset_binary, scope.drag_criterion[0].CueName, scope.drag_tree);
+            //console.log(myAnalysis);
+            scope.general_stats = myAnalysis.general_stats;
+            scope.drag_tree = myAnalysis.cues_stats;
+        }
+
+    });
+}
+
+function ButtonsStatistics(myCuesList) {
+
+    myCuesList.forEach(function(myCueObj) {
+
+        var myCueId = myCueObj.CueName;
+
+        // reset previous button event
+        $('#' + myCueId + ' .button_stat').unbind('mouseup');
+
+        // hide the statistics of the tree
+        $('#' + myCueId).find('.conting_tree').hide();
+        $('#' + myCueId).find('.stat_tree').hide();
+
+        // on mouse click, toggle between cue and tree statistics
+        $('#' + myCueId + ' .button_stat').mouseup(function () {
+
+        // hide cue stats and show tree stats, sliding left
+        $(this).closest('.widget_content').find('.conting_cue').slideToggle();
+        $(this).closest('.widget_content').find('.conting_tree').slideToggle();
+
+        // hide cue stats and show tree stats, sliding up
+        $(this).closest('.widget_content').find('.stat_cue').slideToggle();
+        $(this).closest('.widget_content').find('.stat_tree').slideToggle();
+
+            //$(this).closest('.widget_content').find('.stat_cue').animate({width: 'toggle'});
+            //$(this).closest('.widget_content').find('.stat_tree').animate({width: 'toggle'}, 600);
+        });
+    });
+}
+
+function ButtonDatasetStepInfo() {
+
+    // hide by default
+    //.hide();
+    $('#dataset_container').delay(800).slideUp();  //.fadeIn(400)
+
+    $('#button_stepinfo').mouseup(function (e) {
+        console.log('STEPINFO BUTTON!');
+
+        e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
+
+        $('#dataset_container').slideToggle();
+
+        return false;                                            // Return false, prevent default action
+    })
+}
+
+
 function ButtonSaveHeuristic() {
+
+    // reset just in case
+    $('#save').unbind('mouseup');
 
     $('#save').mouseup(function (e) {
         console.log('SAVE BUTTON!');
 
-        e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
+        //e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
 
         // connect to angular's scope
         var scope = angular.element(document.querySelector('#ng_territory')).scope();
         scope.$apply(function() {
-
-            // update the date
-            scope.heuristic_info.Date = new Date();
-
-            // get heuristic info from scope
-            var myHeuristicInfo = scope.heuristic_info;
-            var myHeuristicStructure = scope.heuristic_info.HeuristicStructure;
-
-            console.log('myHeuristicInfo for PUT or POST:');
-            console.log(myHeuristicInfo);
-
-            console.log('scope:');
-            console.log(scope);
 
             // check if this heuristic already was saved on server before
             var myHeuristicId = scope.heuristic_id;
@@ -164,12 +357,114 @@ function ButtonSaveHeuristic() {
             console.log('myHeuristicId:');
             console.log(myHeuristicId);
 
-            // POST if there is no heuristic_id (send to SQL server if doesn't exist) using AJAX
-            if (!myHeuristicId) {
+            // update the date
+            scope.heuristic_info.Date = new Date();
 
-                $.evoAppServices.heuristicInfoes.postHeuristicInfo(myHeuristicInfo)
+            //var myCritArray = [];
+            //var myTreeArray = [];
+            //var myCuesListArray = [];
+            var myHeuristicStructure = [];
+            var myCueMapping = [];
+
+            // add cue attributes to objects
+            scope.drag_criterion.forEach(function(myCueObj, myIndex) {
+                var myHeurStrObj = {}
+                if (myCueObj.EntryId) {myHeurStrObj.EntryId = myCueObj.EntryId};
+                if (myCueObj.HeuristicId) {myHeurStrObj.HeuristicId = myCueObj.HeuristicId};
+                myHeurStrObj.CueName = myCueObj.CueName;
+                myHeurStrObj.CueType = 'criterion';
+                myHeurStrObj.BranchNo = myCueObj.BranchNo;
+                myHeurStrObj.BranchYes = myCueObj.BranchYes;
+                myHeuristicStructure.push(myHeurStrObj);
+
+                var myCueMapObj = {}
+                if (myCueObj.MapId) {myCueMapObj.MapId = myCueObj.MapId};
+                if (myCueObj.DatasetId) {myCueMapObj.DatasetId = myCueMapObj.DatasetId};
+                if (myCueObj.HeuristicId) {myCueMapObj.HeuristicId = myCueMapObj.HeuristicId};
+                myCueMapObj.DatasetCueName = myCueObj.DatasetCueName;
+                myCueMapObj.CueName = myCueObj.CueName;
+                myCueMapObj.SplitValue = myCueObj.SplitValue;
+                myCueMapObj.IsFlipped = myCueObj.IsFlipped;
+                myCueMapObj.MinValue = myCueObj.MinValue;
+                myCueMapObj.MaxValue = myCueObj.MaxValue;
+                myCueMapping.push(myCueMapObj);
+            });
+            scope.drag_tree.forEach(function(myCueObj, myIndex) {
+                var myHeurStrObj = {}
+                if (myCueObj.EntryId) {myHeurStrObj.EntryId = myCueObj.EntryId};
+                if (myCueObj.HeuristicId) {myHeurStrObj.HeuristicId = myCueObj.HeuristicId};
+                myHeurStrObj.CueName = myCueObj.CueName;
+                myHeurStrObj.CueType = 'treecue';
+                myHeurStrObj.BranchNo = myCueObj.BranchNo;
+                myHeurStrObj.BranchYes = myCueObj.BranchYes;
+                myHeuristicStructure.push(myHeurStrObj);
+
+                var myCueMapObj = {}
+                if (myCueObj.MapId) {myCueMapObj.MapId = myCueObj.MapId};
+                if (myCueObj.DatasetId) {myCueMapObj.DatasetId = myCueMapObj.DatasetId};
+                if (myCueObj.HeuristicId) {myCueMapObj.HeuristicId = myCueMapObj.HeuristicId};
+                myCueMapObj.DatasetCueName = myCueObj.DatasetCueName;
+                myCueMapObj.CueName = myCueObj.CueName;
+                myCueMapObj.SplitValue = myCueObj.SplitValue;
+                myCueMapObj.IsFlipped = myCueObj.IsFlipped;
+                myCueMapObj.MinValue = myCueObj.MinValue;
+                myCueMapObj.MaxValue = myCueObj.MaxValue;
+                myCueMapping.push(myCueMapObj);
+            });
+            scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
+                var myHeurStrObj = {}
+                if (myCueObj.EntryId) {myHeurStrObj.EntryId = myCueObj.EntryId};
+                if (myCueObj.HeuristicId) {myHeurStrObj.HeuristicId = myCueObj.HeuristicId};
+                myHeurStrObj.CueName = myCueObj.CueName;
+                myHeurStrObj.CueType = 'cue';
+                myHeurStrObj.BranchNo = myCueObj.BranchNo;
+                myHeurStrObj.BranchYes = myCueObj.BranchYes;
+                myHeuristicStructure.push(myHeurStrObj);
+
+                var myCueMapObj = {}
+                if (myCueObj.MapId) {myCueMapObj.MapId = myCueObj.MapId};
+                if (myCueObj.DatasetId) {myCueMapObj.DatasetId = myCueMapObj.DatasetId};
+                if (myCueObj.HeuristicId) {myCueMapObj.HeuristicId = myCueMapObj.HeuristicId};
+                myCueMapObj.DatasetCueName = myCueObj.DatasetCueName;
+                myCueMapObj.CueName = myCueObj.CueName;
+                myCueMapObj.SplitValue = myCueObj.SplitValue;
+                myCueMapObj.IsFlipped = myCueObj.IsFlipped;
+                myCueMapObj.MinValue = myCueObj.MinValue;
+                myCueMapObj.MaxValue = myCueObj.MaxValue;
+                myCueMapping.push(myCueMapObj);
+            });
+
+            console.log(myCueMapping);
+            console.log(scope.heuristic_info.CueMapping);
+            debugger;
+
+            // merge the lists for heuristic structure
+            //var myHeuristicStructure = $.merge([], myCritArray);  // make copy of criterion array
+            //$.merge( myHeuristicStructure, myTreeArray);  // add tree array
+            //$.merge( myHeuristicStructure, myCuesListArray);  // add cues list array
+
+            // save to scope, just in case
+            scope.heuristic_info.HeuristicStructure = myHeuristicStructure;
+            //scope.heuristic_info.CueMapping = myCueMapping;
+
+            // get heuristic info from scope
+            var myHeuristicInfo = scope.heuristic_info;
+            //var myHeuristicStructure = scope.heuristic_info.HeuristicStructure;
+
+            console.log('myHeuristicInfo for PUT or POST');
+            //console.log(JSON.stringify(myHeuristicInfo, null, "  "));
+
+            //console.log('scope:');
+            //console.log(scope);
+
+            // POST if there is no heuristic_id (save new) or access is public (save copy)
+            if (!myHeuristicId || scope.heuristic_info.Access == 'public') {
+
+                scope.heuristic_info.Access = 'private';
+
+                $.evoAppServices.heuristicInfoes.postHeuristicInfo(scope.heuristic_info)
                     .success(function (response) {
-                        console.log('AJAX SUCCESS! response:');
+                        console.log('AJAX POST SUCCESS! response:');
                         console.log(response);
                         scope.heuristic_id = response.HeuristicId;
                         //scope.heuristic_info.HeuristicId = response.HeuristicId;
@@ -179,95 +474,36 @@ function ButtonSaveHeuristic() {
                         document.location.href = '/HTML5Boilerplate/index.html#/heuristics/'+scope.heuristic_id; // FIX THIS!!!
 
                     }).error(function (data, status, headers, config) {
-                        console.log('AJAX FAIL');
+                        console.log('AJAX POST FAIL');
                     });
 
-            } else {   // PUT if there is heuristic_id (update in SQL) using AJAX
+            } else {
 
-                console.log('PUT!');
-                console.log(myHeuristicStructure);
-                debugger;
-
-                /*angular.injector(['ng']).invoke(['$q', function($q) {
-
-                    $q.all([   // angular promise - when this is done, then do the next
-                        // get old HeuristicStructure entries
-                        $.evoAppServices.heuristicStructures.getHeuristicStructuresByHeuristicId(myHeuristicId)
-                            .success(function (response) {
-                                console.log('AJAX SUCCESS getHeuristicStructuresByHeuristicId! response:');
-                                console.log(response);
-
-                                // delete old entries
-                                var myOldHeuristicStructure = response;
-
-                                myOldHeuristicStructure.forEach(function(myEntry, myIndex) {
-                                    $.evoAppServices.heuristicStructures.deleteHeuristicStructure(myEntry.EntryId)
-                                        .success(function (response) {
-                                            console.log('AJAX SUCCESS deleteHeuristicStructure! response:');
-                                            //console.log(response);
-                                        }).error(function (response, status, headers, config) {
-                                            console.log('AJAX FAIL deleteHeuristicStructure');
-                                            console.log(response);
-                                        });
-                                });
-
-                            }).error(function (response, status, headers, config) {
-                                console.log('AJAX FAIL getHeuristicStructuresByHeuristicId');
-                                console.log(response);
-                            })
-
-                    ]).then(function() {
-
-                        // post new HeuristicStructure entries
-                        myHeuristicStructure.forEach(function(myEntry, myIndex) {
-                            console.log(myIndex);
-                            console.log(myEntry);
-                            $.evoAppServices.heuristicStructures.postHeuristicStructure(myEntry)
-                                .success(function (response) {
-                                    console.log('AJAX SUCCESS postHeuristicStructure! response:');
-                                    //console.log(response);
-                                }).error(function (response, status, headers, config) {
-                                    console.log('AJAX FAIL postHeuristicStructure');
-                                    console.log(response);
-                                });
-                        });
-                    });
-
-                }]);*/
-
-
-
-                //delete myHeuristicInfo[CueMapping];
-                //delete myHeuristicInfo[HeuristicStructure];
-
+                // PUT if there is heuristic_id (update in SQL) using AJAX
                 $.evoAppServices.heuristicInfoes.putHeuristicInfo(myHeuristicId, myHeuristicInfo)
                     .success(function (response) {
-                        console.log('AJAX SUCCESS putHeuristicInfo! response:');
+                        console.log('AJAX PUT SUCCESS! response:');
                         //console.log(response);
                     }).error(function (response, status, headers, config) {
-                        console.log('AJAX FAIL putHeuristicInfo');
-                        console.log(response);
-
+                        console.log('AJAX PUT FAIL');
                     });
 
 
                 // update HeuristicStructure entries separately one by one, doesn't update with heuristic_info...
-                var myHeurStructArray = myHeuristicInfo.HeuristicStructure;
-                myHeurStructArray.forEach(function(myEntry, myIndex) {
+                //var myHeurStructArray = myHeuristicInfo.HeuristicStructure;
+                myHeuristicStructure.forEach(function(myEntry, myIndex) {
                     $.evoAppServices.heuristicStructures.putHeuristicStructure(myEntry.EntryId, myEntry)
                         .success(function (response) {
-                            console.log('ADDITIONAL AJAX SUCCESS! response:');
+                            console.log('ADDITIONAL AJAX PUT SUCCESS! response:');
                             //console.log(response);
                         }).error(function (response, status, headers, config) {
-                            console.log('AJAX FAIL');
-                            console.log(response);
-
+                            console.log('ADDITIONAL AJAX PUT FAIL');
                         });
                 });
             }
         });
 
-        return false;                                            // Return false, prevent default action
+        //return false;                                            // Return false, prevent default action
     })
 }
 
@@ -289,7 +525,7 @@ function ButtonPublishHeuristic() {
             scope.heuristic_info.Access = 'public';
 
             // remove CueMapping, otherwise the server gives an error
-            var myHeuristicInfo = scope.heuristic_info;
+            var myHeuristicInfo = $.merge([], scope.heuristic_info);  // make DEEP copy
             delete myHeuristicInfo.CueMapping;
             delete myHeuristicInfo.HeuristicStructure;
 
@@ -330,7 +566,7 @@ function ButtonChooseDataset(myHeurId) {
     })
 }
 
-function ButtonRemove(myHeuristicId) {
+function ButtonRemoveHeuristic(myHeuristicId) {
 
     $('#remove').mouseup(function (e) {
         console.log('REMOVE BUTTON!');
@@ -348,7 +584,7 @@ function ButtonRemove(myHeuristicId) {
                     //scope.heuristic_info = response;
 
                     // go to the parent page - FIX THIS!!!
-                    window.location.href = window.location.pathname+'#/heuristics';
+                    window.location.href = window.location.pathname+'#/';
 
                 }).error(function (data, status, headers, config) {
                     console.log('AJAX FAIL');
@@ -417,7 +653,7 @@ function HandleFileSelect(evt) {
     // mark the button as selected
     //$('#button_upload_csv_file').toggleClass('button_on', true);
     //$('#button_load_csv_sample').toggleClass('button_on', false);
-}*/
+}*/ //ButtonUpload()
 
 function ButtonSaveDataset() {
 
@@ -452,7 +688,6 @@ function ButtonSaveDataset() {
             if (!myDatasetId) {
 
                 console.log('Posting to server, PLEASE WAIT...');
-                debugger;
 
                 $.evoAppServices.datasetInfoes.postDatasetInfo(myObj)
                     .success(function (response) {
@@ -460,8 +695,6 @@ function ButtonSaveDataset() {
                         console.log(response);
                         scope.dataset_id = response.DatasetId;
                         scope.dataset_info = response;
-
-                        debugger;
 
                         // go to page datasets/dataset_id
                         document.location.href = '/HTML5Boilerplate/index.html#/datasets/'+scope.dataset_id; // FIX THIS!!!
@@ -474,7 +707,6 @@ function ButtonSaveDataset() {
 
                 console.log(myDatasetId);
                 console.log('Updating to server, PLEASE WAIT...');
-                debugger;
 
                 $.evoAppServices.datasetInfoes.putDatasetInfo(myDatasetId, myObj)
                     .success(function (response) {
@@ -532,7 +764,7 @@ function ButtonRemoveDataset(myDatasetId) {
                     //scope.dataset_info = response;
 
                     // go to the parent page - FIX THIS!!!
-                    window.location.href = window.location.pathname+'#/datasets';
+                    window.location.href = window.location.pathname+'#/';
 
                 }).error(function (data, status, headers, config) {
                     console.log('AJAX FAIL');
@@ -541,3 +773,4 @@ function ButtonRemoveDataset(myDatasetId) {
         return false;                                            // Return false, prevent default action
     })
 }
+

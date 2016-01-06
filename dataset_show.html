@@ -2,15 +2,15 @@
 <!--Dataset entry: {{dataset_full[0].age}}-->
 
 
-<div id="blue_area">
+<div class="blue_area">
 
     <div>
-        <button id="save" class="button_gray">Save</button>
+        <button id="save" class="button_grey">Save</button>
 
-        <!--<a href="#/{{dataset_info.dataset_id}}/fft/1"><button id="create_fft" class="button_gray">Create FFT</button></a>-->
-        <a href="#/{{dataset_info.DatasetId}}/new_fft"><button id="create_fft" class="button_gray">Create FFT</button></a>
+        <!--<a href="#/{{dataset_info.dataset_id}}/fft/1"><button id="create_fft" class="button_grey">Create FFT</button></a>-->
+        <a href="#/{{dataset_info.DatasetId}}/new_fft"><button id="create_fft" class="button_grey">Create FFT</button></a>
 
-        <select id="apply_heuristic" class="button_gray" onChange="window.location.href=this.value">
+        <select id="apply_heuristic" class="button_grey" onChange="window.location.href=this.value">
             <option>Apply Heuristic:</option>
             <option value="#/{{dataset_info.DatasetId}}/new_ttb">Take The Best</option>
             <option value="#/{{dataset_info.DatasetId}}/new_mini">Minimalist</option>
@@ -19,9 +19,9 @@
             </optgroup>
         </select>
 
-        <button id="download" class="button_gray">Download</button>
+        <button id="download" class="button_grey">Download</button>
 
-        <button id="remove" class="button_gray">Remove</button>
+        <button id="remove" class="button_grey">Remove</button>
     </div>
 
 </div>

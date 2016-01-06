@@ -10,6 +10,7 @@
 
         <link rel="apple-touch-icon" href="boilerplatestuff/apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
+        <link rel="stylesheet" type="text/css" href="js/vendor/jquery-ui-1.11.4/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="bower_components/handsontable/dist/handsontable.full.min.css">
         <link rel="stylesheet" type="text/css" href="css/normalize.css">
         <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -24,7 +25,7 @@
         <!--<p>Hello world! This is HTML5 Boilerplate.</p>-->
 
 
-<div class="blue_area">
+<div class="blue_area" id="blue_area_top">
     <h1 id="page_title">ADAPTIVE TOOLBOX Online</h1>
 
     <nav class="navbar navbar-default" role="navigation">
@@ -65,8 +66,8 @@
         <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>-->
 
         <!--libraries and plugins-->
-        <script src="js/vendor/jquery-1.11.2.js"></script>
-        <script src="js/vendor/jquery-ui-1.11.4.min.js"></script>
+        <script src="js/vendor/jquery-1.11.3.min.js"></script>
+        <script src="js/vendor/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="js/vendor/papaparse.min.js"></script>
         <script src="js/vendor/list.js"></script>
@@ -80,6 +81,8 @@
         <script src="bower_components/handsontable/dist/handsontable.full.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
+        <script src="bower_components/ngHandsontable/dist/ngHandsontable.min.js"></script>
 
 
 
@@ -89,9 +92,10 @@
         <script src="js/api/jquery.evoapp-services.js"></script>
 
         <!--custom scripts-->
-        <script src="js/ttb_algorithm.js"></script>
         <script src="js/arrows.js"></script>
         <script src="js/buttons.js"></script>
+        <script src="js/analysis.js"></script>
+        <script src="js/TreeStatistics.js"></script>
         <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

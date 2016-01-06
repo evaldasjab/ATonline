@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a752d6-9ffd-4ac4-85cb-626935fa14c7" name="Default" comment="- private / public entries&#10;- save / publish / remove entries&#10;- choose different dataset for public heuristic">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/img/icon_MI_512.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/img/icon_TA_512.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/img/icon_WT_512.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/index_login.html" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/js/api/evoapp_angular_services.js" afterPath="$PROJECT_DIR$/js/api/evoapp.services.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/js/api/evoapp_jquery_services.js" afterPath="$PROJECT_DIR$/js/api/jquery.evoapp-services.js" />
+    <list default="true" id="09a752d6-9ffd-4ac4-85cb-626935fa14c7" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/analysis.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/js/ttb_algorithm.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/js/vendor/jquery-1.11.2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/js/vendor/jquery-ui-1.11.4.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/mini.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tall.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tree.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ttb.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/weta.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/.bower.json" afterPath="$PROJECT_DIR$/bower_components/handsontable/.bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/Gruntfile.js" afterPath="$PROJECT_DIR$/bower_components/handsontable/Gruntfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/dist/README.md" afterPath="$PROJECT_DIR$/bower_components/handsontable/dist/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/arrows.js" afterPath="$PROJECT_DIR$/js/arrows.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/bower.json" afterPath="$PROJECT_DIR$/bower_components/handsontable/bower.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/buttons.js" afterPath="$PROJECT_DIR$/js/buttons.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/json/datasest_converted.json" afterPath="$PROJECT_DIR$/json/datasest_converted.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/json/dataset_2_converted_new.json" afterPath="$PROJECT_DIR$/json/dataset_2_converted_new.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/json/dataset_3_converted_new.json" afterPath="$PROJECT_DIR$/json/dataset_3_converted_new.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_list.html" afterPath="$PROJECT_DIR$/dataset_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dataset_show.html" afterPath="$PROJECT_DIR$/dataset_show.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.css" afterPath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.full.css" afterPath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.full.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.full.js" afterPath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.full.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.full.min.css" afterPath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.full.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.full.min.js" afterPath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.full.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/handsontable.jquery.json" afterPath="$PROJECT_DIR$/bower_components/handsontable/handsontable.jquery.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.js" afterPath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.min.css" afterPath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.min.js" afterPath="$PROJECT_DIR$/bower_components/handsontable/dist/handsontable.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/heur.html" afterPath="$PROJECT_DIR$/heur.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/heuristic_list.html" afterPath="$PROJECT_DIR$/heuristic_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/index.html" afterPath="$PROJECT_DIR$/bower_components/handsontable/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/main.css" afterPath="$PROJECT_DIR$/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/handsontable/package.json" afterPath="$PROJECT_DIR$/bower_components/handsontable/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/toolbox.html" afterPath="$PROJECT_DIR$/toolbox.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/json/tree_11.json" afterPath="$PROJECT_DIR$/json/tree_11.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/ttb_algorithm.js" afterPath="$PROJECT_DIR$/js/ttb_algorithm.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HTML5Boilerplate.iws" />
@@ -48,17 +61,7 @@
         <entry file="file://$PROJECT_DIR$/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="150" column="4" selection-start-line="150" selection-start-column="4" selection-end-line="150" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dataset_list.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataset_list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.5">
-              <caret line="46" column="69" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="69" />
+              <caret line="365" column="23" selection-start-line="365" selection-start-column="23" selection-end-line="365" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -67,32 +70,75 @@
       <file leaf-file-name="heur.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/heur.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.5">
-              <caret line="21" column="81" selection-start-line="21" selection-start-column="73" selection-end-line="21" selection-end-column="81" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="114" column="73" selection-start-line="114" selection-start-column="73" selection-end-line="114" selection-end-column="73" />
               <folding>
-                <element signature="n#style#0;n#div#1;n#li#0;n#ul#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#li#1;n#ul#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#svg#0;n#div#1;n#div#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#svg#0;n#div#1;n#div#0;n#li#0;n#ul#0;n#div#1;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.84513277">
-              <caret line="1376" column="87" selection-start-line="1376" selection-start-column="87" selection-end-line="1376" selection-end-column="87" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="443" column="89" selection-start-line="443" selection-start-column="89" selection-end-line="443" selection-end-column="89" />
+              <folding>
+                <element signature="n#!!block;n#ConvertDataset#0" expanded="false" />
+                <element signature="n#!!block;n#ShowTable#0" expanded="false" />
+                <element signature="n#!!block;n#GetCueMapping#0" expanded="false" />
+                <element signature="n#!!block;n#UpdateCueMapping#0" expanded="false" />
+                <element signature="n#!!block;n#ConvertToBinary#0" expanded="false" />
+                <element signature="n#!!block;n#MoveAllCuesToArea#0" expanded="false" />
+                <element signature="n#!!block;n#GetHeuristicStructure#0" expanded="false" />
+                <element signature="n#!!block;n#GetValidities#0" expanded="false" />
+                <element signature="n#!!block;n#OrderCuesByValidities#0" expanded="false" />
+                <element signature="n#!!block;n#UpdateExitBranches#0" expanded="false" />
+                <element signature="n#!!block;n#UpdateScope#0" expanded="false" />
+                <element signature="e#19824#20096#0" expanded="false" />
+                <element signature="e#20144#20416#0" expanded="false" />
+                <element signature="e#20464#20736#0" expanded="false" />
+                <element signature="e#20782#21041#0" expanded="false" />
+                <element signature="e#21096#21543#0" expanded="false" />
+                <element signature="e#23186#23987#0" expanded="false" />
+                <element signature="e#24113#24928#0" expanded="false" />
+                <element signature="e#25136#29547#0" expanded="false" />
+                <element signature="e#29704#31150#0" expanded="false" />
+                <element signature="e#31323#33280#0" expanded="false" />
+                <element signature="e#33431#35520#0" expanded="false" />
+                <element signature="e#35641#36853#0" expanded="false" />
+                <element signature="e#36974#38085#0" expanded="false" />
+                <element signature="e#38231#39698#0" expanded="false" />
+                <element signature="e#39850#54362#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="buttons.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="buttons.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/buttons.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.666667">
-              <caret line="293" column="53" selection-start-line="293" selection-start-column="53" selection-end-line="293" selection-end-column="53" />
-              <folding />
+            <state vertical-scroll-proportion="0.5442478">
+              <caret line="542" column="43" selection-start-line="542" selection-start-column="43" selection-end-line="542" selection-end-column="43" />
+              <folding>
+                <element signature="n#!!block;n#ButtonsExpand#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonExpandAll#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonsShuffle#0" expanded="false" />
+                <element signature="n#!!block;n#ShuffleArray#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonSwitchExit#0" expanded="false" />
+                <element signature="n#!!block;n#SplitValueSliderChangeSwap#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonsStatistics#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonDatasetStepInfo#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonSaveHeuristic#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonChooseDataset#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonRemoveHeuristic#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonClone#0" expanded="false" />
+                <element signature="e#24760#26047#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonSaveDataset#0" expanded="false" />
+                <element signature="n#!!block;n#ButtonRemoveDataset#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -101,17 +147,9 @@
         <entry file="file://$PROJECT_DIR$/js/arrows.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+              <caret line="465" column="34" selection-start-line="465" selection-start-column="34" selection-end-line="465" selection-end-column="34" />
               <folding>
-                <marker date="1448916481000" expanded="true" signature="13560:13921" placeholder="..." />
-                <marker date="1448916481000" expanded="true" signature="19281:19497" placeholder="..." />
-                <marker date="1448916481000" expanded="true" signature="19363:19491" placeholder="..." />
-                <marker date="1448916481000" expanded="true" signature="20005:20220" placeholder="..." />
-                <marker date="1448916481000" expanded="true" signature="20086:20214" placeholder="..." />
-                <marker date="1448916481000" expanded="true" signature="20441:20524" placeholder="..." />
-                <marker date="1448916481000" expanded="true" signature="20598:20627" placeholder="..." />
-                <marker date="1448916481000" expanded="true" signature="22605:22642" placeholder="..." />
-                <marker date="1448916481000" expanded="true" signature="22771:22800" placeholder="..." />
+                <marker date="1452023095000" expanded="true" signature="13239:13600" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -172,16 +210,17 @@
         <option value="$PROJECT_DIR$/js/api/evoapp.services.js" />
         <option value="$PROJECT_DIR$/js/api/jquery.evoapp-services.js" />
         <option value="$PROJECT_DIR$/js/ttb_algorithm.js" />
-        <option value="$PROJECT_DIR$/js/arrows.js" />
-        <option value="$PROJECT_DIR$/dataset_list.html" />
-        <option value="$PROJECT_DIR$/heuristic_list.html" />
+        <option value="$PROJECT_DIR$/js/analysis.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/dataset_list.html" />
+        <option value="$PROJECT_DIR$/dataset_show.html" />
+        <option value="$PROJECT_DIR$/heuristic_list.html" />
         <option value="$PROJECT_DIR$/toolbox.html" />
         <option value="$PROJECT_DIR$/css/main.css" />
-        <option value="$PROJECT_DIR$/dataset_show.html" />
         <option value="$PROJECT_DIR$/heur.html" />
-        <option value="$PROJECT_DIR$/js/buttons.js" />
+        <option value="$PROJECT_DIR$/js/arrows.js" />
         <option value="$PROJECT_DIR$/js/main.js" />
+        <option value="$PROJECT_DIR$/js/buttons.js" />
       </list>
     </option>
   </component>
@@ -305,16 +344,30 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HTML5Boilerplate" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ATonline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bower_components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/evo/Documents/Workspaces/WebStorm/ATonline/dataset_show.html&#10;8px&#9;null&#9;null" />
     <property name="FullScreen" value="true" />
@@ -338,7 +391,10 @@
       <recent name="$PROJECT_DIR$/js/vendor" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Node.js.analysis.js">
+    <configuration default="false" name="analysis.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="/usr/local/bin/node" path-to-js-file="analysis.js" working-dir="$PROJECT_DIR$/js">
+      <method />
+    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
@@ -377,6 +433,14 @@
       <envs />
       <method />
     </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Node.js.analysis.js" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Node.js.analysis.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
@@ -389,31 +453,38 @@
       <option name="number" value="Default" />
       <updated>1441987810501</updated>
     </task>
+    <task id="LOCAL-00001" summary="- private / public entries&#10;- save / publish / remove entries&#10;- choose different dataset for public heuristic">
+      <created>1449500485690</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1449500485690</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32846716" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32719547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21366164" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39943343" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32868218" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3243626" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -431,9 +502,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21366164" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -453,24 +524,88 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="16" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/api/jquery.evoapp-services.js">
+    <entry file="file://$PROJECT_DIR$/heur.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="286" column="72" selection-start-line="286" selection-start-column="37" selection-end-line="286" selection-end-column="72" />
-          <folding />
+          <caret line="306" column="509" selection-start-line="306" selection-start-column="509" selection-end-line="306" selection-end-column="509" />
+          <folding>
+            <element signature="n#style#0;n#svg#0;n#div#1;n#div#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#svg#0;n#div#1;n#div#0;n#li#0;n#ul#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="149" column="43" selection-start-line="149" selection-start-column="43" selection-end-line="149" selection-end-column="43" />
-          <folding />
+          <caret line="1582" column="96" selection-start-line="1582" selection-start-column="96" selection-end-line="1582" selection-end-column="96" />
+          <folding>
+            <element signature="n#!!block;n#ConvertDataset#0" expanded="false" />
+            <element signature="n#!!block;n#ShowTable#0" expanded="false" />
+            <element signature="n#!!block;n#GetCueMapping#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateCueMapping#0" expanded="false" />
+            <element signature="n#!!block;n#ConvertToBinary#0" expanded="false" />
+            <element signature="n#!!block;n#MoveAllCuesToArea#0" expanded="false" />
+            <element signature="n#!!block;n#GetHeuristicStructure#0" expanded="false" />
+            <element signature="n#!!block;n#GetValidities#0" expanded="false" />
+            <element signature="n#!!block;n#OrderCuesByValidities#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateExitBranches#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateScope#0" expanded="false" />
+            <element signature="e#19824#20096#0" expanded="false" />
+            <element signature="e#20144#20416#0" expanded="false" />
+            <element signature="e#20464#20736#0" expanded="false" />
+            <element signature="e#20782#21041#0" expanded="false" />
+            <element signature="e#21096#21543#0" expanded="false" />
+            <element signature="e#23186#23987#0" expanded="false" />
+            <element signature="e#24113#24928#0" expanded="false" />
+            <element signature="e#25136#29547#0" expanded="false" />
+            <element signature="e#29704#31150#0" expanded="false" />
+            <element signature="e#31323#33280#0" expanded="false" />
+            <element signature="e#33431#35520#0" expanded="false" />
+            <element signature="e#35641#36853#0" expanded="false" />
+            <element signature="e#36974#38085#0" expanded="false" />
+            <element signature="e#38231#39698#0" expanded="false" />
+            <element signature="e#39850#54362#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/buttons.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="650" column="7" selection-start-line="650" selection-start-column="7" selection-end-line="650" selection-end-column="7" />
+          <folding>
+            <element signature="n#!!block;n#ButtonsExpand#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonExpandAll#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonsShuffle#0" expanded="false" />
+            <element signature="n#!!block;n#ShuffleArray#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonSwitchExit#0" expanded="false" />
+            <element signature="n#!!block;n#SplitValueSliderChangeSwap#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonsStatistics#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonDatasetStepInfo#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonSaveHeuristic#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonChooseDataset#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonRemoveHeuristic#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonClone#0" expanded="false" />
+            <element signature="e#24760#26047#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonSaveDataset#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonRemoveDataset#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/arrows.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="349" column="29" selection-start-line="349" selection-start-column="29" selection-end-line="349" selection-end-column="29" />
+          <folding>
+            <marker date="1452023095000" expanded="true" signature="13239:13600" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -492,7 +627,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="149" column="43" selection-start-line="149" selection-start-column="43" selection-end-line="149" selection-end-column="43" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#ConvertDataset#0" expanded="false" />
+            <element signature="n#!!block;n#ShowTable#0" expanded="false" />
+            <element signature="n#!!block;n#GetCueMapping#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateCueMapping#0" expanded="false" />
+            <element signature="n#!!block;n#ConvertToBinary#0" expanded="false" />
+            <element signature="n#!!block;n#MoveAllCuesToArea#0" expanded="false" />
+            <element signature="n#!!block;n#GetHeuristicStructure#0" expanded="false" />
+            <element signature="n#!!block;n#GetValidities#0" expanded="false" />
+            <element signature="n#!!block;n#OrderCuesByValidities#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateExitBranches#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateScope#0" expanded="false" />
+            <element signature="e#19824#20096#0" expanded="false" />
+            <element signature="e#20144#20416#0" expanded="false" />
+            <element signature="e#20464#20736#0" expanded="false" />
+            <element signature="e#20782#21041#0" expanded="false" />
+            <element signature="e#21096#21543#0" expanded="false" />
+            <element signature="e#23186#23987#0" expanded="false" />
+            <element signature="e#24113#24928#0" expanded="false" />
+            <element signature="e#25136#29547#0" expanded="false" />
+            <element signature="e#29704#31150#0" expanded="false" />
+            <element signature="e#31323#33280#0" expanded="false" />
+            <element signature="e#33431#35520#0" expanded="false" />
+            <element signature="e#35641#36853#0" expanded="false" />
+            <element signature="e#36974#38085#0" expanded="false" />
+            <element signature="e#38231#39698#0" expanded="false" />
+            <element signature="e#39850#54362#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -514,7 +676,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#ConvertDataset#0" expanded="false" />
+            <element signature="n#!!block;n#ShowTable#0" expanded="false" />
+            <element signature="n#!!block;n#GetCueMapping#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateCueMapping#0" expanded="false" />
+            <element signature="n#!!block;n#ConvertToBinary#0" expanded="false" />
+            <element signature="n#!!block;n#MoveAllCuesToArea#0" expanded="false" />
+            <element signature="n#!!block;n#GetHeuristicStructure#0" expanded="false" />
+            <element signature="n#!!block;n#GetValidities#0" expanded="false" />
+            <element signature="n#!!block;n#OrderCuesByValidities#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateExitBranches#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateScope#0" expanded="false" />
+            <element signature="e#19824#20096#0" expanded="false" />
+            <element signature="e#20144#20416#0" expanded="false" />
+            <element signature="e#20464#20736#0" expanded="false" />
+            <element signature="e#20782#21041#0" expanded="false" />
+            <element signature="e#21096#21543#0" expanded="false" />
+            <element signature="e#23186#23987#0" expanded="false" />
+            <element signature="e#24113#24928#0" expanded="false" />
+            <element signature="e#25136#29547#0" expanded="false" />
+            <element signature="e#29704#31150#0" expanded="false" />
+            <element signature="e#31323#33280#0" expanded="false" />
+            <element signature="e#33431#35520#0" expanded="false" />
+            <element signature="e#35641#36853#0" expanded="false" />
+            <element signature="e#36974#38085#0" expanded="false" />
+            <element signature="e#38231#39698#0" expanded="false" />
+            <element signature="e#39850#54362#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -563,13 +752,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/vendor/jquery-ui-1.11.4.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/webstorm.jar!/resources/html5-schema/html5/block.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
@@ -598,45 +780,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ttb.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.583333">
-          <caret line="116" column="10" selection-start-line="116" selection-start-column="10" selection-end-line="116" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mini.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.5">
-          <caret line="30" column="26" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/json/heuristics_info.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33858266">
           <caret line="28" column="32" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tall.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.007874">
-          <caret line="67" column="25" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/weta.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6720588">
-          <caret line="81" column="35" selection-start-line="81" selection-start-column="35" selection-end-line="81" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tree.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19705883">
-          <caret line="71" column="35" selection-start-line="71" selection-start-column="35" selection-end-line="71" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -724,119 +871,175 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/api/evoapp.services.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="31" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/api/jquery.evoapp-services.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="286" column="72" selection-start-line="286" selection-start-column="37" selection-end-line="286" selection-end-column="72" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/ttb_algorithm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3761062">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/arrows.js">
+    <entry file="file://$PROJECT_DIR$/bower_components/angular-ui-sortable/sortable.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding>
-            <marker date="1448916481000" expanded="true" signature="13560:13921" placeholder="..." />
-            <marker date="1448916481000" expanded="true" signature="19281:19497" placeholder="..." />
-            <marker date="1448916481000" expanded="true" signature="19363:19491" placeholder="..." />
-            <marker date="1448916481000" expanded="true" signature="20005:20220" placeholder="..." />
-            <marker date="1448916481000" expanded="true" signature="20086:20214" placeholder="..." />
-            <marker date="1448916481000" expanded="true" signature="20441:20524" placeholder="..." />
-            <marker date="1448916481000" expanded="true" signature="20598:20627" placeholder="..." />
-            <marker date="1448916481000" expanded="true" signature="22605:22642" placeholder="..." />
-            <marker date="1448916481000" expanded="true" signature="22771:22800" placeholder="..." />
-          </folding>
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/heuristic_list.html">
+    <entry file="file://$PROJECT_DIR$/bower_components/angular-ui-sortable/sortable.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.25">
-          <caret line="46" column="69" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="69" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/toolbox.html">
+    <entry file="file://$PROJECT_DIR$/bower_components/angular/angular.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8715596">
-          <caret line="70" column="12" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/TreeStatistics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.9454278">
+          <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5504587">
-          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="84" column="90" selection-start-line="84" selection-start-column="90" selection-end-line="84" selection-end-column="90" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataset_list.html">
+    <entry file="file://$PROJECT_DIR$/js/analysis.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.5">
-          <caret line="46" column="69" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="69" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="228" column="54" selection-start-line="228" selection-start-column="52" selection-end-line="228" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_show.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.375">
+          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/toolbox.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.5">
+          <caret line="12" column="48" selection-start-line="12" selection-start-column="48" selection-end-line="12" selection-end-column="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="150" column="4" selection-start-line="150" selection-start-column="4" selection-end-line="150" selection-end-column="4" />
+          <caret line="365" column="23" selection-start-line="365" selection-start-column="23" selection-end-line="365" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataset_show.html">
+    <entry file="file://$PROJECT_DIR$/js/api/evoapp.services.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-20.0">
-          <caret line="41" column="66" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="66" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="31" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/heuristic_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/heur.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5">
-          <caret line="21" column="81" selection-start-line="21" selection-start-column="73" selection-end-line="21" selection-end-column="81" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="114" column="73" selection-start-line="114" selection-start-column="73" selection-end-line="114" selection-end-column="73" />
           <folding>
-            <element signature="n#style#0;n#div#1;n#li#0;n#ul#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#li#1;n#ul#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#svg#0;n#div#1;n#div#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#svg#0;n#div#1;n#div#0;n#li#0;n#ul#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/arrows.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="465" column="34" selection-start-line="465" selection-start-column="34" selection-end-line="465" selection-end-column="34" />
+          <folding>
+            <marker date="1452023095000" expanded="true" signature="13239:13600" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="443" column="89" selection-start-line="443" selection-start-column="89" selection-end-line="443" selection-end-column="89" />
+          <folding>
+            <element signature="n#!!block;n#ConvertDataset#0" expanded="false" />
+            <element signature="n#!!block;n#ShowTable#0" expanded="false" />
+            <element signature="n#!!block;n#GetCueMapping#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateCueMapping#0" expanded="false" />
+            <element signature="n#!!block;n#ConvertToBinary#0" expanded="false" />
+            <element signature="n#!!block;n#MoveAllCuesToArea#0" expanded="false" />
+            <element signature="n#!!block;n#GetHeuristicStructure#0" expanded="false" />
+            <element signature="n#!!block;n#GetValidities#0" expanded="false" />
+            <element signature="n#!!block;n#OrderCuesByValidities#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateExitBranches#0" expanded="false" />
+            <element signature="n#!!block;n#UpdateScope#0" expanded="false" />
+            <element signature="e#19824#20096#0" expanded="false" />
+            <element signature="e#20144#20416#0" expanded="false" />
+            <element signature="e#20464#20736#0" expanded="false" />
+            <element signature="e#20782#21041#0" expanded="false" />
+            <element signature="e#21096#21543#0" expanded="false" />
+            <element signature="e#23186#23987#0" expanded="false" />
+            <element signature="e#24113#24928#0" expanded="false" />
+            <element signature="e#25136#29547#0" expanded="false" />
+            <element signature="e#29704#31150#0" expanded="false" />
+            <element signature="e#31323#33280#0" expanded="false" />
+            <element signature="e#33431#35520#0" expanded="false" />
+            <element signature="e#35641#36853#0" expanded="false" />
+            <element signature="e#36974#38085#0" expanded="false" />
+            <element signature="e#38231#39698#0" expanded="false" />
+            <element signature="e#39850#54362#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/buttons.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.666667">
-          <caret line="293" column="53" selection-start-line="293" selection-start-column="53" selection-end-line="293" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.84513277">
-          <caret line="1376" column="87" selection-start-line="1376" selection-start-column="87" selection-end-line="1376" selection-end-column="87" />
-          <folding />
+        <state vertical-scroll-proportion="0.5442478">
+          <caret line="542" column="43" selection-start-line="542" selection-start-column="43" selection-end-line="542" selection-end-column="43" />
+          <folding>
+            <element signature="n#!!block;n#ButtonsExpand#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonExpandAll#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonsShuffle#0" expanded="false" />
+            <element signature="n#!!block;n#ShuffleArray#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonSwitchExit#0" expanded="false" />
+            <element signature="n#!!block;n#SplitValueSliderChangeSwap#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonsStatistics#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonDatasetStepInfo#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonSaveHeuristic#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonChooseDataset#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonRemoveHeuristic#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonClone#0" expanded="false" />
+            <element signature="e#24760#26047#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonSaveDataset#0" expanded="false" />
+            <element signature="n#!!block;n#ButtonRemoveDataset#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

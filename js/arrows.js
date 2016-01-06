@@ -6,7 +6,7 @@
  UNIVERSAL - for all ffts and heuristics
  *****************************/
 
-function RestoreCuesArrowsAndExits(myHeuristicName, myHeuristicStructure) {
+function RestoreCuesArrowsAndExits(myHeuristicName, myTreeArray) {
 
     // select text, depending on the heuristic
     switch (myHeuristicName) {
@@ -32,10 +32,7 @@ function RestoreCuesArrowsAndExits(myHeuristicName, myHeuristicStructure) {
             break;
     }
 
-    // get the last cue
-    //var myLastCueId = $(myHeuristicStructure).get(-1).CueName;
-
-    myHeuristicStructure.forEach(function (myCueObj, myIndex) {
+    myTreeArray.forEach(function (myCueObj, myIndex) {
 
         var myCueId = myCueObj.CueName;
 
@@ -49,7 +46,9 @@ function RestoreCuesArrowsAndExits(myHeuristicName, myHeuristicStructure) {
             // move cue to tree
             $('#' +myCueId).appendTo($('#tree'));
 
-            switch (myCueObj.BranchNo +'|'+ myCueObj.BranchYes) {
+            UpdateArrowsAndExits(myHeuristicName, myTreeArray);
+
+            /*switch (myCueObj.BranchNo +'|'+ myCueObj.BranchYes) {
 
                 case 'exit|continue':
 
@@ -87,11 +86,11 @@ function RestoreCuesArrowsAndExits(myHeuristicName, myHeuristicStructure) {
                     DrawArrowToNextCue(myCueId, myNoText);
 
                     break;
-            }
+            }*/
         }
 
         // do for the last cue
-        if (myIndex == myHeuristicStructure.length-1) {
+        /*if (myIndex == myTreeArray.length-1) {
 
             switch (myHeuristicName) {
 
@@ -123,113 +122,135 @@ function RestoreCuesArrowsAndExits(myHeuristicName, myHeuristicStructure) {
 
                     break;
             }
-        }
+        }*/
     });
 }
 
-function UpdateArrowsAndExits(myHeuristicName, myListId) {
+function UpdateArrowsAndExits(myHeuristicName, myTreeArray) {
+    console.log('Updating arrows and exits...');
 
-    // if it's criterion_place or cues_list
-    if (myListId != 'tree') {
-        // remove all exits and arrows
-        $('#'+myListId).find('.arrows_exits').empty();
+    // select text, depending on the heuristic
+    switch (myHeuristicName) {
 
-    } else {  // if the list is a tree
+        case 'Fast-and-Frugal Tree':
 
-        // get the array of cues in the tree, "sortable" may be disabled ($('#tree').sortable('toArray') doesn't work)
-        var myTreeArray = GetElementsArray(myListId, 'widget');
+            var myNoText = 'no';
+            var myYesText = 'yes';
+            break;
 
-        // get the last cue
-        var myLastCueId = $(myTreeArray).get(-1);
+        case 'Take The Best':
+        case "Minimalist":
 
-        myTreeArray.forEach(function (myCueId) {
+            var myNoText = 'equal';
+            var myYesText = 'different';
+            break;
 
-            // do for all cues, depending on the heuristic
+        case "Tallying":
+        case "Weighted Tallying":
+
+            var myNoText = '';
+            var myYesText = '';
+            break;
+    }
+
+    myTreeArray.forEach(function (myCueObj, myIndex) {
+
+        //console.log(myCueObj);
+        //debugger;
+
+        var myCueId = myCueObj.CueName;
+
+        switch (myCueObj.BranchNo +'|'+ myCueObj.BranchYes) {
+
+            case 'exit|continue':
+
+                // add EXIT node to left
+                AddExitNode(myCueId, 'exit_left', myNoText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+
+                // draw ARROW to next cue
+                DrawArrowToNextCue(myCueId, myYesText);
+
+                break;
+
+            case 'continue|exit':
+
+                // add EXIT node to right
+                AddExitNode(myCueId, 'exit_right', myYesText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+
+                // draw ARROW to next cue
+                DrawArrowToNextCue(myCueId, myNoText);
+
+                break;
+
+            case 'exit|exit':
+
+                // add EXIT node to right
+                AddExitNode(myCueId, 'exit_right', myYesText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+
+                // add second EXIT node to left
+                //AddExitNode(myCueId, 'second', myNoText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+
+                break;
+
+            case 'continue|continue':
+
+                // draw ARROW to next cue
+                DrawArrowToNextCue(myCueId, myNoText);
+
+                break;
+        }
+
+        // do for the last cue
+        if (myIndex == myTreeArray.length-1) {
+
             switch (myHeuristicName) {
 
                 case 'Fast-and-Frugal Tree':
 
+                    // add EXIT node to left
+                    AddExitNode(myCueId, 'exit_left', myNoText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+
                     // add EXIT node to right
-                    AddExitNode(myCueId, 'exit_right', 'yes', 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+                    AddExitNode(myCueId, 'second', myYesText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
 
-                    // do for each cue in the tree, except the last cue
-                    if (myCueId != myLastCueId) {
 
-                        // draw ARROW to next cue
-                        DrawArrowToNextCue(myCueId, 'no');
-
-                    // do for the last cue
-                    } else {
-                        // add EXIT node to right
-                        AddExitNode(myCueId, 'second', 'no', 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
-
-                        // remove ARROW to next cue
-                        $('#'+myCueId+' .cue_arrow').remove();
-                    }
-
-                    // activate the EXIT switch button
-                    //ButtonSwitchExit(myCueId);  // activate the switch button
+                    // remove arrow to the next cue
+                    $('#'+myCueId+' .cue_arrow').remove();
 
                     break;
 
                 case 'Take The Best':
                 case "Minimalist":
 
-                    // add EXIT node to right
-                    AddExitNode(myCueId, 'exit_right', 'different', 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
-
                     // draw ARROW to next cue
-                    DrawArrowToNextCue(myCueId, 'equal');
+                    DrawArrowToNextCue(myCueId, myNoText);
 
+                    // add EXIT node to down
+                    AddExitNode(myCueId,'exit_down','equal','guess'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+
+                    // remove all buttons switch EXIT
+                    $('.button_switch').remove();
                     break;
 
                 case "Tallying":
                 case "Weighted Tallying":
 
                     // draw ARROW to next cue
-                    DrawArrowToNextCue(myCueId, '');
+                    DrawArrowToNextCue(myCueId, myNoText);
+
+                    // remove EXIT node to the right
+                    $('#'+myCueId+' .exit_right').remove();
+
+                    // add EXIT node to down
+                    AddExitNode(myCueId,'exit_down','','decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+
+                    // remove all buttons switch EXIT
+                    //$('.button_switch').remove();
 
                     break;
             }
-
-            // do only for the LAST cue
-            if (myCueId == myLastCueId) {
-
-                switch (myHeuristicName) {
-
-                    case 'Fast And Frugal Tree':
-
-                        // add the second EXIT node
-                        AddExitNode(myCueId,'second','second','decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
-
-                        // remove ARROW to next cue
-                        //RemoveElement(myCueId,'cue_arrow');
-                        $('#'+myCueId+' .cue_arrow').remove();
-
-                        break;
-
-                    case 'Take The Best':
-                    case "Minimalist":
-
-                        // add EXIT node to down
-                        AddExitNode(myCueId,'exit_down','equal','guess'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
-
-                        break;
-
-                    case "Tallying":
-                    case "Weighted Tallying":
-
-                        // add EXIT node to the right
-                        AddExitNode(myCueId,'exit_right','different','decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
-
-                        // add EXIT node to down
-                        AddExitNode(myCueId,'exit_down','equal','guess'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
-
-                        break;
-                }
-            }
-        });
-    }
+        }
+    });
 }
 function GetElementsArray(myListId, myElementClass) {
     var myWidgetsArray = new Array();
@@ -248,11 +269,11 @@ function AddExitNode(myCueId, myExitClass, myExitArrowText, myExitTitle) {
         switch (myExitsArray[0]) {
             case 'exit_left':
                 myExitClass = 'exit_right';
-                myExitArrowText = 'yes';
+                //myExitArrowText = 'yes';
                 break;
             case 'exit_right':
                 myExitClass = 'exit_left';
-                myExitArrowText = 'no';
+                //myExitArrowText = 'no';
                 break;
         }
         // remember that the second node is needed
@@ -264,30 +285,30 @@ function AddExitNode(myCueId, myExitClass, myExitArrowText, myExitTitle) {
 
         case 'exit_left':
             var myArrowHtml =   '<line x1="0" y1="45" x2="45" y2="0"/>'+
-                                '<line x1="1" y1="25" x2="1" y2="44"/>'+
-                                '<line x1="1" y1="44" x2="20" y2="44"/>'+
-                                '<text text-anchor="middle" x="22" y="25"'+
-                                'font-size="10px" stroke-width="1" stroke="none"'+
-                                'fill="black">'+ myExitArrowText +'</text>';
+                '<line x1="1" y1="25" x2="1" y2="44"/>'+
+                '<line x1="1" y1="44" x2="20" y2="44"/>'+
+                '<text text-anchor="middle" x="22" y="25"'+
+                'font-size="10px" stroke-width="1" stroke="none"'+
+                'fill="black">'+ myExitArrowText +'</text>';
             var myIconHtml =  '<div title="Switch EXIT Direction">'+
-                                '<svg class="button_controls button_switch switch_to_right" height="20" width="20">'+
-                                    '<polyline class="right" points="7 3,14 10,7 17"/>'+
-                                '</svg>'+
-                              '</div>';
+                '<svg class="button_controls button_switch switch_to_right" height="20" width="20">'+
+                '<polyline class="right" points="7 3,14 10,7 17"/>'+
+                '</svg>'+
+                '</div>';
             break;
 
         case 'exit_right':
             var myArrowHtml =   '<line x1="0" y1="0" x2="45" y2="45"/>'+
-                                '<line x1="44" y1="25" x2="44" y2="44"/>'+
-                                '<line x1="25" y1="44" x2="44" y2="44"/>'+
-                                '<text text-anchor="middle" x="22" y="25"'+
-                                'font-size="10px" stroke-width="1" stroke="none"'+
-                                'fill="black">'+ myExitArrowText +'</text>';
+                '<line x1="44" y1="25" x2="44" y2="44"/>'+
+                '<line x1="25" y1="44" x2="44" y2="44"/>'+
+                '<text text-anchor="middle" x="22" y="25"'+
+                'font-size="10px" stroke-width="1" stroke="none"'+
+                'fill="black">'+ myExitArrowText +'</text>';
             var myIconHtml =  '<div title="Switch EXIT Direction">'+
-                                '<svg class="button_controls button_switch switch_to_left" height="20" width="20">'+
-                                    '<polyline class="left" points="13 3,6 10,13 17"/>'+
-                                '</svg>'+
-                              '</div>';
+                '<svg class="button_controls button_switch switch_to_left" height="20" width="20">'+
+                '<polyline class="left" points="13 3,6 10,13 17"/>'+
+                '</svg>'+
+                '</div>';
             break;
 
         case 'exit_down':
@@ -298,13 +319,9 @@ function AddExitNode(myCueId, myExitClass, myExitArrowText, myExitTitle) {
             break;
     }
 
-    var myExitNode =  '<li id="'+myExitClass+'" class="'+myExitClass+' exit_widget unsortable">'+
-                        myIconHtml+
-                        '<div class="exit_widget_title"><span>'+myExitTitle+'</span></div>'+
-                        '<svg class="exit_arrow" height="45" width="45">'+
-                        myArrowHtml+
-                        '</svg>'+
-                      '</li>';
+    var myExitNode =  '<li id="'+myExitClass+'" class="'+myExitClass+' exit_widget unsortable">'+ myIconHtml+
+        '<div class="exit_widget_title"><span>'+myExitTitle+'</span></div>'+
+        '<svg class="exit_arrow" height="45" width="45">'+myArrowHtml+'</svg></li>';
 
     // depending on how many EXITs are already
     switch(myExitsArray.length) {
@@ -332,7 +349,7 @@ function AddExitNode(myCueId, myExitClass, myExitArrowText, myExitTitle) {
                 // two nodes exist, do nothing
             } else {
                 // remove one exit node
-                $('#'+myCueId+' .'+myExitsArray[1]).remove();
+                $('#'+myCueId+' .exit_left').remove();
             }
             break;
     }
@@ -401,7 +418,7 @@ function DrawArrowToNextCue (myCueId, myArrowText) {
 
 function UpdateValidityTags(myHeuristic, myListId, myValidities) {
 
-    // if it's criterion_place or cues_list
+    // if it's criterion_place or drag_cues_list
     if (myListId != 'tree') {
         // remove all exits and arrows
         $('#'+myListId).find('.widget_tags').empty();
@@ -443,10 +460,10 @@ function UpdateValidityTags(myHeuristic, myListId, myValidities) {
         myValidities.forEach(function(myCueObj, myIndex) {
 
             // add the html code
-            $(myHtml).hide().appendTo('#'+myCueObj.cueId+' .widget_tags').fadeIn(300);
+            $(myHtml).hide().appendTo('#'+myCueObj.CueName+' .widget_tags').fadeIn(300);
             // add the index
             var v = myCueObj.index + 1;
-            $('#'+myCueObj.cueId+' .widget_validity').html('v'+ v);
+            $('#'+myCueObj.CueName+' .widget_validity').html('v'+ v);
 
         })
 
@@ -454,272 +471,3 @@ function UpdateValidityTags(myHeuristic, myListId, myValidities) {
 }
 
 
-
-
-
-
-
-
-
-
-
-/* ****************************
- FAST AND FRUGAL TREE
- *****************************/
-
-function UpdateArrowsAndExitsFFT(myListId) {
-
-    if (myListId != 'tree') {
-        //console.log('its not tree!');
-        RemoveElement(myListId, 'exit_left');
-        RemoveElement(myListId, 'exit_right');
-        RemoveArrowToNextCue(myListId);
-    } else {
-
-        // get the last and ex-last cue
-        var myTreeArray = GetWidgetsArray(myListId);
-
-        var myLastCueId = $(myTreeArray).get(-1);                     // get the last cue
-
-        myTreeArray.forEach(function (myCueId) {
-
-            // do for each cue in the tree, except the last cue
-            if (myCueId != myLastCueId) {
-                // set only one EXIT node and draw ARROW to next cue
-                SetExitNodesAndArrows(myCueId, false);  //  SetExitNodesAndArrows(myCueId, isLastCueBool)
-
-                // do for the last cue
-            } else {
-                // add the second EXIT node
-                SetExitNodesAndArrows(myCueId, true);  //  SetExitNodesAndArrows(myCueId, isLastCueBool)
-            }
-        });
-    }
-}
-
-function SetExitNodesAndArrowsFFT(myCueId, isLastCueBool) {
-
-    // check if Exit nodes exist
-    var myExitLeftTest = $('#'+myCueId).find('.exit_left').length;
-    var myExitRightTest = $('#'+myCueId).find('.exit_right').length;
-
-    // check if Arrow to next cue exist
-    var myArrowToNextCueTest = $('#'+myCueId).find('.cue_arrow').length;
-    //console.log('myArrowToNextCue: '+myArrowToNextCue);
-
-
-    switch (isLastCueBool) {  // two exits for last cue, one for others
-        case false:    // not the last cue
-            if ((myExitLeftTest == 0) && (myExitRightTest == 0)) {       // no EXIT nodes
-                AddExitNode(myCueId, 'exit_right');        // add right EXIT node
-            } else if ((myExitLeftTest != 0) && (myExitRightTest != 0)) { // two EXIT nodes
-                RemoveElement(myCueId, 'exit_left');      // remove LEFT exit node
-            }
-            if (myArrowToNextCueTest == 0) {          // no arrow
-                DrawArrowToNextCue(myCueId, 'no')     // DrawArrowToNextCue(myCueId, myLabel)
-            }
-
-            break;
-        case true:     // last cue
-            if (myExitLeftTest == 0) {       // no left EXIT node
-                AddExitNode(myCueId, 'exit_left');        // add left EXIT node
-            }
-            if (myExitRightTest == 0) {       // no left EXIT node
-                AddExitNode(myCueId, 'exit_right');        // add right EXIT node
-            }
-            if (myArrowToNextCueTest != 0) {            // there is arrow to the next cue
-                RemoveArrowToNextCue(myCueId)     //   remove
-            }
-            break;
-    }
-}
-function AddExitNodeFFT(myCueId, myExitClass) {
-    //console.log('ADD EXIT NODE! '+myCueId+' '+myExitClass);
-
-    switch(myExitClass) {
-        case 'exit_left':
-            var myExitText = 'no';
-            var myArrowHtml =  '<line x1="0" y1="45" x2="45" y2="0"/> \
-                                <line x1="1" y1="25" x2="1" y2="44"/> \
-                                <line x1="1" y1="44" x2="20" y2="44"/> \
-                                <text x="15" y="25" font-size="10px" stroke-width="1" stroke="none" fill="black">'+myExitText+'</text>';
-            var myIconHtml =  '<div title="Switch EXIT Direction"><svg class="button_controls button_switch switch_to_right" height="20" width="20"> \
-                                    <polyline class="right" points="7 3,14 10,7 17"/> \
-                               </svg></div>';
-            break;
-        case 'exit_right':
-            var myExitText = 'yes';
-            var myArrowHtml =  '<line x1="0" y1="0" x2="45" y2="45"/> \
-                                <line x1="44" y1="25" x2="44" y2="44"/> \
-                                <line x1="25" y1="44" x2="44" y2="44"/> \
-                                <text x="17" y="25" font-size="10px" stroke-width="1" stroke="none" fill="black">'+myExitText+'</text>';
-            var myIconHtml =  '<div title="Switch EXIT Direction"><svg class="button_controls button_switch switch_to_left" height="20" width="20"> \
-                                    <polyline class="left" points="13 3,6 10,13 17"/> \
-                               </svg></div>';
-            break;
-    }
-
-    var exitNode =  '<li id="'+myExitClass+'" class="'+myExitClass+' exit_widget unsortable"> \
-                        '+myIconHtml+' \
-                        <div class="exit_widget_title"> \
-                            <span>DECIDE</span> \
-                        </div> \
-                        <svg class="exit_arrow" height="45" width="45"> \
-                          '+myArrowHtml+' \
-                        </svg> \
-                    </li>';
-    $(exitNode).hide().appendTo('#'+myCueId+' .exits').fadeIn(300);
-
-    // activate the EXIT switch button
-    ButtonSwitchExit(myCueId, myExitClass);  // activate the switch button
-}
-
-
-
-
-function SetExitNodesAndArrowsTTB(myCueId, isLastCueBool) {
-
-    // check if Exit nodes exist
-    //var myExitLeftTest = $('#'+myCueId).find('.exit_left').length;
-    //var myExitRightTest = $('#'+myCueId).find('.exit_right').length;
-
-    // check if Arrow to next cue exist
-    //var myArrowToNextCueTest = $('#'+myCueId).find('.cue_arrow').length;
-    //console.log('myArrowToNextCue: '+myArrowToNextCue);
-
-    AddExitNodeTTB(myCueId, 'exit_right', 'decide');        // AddExitNodeTTB(myCueId, myExitClass, myExitTitle)
-    DrawArrowToNextCue(myCueId, 'equal');     // DrawArrowToNextCue(myCueId, myLabel)
-
-    if (isLastCueBool == true) {
-        AddExitNodeTTB(myCueId, 'exit_down', 'guess');        // AddExitNodeTTB(myCueId, myExitClass, myExitTitle)
-    }
-}
-function AddExitNodeTTBCHECK(myCueId, myExitClass, myExitTitle) {
-    //console.log('ADD EXIT NODE! '+myCueId+' '+myExitClass);
-
-    switch(myExitClass) {
-
-        case 'exit_right':
-            var myArrowText = 'different';
-            var myArrowHtml =  '<line x1="0" y1="0" x2="45" y2="45"/> \
-                                <line x1="44" y1="25" x2="44" y2="44"/> \
-                                <line x1="25" y1="44" x2="44" y2="44"/> \
-                                <text text-anchor="middle" x="22" y="25" font-size="10px" stroke-width="1" stroke="none" fill="black">'+myArrowText+'</text>';
-            //var myExitTitle = 'decide';
-            break;
-        case 'exit_down':
-            var myArrowHtml =  '';
-            //var myExitTitle = 'guess';
-            break;
-    }
-
-    var exitNode =  '<li id="'+myExitClass+'" class="'+myExitClass+' exit_widget unsortable"> \
-                        <div class="exit_widget_title"> \
-                            <span>'+myExitTitle+'</span> \
-                        </div> \
-                        <svg class="exit_arrow" height="45" width="45"> \
-                          '+myArrowHtml+' \
-                        </svg> \
-                    </li>';
-    $(exitNode).hide().appendTo('#'+myCueId+' .exits').fadeIn(300);
-
-    // activate the EXIT switch button
-    //ButtonSwitchExit(myCueId, myExitClass);  // activate the switch button
-}
-
-
-
-
-/* ****************************
- WEIGHTED TALLYING
- *****************************/
-
-function ArrowsAndExitsWTCHECK(myListId) {
-
-    $('#tree').find('.exits').empty();
-
-    //remove all if there is any
-    RemoveElement(myListId, 'exit_left');
-    RemoveElement(myListId, 'exit_right');
-    RemoveElement(myListId, 'exit_down');
-    RemoveElement(myListId, 'widget_validity');
-    RemoveElement(myListId, 'widget_multiply');
-    RemoveElement(myListId, 'cue_arrow');
-
-    if (myListId == 'tree') {
-
-        // get the array of cues in the tree, "sortable" is disabled ($('#tree').sortable('toArray') doesn't work)
-        var myTreeArray = GetWidgetsArray(myListId);
-
-        // get the last cue
-        var myLastCueId = $(myTreeArray).get(-1);
-
-        myTreeArray.forEach(function (myCueId) {
-
-            // do for each cue in the tree, except the last cue
-            if (myCueId != myLastCueId) {
-                // draw ARROW to next cue
-                DrawArrowToNextCue(myCueId, '');
-
-                // do for the last cue
-            } else {
-
-                // add EXIT node to right
-                AddExitNodeTTB(myCueId, 'exit_right', 'decide');        // AddExitNodeTTB(myCueId, myExitClass, myExitTitle)
-
-                // draw ARROW to next cue
-                DrawArrowToNextCue(myCueId, 'equal');
-
-                // add the EXIT node down
-                AddExitNodeTTB(myCueId, 'exit_down', 'guess');        // AddExitNodeTTB(myCueId, myExitClass, myExitTitle)
-            }
-        });
-    }
-}
-
-/* ****************************
- WEIGHTED TALLYING
- *****************************/
-
-function ArrowsAndExitsTA(myListId) {
-
-    $('#tree').find('.exits').empty();
-
-    //remove all if there is any
-    RemoveElement(myListId, 'exit_left');
-    RemoveElement(myListId, 'exit_right');
-    RemoveElement(myListId, 'exit_down');
-    RemoveElement(myListId, 'widget_validity');
-    RemoveElement(myListId, 'widget_multiply');
-    RemoveElement(myListId, 'cue_arrow');
-
-    if (myListId == 'tree') {
-
-        // get the array of cues in the tree, "sortable" is disabled ($('#tree').sortable('toArray') doesn't work)
-        var myTreeArray = GetWidgetsArray(myListId);
-
-        // get the last cue
-        var myLastCueId = $(myTreeArray).get(-1);
-
-        myTreeArray.forEach(function (myCueId) {
-
-            // do for each cue in the tree, except the last cue
-            if (myCueId != myLastCueId) {
-                // draw ARROW to next cue
-                DrawArrowToNextCue(myCueId, '');
-
-            // do for the last cue
-            } else {
-
-                // add EXIT node to right
-                AddExitNodeTTB(myCueId, 'exit_right', 'decide');        // AddExitNodeTTB(myCueId, myExitClass, myExitTitle)
-
-                // draw ARROW to next cue
-                DrawArrowToNextCue(myCueId, 'equal');
-
-                // add the EXIT node down
-                AddExitNodeTTB(myCueId, 'exit_down', 'guess');        // AddExitNodeTTB(myCueId, myExitClass, myExitTitle)
-            }
-        });
-    }
-}
