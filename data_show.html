@@ -8,14 +8,14 @@
         <button id="save" class="button_grey">Save</button>
 
         <!--<a href="#/{{dataset_info.dataset_id}}/fft/1"><button id="create_fft" class="button_grey">Create FFT</button></a>-->
-        <a href="#/{{dataset_info.DatasetId}}/new_fft"><button id="create_fft" class="button_grey">Create FFT</button></a>
+        <a href="#/data/{{dataset_info.DatasetId}}/new_fft"><button id="create_fft" class="button_grey">Create FFT</button></a>
 
         <select id="apply_heuristic" class="button_grey" onChange="window.location.href=this.value">
             <option>Apply Heuristic:</option>
-            <option value="#/{{dataset_info.DatasetId}}/new_ttb">Take The Best</option>
-            <option value="#/{{dataset_info.DatasetId}}/new_mini">Minimalist</option>
-            <option value="#/{{dataset_info.DatasetId}}/new_tall">Tallying</option>
-            <option value="#/{{dataset_info.DatasetId}}/new_weta">Weighted Tallying</option>
+            <option value="#/data/{{dataset_info.DatasetId}}/new_ttb">Take The Best</option>
+            <option value="#/data/{{dataset_info.DatasetId}}/new_mini">Minimalist</option>
+            <option value="#/data/{{dataset_info.DatasetId}}/new_tall">Tallying</option>
+            <option value="#/data/{{dataset_info.DatasetId}}/new_weta">Weighted Tallying</option>
             </optgroup>
         </select>
 

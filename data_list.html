@@ -36,7 +36,7 @@
 
     <ul id ="view_tools" class="view-list">
         <li ng-repeat="entry in datasets | filter:query | orderBy:sortField:reverse" on-finish-render="ngRepeatFinished">
-            <a class="image inline" href="#/datasets/{{entry.DatasetId}}"><img ng-src="img/{{entry.Image}}" width="96" height="96"></a>
+            <a class="image inline" href="#/data/{{entry.DatasetId}}"><img ng-src="img/{{entry.Image}}" width="96" height="96"></a>
             <div id="titleblock_id" class="titleblock inline">
                 <h2 class="title">{{entry.Title}}</h2>
                 <h4><span class="date">{{entry.Date}}</span> by <span class="username">{{entry.UserName}}</span></h4>

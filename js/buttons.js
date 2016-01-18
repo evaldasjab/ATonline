@@ -180,7 +180,7 @@ function ButtonSwitchExit(myCueId, myExitClass) {
             scope.drag_tree[myIndex] = myCueObj;
 
             // update statistics
-            var myAnalysis = AnalyzeDataset(scope.dataset_binary, scope.drag_criterion[0].CueName, scope.drag_tree);
+            var myAnalysis = AnalyzeDataset(scope.heuristic_name, scope.dataset_binary, scope.drag_criterion[0].CueName, scope.drag_tree);
             //console.log(myAnalysis);
             scope.general_stats = myAnalysis.general_stats;
             scope.drag_tree = myAnalysis.cues_stats;
@@ -258,35 +258,47 @@ function SplitValueSliderChangeSwap(myCuesList) {
 function UpdateScopeModels() {
 
     var scope = angular.element(document.querySelector('#ng_territory')).scope();
-    scope.$apply(function () {
 
-        // merge drag lists for cue mapping update
-        var myDragListsArray = $.merge([], scope.drag_cues_list);  // make copy of cues list array
-        $.merge( myDragListsArray, scope.drag_tree );  // add tree array
-        $.merge( myDragListsArray, scope.drag_criterion );  // add criterion array
+    if(!scope.$$phase) {     // bug workaround FIX THIS!!!
+        scope.$apply(function () {
 
-        // update cue mapping
-        scope.heuristic_info.CueMapping = UpdateCueMapping(scope.heuristic_info.CueMapping, myDragListsArray);
+            // merge drag lists for cue mapping update
+            var myDragListsArray = $.merge([], scope.drag_cues_list);  // make copy of cues list array
+            $.merge(myDragListsArray, scope.drag_tree);  // add tree array
+            $.merge(myDragListsArray, scope.drag_criterion);  // add criterion array
 
-        // update the dataset
-        scope.dataset_binary = ConvertToBinary(scope.dataset_full, scope.dataset_original, scope.heuristic_info.CueMapping);
+            // update cue mapping
+            scope.heuristic_info.CueMapping = UpdateCueMapping(scope.heuristic_info.CueMapping, myDragListsArray);
 
-        // if criterion is already selected
-        if (scope.drag_criterion.length >0) {
-            // analyse every cue in cues_list as one-cue-tree
-            scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
-                var myAnalysis = AnalyzeDataset(scope.dataset_binary, scope.drag_criterion[0].CueName, [myCueObj]);
-                scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
-            });
+            // update the dataset
+            scope.dataset_binary = ConvertToBinary(scope.dataset_original, scope.heuristic_info.CueMapping);
+            scope.dataset_sorted = scope.dataset_binary;
 
-            // update statistics
-            var myAnalysis = AnalyzeDataset(scope.dataset_binary, scope.drag_criterion[0].CueName, scope.drag_tree);
-            //console.log(myAnalysis);
-            scope.general_stats = myAnalysis.general_stats;
-            scope.drag_tree = myAnalysis.cues_stats;
-        }
+            // bug workaround FIX THIS!!!
+            if (scope.heuristic_name != 'Fast-and-Frugal Tree') {
+                // get binary dataset except criterion
+                scope.dataset_binary_exceptcriterion = ConvertToBinaryExceptCriterion(scope.dataset_original, scope.heuristic_info.CueMapping, scope.drag_criterion[0].CueName);
+                // sort by criterion
+                scope.dataset_sorted = SortByCriterion(scope.dataset_binary_exceptcriterion, scope.drag_criterion[0].CueName);
+            }
 
-    });
+            // if criterion is already selected
+            if (scope.drag_criterion.length > 0) {
+                // analyse every cue in cues_list as one-cue-tree
+                scope.drag_cues_list.forEach(function (myCueObj, myIndex) {
+                    var myAnalysis = AnalyzeDataset(scope.heuristic_name, scope.dataset_sorted, scope.drag_criterion[0].CueName, [myCueObj]);
+                    scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
+                });
+
+                // update statistics
+                var myAnalysis = AnalyzeDataset(scope.heuristic_name, scope.dataset_sorted, scope.drag_criterion[0].CueName, scope.drag_tree);
+                //console.log(myAnalysis);
+                scope.general_stats = myAnalysis.general_stats;
+                scope.drag_tree = myAnalysis.cues_stats;
+            }
+
+        });
+    }
 }
 
 function ButtonsStatistics(myCuesList) {
@@ -323,7 +335,7 @@ function ButtonDatasetStepInfo() {
 
     // hide by default
     //.hide();
-    $('#dataset_container').delay(800).slideUp();  //.fadeIn(400)
+    //$('#dataset_container').delay(800).slideUp();  //.fadeIn(400)  DISABLE WHEN TESTING!
 
     $('#button_stepinfo').mouseup(function (e) {
         console.log('STEPINFO BUTTON!');
@@ -434,9 +446,9 @@ function ButtonSaveHeuristic() {
                 myCueMapping.push(myCueMapObj);
             });
 
-            console.log(myCueMapping);
+            /*console.log(myCueMapping);
             console.log(scope.heuristic_info.CueMapping);
-            debugger;
+            debugger;*/
 
             // merge the lists for heuristic structure
             //var myHeuristicStructure = $.merge([], myCritArray);  // make copy of criterion array
@@ -471,7 +483,7 @@ function ButtonSaveHeuristic() {
                         //scope.heuristic_info = response;
 
                         // go to page heuristics/heuristic_id
-                        document.location.href = '/HTML5Boilerplate/index.html#/heuristics/'+scope.heuristic_id; // FIX THIS!!!
+                        document.location.href = '/ato/index.html#/heur/'+scope.heuristic_id; // FIX THIS!!!
 
                     }).error(function (data, status, headers, config) {
                         console.log('AJAX POST FAIL');
@@ -525,7 +537,7 @@ function ButtonPublishHeuristic() {
             scope.heuristic_info.Access = 'public';
 
             // remove CueMapping, otherwise the server gives an error
-            var myHeuristicInfo = $.merge([], scope.heuristic_info);  // make DEEP copy
+            var myHeuristicInfo = $.extend(true, [], scope.heuristic_info);  // make DEEP copy
             delete myHeuristicInfo.CueMapping;
             delete myHeuristicInfo.HeuristicStructure;
 
@@ -552,14 +564,14 @@ function ButtonChooseDataset(myHeurId) {
         e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
 
         // go to page heuristics/heuristic_id/choose_data
-        document.location.href = '/HTML5Boilerplate/index.html#/heuristics/'+myHeurId+'/choose_data';
+        document.location.href = '/ato/index.html#/heur/'+myHeurId+'/choose_data';
 
         // connect to angular's scope
         /*var scope = angular.element(document.querySelector('#ng_territory')).scope();
         scope.$apply(function() {
 
             // go to page heuristics/heuristic_id/choose_data
-            document.location.href = '/HTML5Boilerplate/index.html#/heuristics/'+scope.heuristic_id+'/choose_data';
+            document.location.href = '/ato/index.html#/heur/'+scope.heuristic_id+'/choose_data';
         });*/
 
         return false;                                            // Return false, prevent default action
@@ -594,67 +606,6 @@ function ButtonRemoveHeuristic(myHeuristicId) {
     })
 }
 
-function ButtonClone() {
-
-    $('#clone').mouseup(function (e) {
-        console.log('CLONE BUTTON!');
-
-        e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
-
-        var printWindow = window.open(''),
-            html = $('html').clone(true, true);
-
-        printWindow.document.write("<!DOCTYPE html><html><head></head><body></body></html>");
-
-        $(printWindow.document).find('html').replaceWith(html);
-
-        return false;                                            // Return false, prevent default action
-    })
-}
-
-/*function ButtonUpload(){
-
-    $('#button_upload_csv_file').mouseup(function (e) {
-        // get the file
-        document.getElementById('csv-file').click();
-    });
-
-    $("#csv-file").change(HandleFileSelect);
-
-}
-function HandleFileSelect(evt) {
-
-    // activate select data buttons
-    //buttonsAllcasesTrainingTesting();
-
-    var myFile = evt.target.files[0];
-
-    Papa.parse(myFile, {
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-            console.log('UPLOADED CSV FILE:');
-            console.log(results);
-
-            // go to page dataset_show
-            document.location.href = '/HTML5Boilerplate/index.html#/new_dataset'; // FIX THIS!!!
-
-            // put the dataset to scope
-            UpdateScope('dataset_full', results.data);
-
-            // connect to angular's scope
-            //var scope = angular.element(document.querySelector('#ng_territory')).scope();
-            //scope.$apply(function (sharedProperties) {
-            //    sharedProperties.setShared(results.data);
-            //});
-        }
-    });
-    // mark the button as selected
-    //$('#button_upload_csv_file').toggleClass('button_on', true);
-    //$('#button_load_csv_sample').toggleClass('button_on', false);
-}*/ //ButtonUpload()
-
 function ButtonSaveDataset() {
 
     $('#save').mouseup(function (e) {
@@ -666,17 +617,19 @@ function ButtonSaveDataset() {
         var scope = angular.element(document.querySelector('#ng_territory')).scope();
         scope.$apply(function() {
 
+            console.log('scope:');
+            console.log(scope);
+
             // update the date
             scope.dataset_info.Date = new Date();
 
             // get dataset info from scope
             var myObj = scope.dataset_info;
+            var myDataInfo = scope.dataset_info;
+            var myDataFull = scope.dataset_info.DatasetFull;
 
-            console.log('myObj for PUT or POST:');
-            console.log(myObj);
-
-            console.log('scope:');
-            console.log(scope);
+            delete myDataInfo.CueMapping;
+            //delete myDataInfo.DatasetFull;
 
             // check if this dataset already was saved on server before
             var myDatasetId = scope.dataset_id;
@@ -684,37 +637,37 @@ function ButtonSaveDataset() {
             console.log('myDatasetId:');
             console.log(myDatasetId);
 
-            // POST if there is no heuristic_id (send to SQL if doesn't exist) using AJAX
+            // POST (add) if there is no dataset_id
             if (!myDatasetId) {
 
                 console.log('Posting to server, PLEASE WAIT...');
 
-                $.evoAppServices.datasetInfoes.postDatasetInfo(myObj)
+                $.evoAppServices.datasetInfoes.postDatasetInfo(myDataInfo)
                     .success(function (response) {
-                        console.log('AJAX SUCCESS! response:');
+                        console.log('POST dataset info SUCCESS! response:');
                         console.log(response);
                         scope.dataset_id = response.DatasetId;
-                        scope.dataset_info = response;
+                        //scope.dataset_info = response;
 
                         // go to page datasets/dataset_id
-                        document.location.href = '/HTML5Boilerplate/index.html#/datasets/'+scope.dataset_id; // FIX THIS!!!
+                        document.location.href = '/ato/index.html#/data/'+scope.dataset_id; // FIX THIS!!!
 
                     }).error(function (data, status, headers, config) {
-                        console.log('AJAX FAIL');
+                        console.log('POST dataset info FAIL');
                     });
 
-            } else {   // PUT if there is dataset_id (update in SQL) using AJAX
+            } else {   // PUT (update) if there is dataset_id
 
                 console.log(myDatasetId);
                 console.log('Updating to server, PLEASE WAIT...');
 
                 $.evoAppServices.datasetInfoes.putDatasetInfo(myDatasetId, myObj)
                     .success(function (response) {
-                        console.log('AJAX SUCCESS! response:');
-                        //console.log(response);
-                    }).error(function (response, status, headers, config) {
-                        console.log('AJAX FAIL');
+                        console.log('PUT dataset info SUCCESS! response:');
                         console.log(response);
+                    }).error(function (response, status, headers, config) {
+                        console.log('PUT dataset info FAIL');
+                        //console.log(response);
 
                     });
 

@@ -149,7 +149,7 @@ function UpdateArrowsAndExits(myHeuristicName, myTreeArray) {
         case "Weighted Tallying":
 
             var myNoText = '';
-            var myYesText = '';
+            var myYesText = 'different';
             break;
     }
 
@@ -188,7 +188,7 @@ function UpdateArrowsAndExits(myHeuristicName, myTreeArray) {
                 AddExitNode(myCueId, 'exit_right', myYesText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
 
                 // add second EXIT node to left
-                //AddExitNode(myCueId, 'second', myNoText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+                AddExitNode(myCueId, 'second', myNoText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
 
                 break;
 
@@ -208,11 +208,10 @@ function UpdateArrowsAndExits(myHeuristicName, myTreeArray) {
                 case 'Fast-and-Frugal Tree':
 
                     // add EXIT node to left
-                    AddExitNode(myCueId, 'exit_left', myNoText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+                    //AddExitNode(myCueId, 'exit_left', myNoText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
 
                     // add EXIT node to right
-                    AddExitNode(myCueId, 'second', myYesText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
-
+                    //AddExitNode(myCueId, 'second', myYesText, 'decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
 
                     // remove arrow to the next cue
                     $('#'+myCueId+' .cue_arrow').remove();
@@ -221,6 +220,9 @@ function UpdateArrowsAndExits(myHeuristicName, myTreeArray) {
 
                 case 'Take The Best':
                 case "Minimalist":
+
+                    // remove EXIT node to the left
+                    $('#'+myCueId+' .exit_left').remove();
 
                     // draw ARROW to next cue
                     DrawArrowToNextCue(myCueId, myNoText);
@@ -235,17 +237,20 @@ function UpdateArrowsAndExits(myHeuristicName, myTreeArray) {
                 case "Tallying":
                 case "Weighted Tallying":
 
+                    // remove EXIT node to the left
+                    $('#'+myCueId+' .exit_left').remove();
+
                     // draw ARROW to next cue
-                    DrawArrowToNextCue(myCueId, myNoText);
+                    DrawArrowToNextCue(myCueId, 'equal');
 
                     // remove EXIT node to the right
-                    $('#'+myCueId+' .exit_right').remove();
+                    //$('#'+myCueId+' .exit_right').remove();
 
                     // add EXIT node to down
-                    AddExitNode(myCueId,'exit_down','','decide'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
+                    AddExitNode(myCueId,'exit_down','','guess'); // AddExitNode(myCueId,myExitClass,myExitArrowText,myExitTitle)
 
                     // remove all buttons switch EXIT
-                    //$('.button_switch').remove();
+                    $('.button_switch').remove();
 
                     break;
             }
@@ -266,6 +271,8 @@ function AddExitNode(myCueId, myExitClass, myExitArrowText, myExitTitle) {
 
     // for the second EXIT node, change class depending on the first node
     if (myExitClass == 'second') {
+        console.log(myExitsArray);
+
         switch (myExitsArray[0]) {
             case 'exit_left':
                 myExitClass = 'exit_right';

@@ -2,7 +2,7 @@
  * Javascript commands for mytoolbox.html
  */
 
-// in DATASET_SHOW.HTML - converts the dataset to the original format
+// in data_show.html - converts the dataset to the original format
 function ConvertDataset(myDataset, myFormat) {
 
     var myConvertedDataset = [];
@@ -93,7 +93,7 @@ function ConvertDataset(myDataset, myFormat) {
     return myConvertedDataset;
 }
 
-// in DATASET_SHOW.HTML - displays dataset in a Excel-style table
+// in data_show.html - displays dataset in a Excel-style table
 function ShowTable(myDataset, myController) {
 
     if (myController == 'ShowHeur') {
@@ -127,33 +127,48 @@ function GetCueMapping(myDatasetId, myDatasetFull) {
         //console.log('myCueId: '+myCueId);
 
         // initial values based on the first case
-        var myMinValue = myDatasetFull[0][myCueId];
-        var myMaxValue = myDatasetFull[0][myCueId];
+        var myMinValue = parseFloat(myDatasetFull[0][myCueId]);
+        var myMaxValue = parseFloat(myDatasetFull[0][myCueId]);
+        var isNotNumber = false;
 
-        // go through every object (case/row) in the data array
-        // and find MIN and MAX values
+        // go through every object (case/row) in the data array and find MIN and MAX values
         myDatasetFull.forEach(function(myObj) {
             //console.log('HERE CHECK! myObj: '+JSON.stringify(myObj, null, "  "));
 
-            // get MIN and MAX values
-            if (myObj[myCueId] < myMinValue) {
-                myMinValue = myObj[myCueId];
-            }
-            if (myObj[myCueId] > myMaxValue) {
-                myMaxValue = myObj[myCueId];
+            // check if the value is a number
+            if ( !isNaN(myDatasetFull[0][myCueId]) ) {
+
+                // convert string to number
+                var myValue = parseFloat(myObj[myCueId]);
+
+                // get MIN and MAX values
+                if (myValue < myMinValue) {
+                    myMinValue = myValue;
+                }
+                if (myValue > myMaxValue) {
+                    myMaxValue = myValue;
+                }
+            // if not number, remember
+            } else {
+                isNotNumber = true;
             }
         });
-        var myMeanValue = (myMaxValue + myMinValue) / 2;
 
-        var myMapObj = {};
-        myMapObj.DatasetId = myDatasetId;
-        myMapObj.DatasetCueName = myCueId;    // FIX THIS!!!
-        myMapObj.CueName = myCueId;
-        myMapObj.MinValue = myMinValue;
-        myMapObj.MaxValue = myMaxValue;
-        myMapObj.SplitValue = myMeanValue;
-        myMapObj.IsFlipped = false;
-        myCueMappingArray.push(myMapObj);
+        // add cue, if it had only numbers
+        if (isNotNumber == false){
+
+            var myMeanValue = (myMaxValue + myMinValue) / 2;
+
+            var myMapObj = {};
+            myMapObj.DatasetId = myDatasetId;
+            myMapObj.DatasetCueName = myCueId;    // FIX THIS!!!
+            myMapObj.CueName = myCueId;
+            myMapObj.MinValue = myMinValue;
+            myMapObj.MaxValue = myMaxValue;
+            myMapObj.SplitValue = myMeanValue;
+            myMapObj.IsFlipped = false;
+            myCueMappingArray.push(myMapObj);
+        }
     }
 
     return myCueMappingArray;
@@ -181,67 +196,116 @@ function UpdateCueMapping(myOldCueMapping, myDragListsArray) {
 }
 
 // converts continuous data to binary based on split values
-function ConvertToBinary(myDataset, myOrigDataset, mySplitValuesArray) {
+function ConvertToBinary(myOrigDataset, mySplitValuesArray) {
 
-    //console.log('CONVERT mySplitValuesArray: '+JSON.stringify(mySplitValuesArray, null, "  "));
-    //console.log('BEFORE Dataset: '+JSON.stringify(mySet, null, "  "));
-    //console.log('TRUE Dataset: '+JSON.stringify(myTrueSet, null, "  "));
+    // make DEEP copy of the dataset
+    var myDataset = $.extend(true, [], myOrigDataset);
 
     // go through every attribute
-    for (var myAttr in mySplitValuesArray) {
-        //console.log(i+'i LOOP! myAttrValues: '+JSON.stringify(myAttrValues, null, "  "));
+    mySplitValuesArray.forEach(function(mySplitObj) {
+        //console.log('LOOP! mySplitValues: '+JSON.stringify(mySplitObj, null, "  "));
 
-        var myAttrValues = mySplitValuesArray[myAttr];
+        var myCueId = mySplitObj.CueName;
 
         // go through every object (case/row) in the ORIGINAL data array (results)
         // and replace value to 0 or 1, based on the split value in the BINARY data array (myDataset)
-        for (var myCase in myDataset) {  //myDataset.forEach(function(myObj) {
+        myDataset.forEach(function(myCase, myIndex) {
 
-            var myOrigObj = myOrigDataset[myCase];
-            var myObj = myDataset[myCase];
-            //console.log(c+'c LOOP! myOrigObj: '+JSON.stringify(myOrigObj, null, "  "));
-            //console.log(c+'c LOOP! myObj: '+JSON.stringify(myObj, null, "  "));
+            var myValue = parseFloat(myCase[myCueId]);
 
             // replace value to 0, if it's in range of MIN (included) and SPLIT (included)
-            if ( (myOrigObj[myAttrValues.CueName] >= myAttrValues.MinValue) && (myOrigObj[myAttrValues.CueName] <= myAttrValues.SplitValue) ) {
-                //console.log('MIN-SPLIT');
-                switch (myAttrValues.IsFlipped) {
-                    case false:
-                        //console.log('NOT FLIPPED, so 0');
-                        myObj[myAttrValues.CueName] = 0;
-                        break;
-                    case true:
-                        //console.log('FLIPPED, so 1');
-                        myObj[myAttrValues.CueName] = 1;
-                        break;
+            if (myValue <= mySplitObj.SplitValue) {
+
+                if (mySplitObj.IsFlipped) {
+                    //console.log('FLIPPED, so 1');
+                    myCase[myCueId] = 1;
+                } else {
+                    //console.log('NOT FLIPPED, so 0');
+                    myCase[myCueId] = 0;
                 }
+
                 // replace value to 1, if it's in range of SPLIT (excluded) and MAX (included)
-            } else if ( (myOrigObj[myAttrValues.CueName] > myAttrValues.SplitValue) && (myOrigObj[myAttrValues.CueName] <= myAttrValues.MaxValue) ) {
-                //console.log('SPLIT-MAX');
-                switch (myAttrValues.IsFlipped) {
-                    case false:
-                        //console.log('NOT FLIPPED, so 1');
-                        myObj[myAttrValues.CueName] = 1;
-                        break;
-                    case true:
-                        //console.log('FLIPPED, so 0');
-                        myObj[myAttrValues.CueName] = 0;
-                        break;
+            } else { // if (myValue > mySplitObj.SplitValue ) {
+
+                if (mySplitObj.IsFlipped) {
+                    //console.log('FLIPPED, so 0');
+                    myCase[myCueId] = 0;
+                } else {
+                    //console.log('NOT FLIPPED, so 1');
+                    myCase[myCueId] = 1;
                 }
             }
-        };
-    }
+        });
+    });
 
     return myDataset;
 }
 
-// adds all cues to a decision tree
-function MoveAllCuesToArea(myCuesArray, myToArea){
+// converts continuous data to binary based on split values
+function ConvertToBinaryExceptCriterion(myOrigDataset, mySplitValuesArray, myCritId) {
 
-    // move the cues to the new area
-    myCuesArray.forEach(function (myCueId) {
-        $('#' +myCueId).appendTo($('#'+myToArea))
+    // make DEEP copy of the dataset
+    var myDataset = $.extend(true, [], myOrigDataset);
+
+    // go through every attribute
+    mySplitValuesArray.forEach(function(mySplitObj) {
+        //console.log('LOOP! mySplitValues: '+JSON.stringify(mySplitObj, null, "  "));
+
+        var myCueId = mySplitObj.CueName;
+
+        // go through every object (case/row) and replace value to 0 or 1, based on the split value
+        myDataset.forEach(function(myCase, myIndex) {
+
+            var myValue = parseFloat(myCase[myCueId]);
+
+            // if it's not criterion
+            if (myCueId != myCritId) {
+
+                // replace value to 0, if it's in range of MIN (included) and SPLIT (included)
+                if (myValue <= mySplitObj.SplitValue) {
+
+                    if (mySplitObj.IsFlipped) {
+                        //console.log('FLIPPED, so 1');
+                        myCase[myCueId] = 1;
+                    } else {
+                        //console.log('NOT FLIPPED, so 0');
+                        myCase[myCueId] = 0;
+                    }
+
+                // replace value to 1, if it's in range of SPLIT (excluded) and MAX (included)
+                } else { // if (myValue > mySplitObj.SplitValue ) {
+
+                    if (mySplitObj.IsFlipped) {
+                        //console.log('FLIPPED, so 0');
+                        myCase[myCueId] = 0;
+                    } else {
+                        //console.log('NOT FLIPPED, so 1');
+                        myCase[myCueId] = 1;
+                    }
+                }
+            // if it is criterion, convert from string to number
+            } else {
+                myCase[myCueId] = myValue;
+            }
+        });
+
     });
+
+    return myDataset;
+}
+
+// sort dataset cases by criterion
+function SortByCriterion(myDataset, myCritId) {
+
+    // make DEEP copy of the dataset
+    var myDataSorted = $.extend(true, [], myDataset);
+
+    // sort the list in descending order by validities
+    myDataSorted.sort(function(a, b) {
+        return parseFloat(b[myCritId]) - parseFloat(a[myCritId]);
+    });
+
+    return myDataSorted;
 }
 
 function GetHeuristicStructure() {
@@ -310,107 +374,6 @@ function GetHeuristicStructure() {
     }
 
     return myHeurStructArray;
-}
-
-function GetValidities(myCritId, myDataset) {
-
-    // get the list of cues (headers of the dataset)
-    var myCuesArray = Object.keys(myDataset[0]);
-
-    // remove criterion from the list
-    var myIndex = myCuesArray.indexOf(myCritId);
-    myCuesArray.splice(myIndex, 1);
-
-    //console.log(myCuesArray);
-
-    // set the initial values
-    var myValidArray = [];
-
-    // go through each cue
-    myCuesArray.forEach(function (myCueId) {
-
-        // set the initial values
-        var myValidObj = {};
-        myValidObj.CueName = myCueId;
-        myValidObj.corrPred = 0;
-        myValidObj.allPred = 0;
-        myValidObj.validity = 0;
-        myValidObj.isFlipped = false;
-
-
-
-        // go through every case, except the last one
-        //for (var a1 = 0; a1 < myCuesArray.length; a1++) {
-        for (var c1 = 0; c1 < myDataset.length; c1++) {
-            var myCase1 = myDataset[c1];
-
-            //var myAllPred = 0;  // number of all possible predictions (where the values in pairs differ)
-            //var myCorrPred = 0;  // number of correct predictions
-
-            // go through every case, except the first one
-            for (var c2 = c1+1; c2 < myDataset.length; c2++) {
-                var myCase2 = myDataset[c2];
-
-                // if criterion values in both cases are different and cue values are also different
-                if ((myCase1[myCritId] != myCase2[myCritId]) && (myCase1[myCueId] != myCase2[myCueId])) {
-
-                    // it's a possible prediction
-                    //myAllPred++;
-                    myValidObj.allPred++;
-
-                    // if the cue correctly predicts the criterion
-                    if (myCase1[myCritId] == myCase1[myCueId]) {
-                        // it's a correct prediction
-                        //myCorrPred++;
-                        myValidObj.corrPred++;
-
-                        /*console.log(myCueId);
-                         console.log(myCase1);
-                         console.log(myCase2);
-                         console.log(myAllPred);
-                         console.log(myCorrPred);*/
-                    } else {
-                        /*console.log(myCueId);
-                         console.log(c1);
-                         console.log(myCase1);
-                         console.log(c2);
-                         console.log(myCase2);
-                         console.log(myValidObj.allPred);
-                         console.log(myValidObj.corrPred);
-                         debugger;*/
-                    }
-                }
-
-
-            }
-
-            //AddPredictionValues(myValidArray, myCueId, myCorrPred, myAllPred); // AddPredictionValues(myValidArray, myCueId, myCorrPred, myAllPred)
-            //console.log(myValidArray);
-        }
-        // calculate validities
-        myValidObj.validity = myValidObj.corrPred / myValidObj.allPred;
-
-        // if the validity is less than 0.5, flip the cue
-        if (myValidObj.validity < 0.5) {
-            myValidObj.validity = 1 - myValidObj.validity;
-            myValidObj.isFlipped = true;
-        }
-
-        // add to the array
-        myValidArray.push(myValidObj);
-    });
-
-    // sort the list in descending order by validities
-    myValidArray.sort(function(a, b) {
-        return parseFloat(b.validity) - parseFloat(a.validity);
-    });
-
-    // add index to every entry
-    myValidArray.forEach(function (myEntry, myIndex) {
-        myEntry.index = myIndex;
-    });
-
-    return myValidArray;
 }
 
 function OrderCuesByValidities(myCuesList, myValidities) {
@@ -641,39 +604,39 @@ myApp.config(function($routeProvider) {
             templateUrl: 'toolbox.html',
             controller: 'ToolboxCtrl'
         }).
-        when('/datasets', {
-            templateUrl: 'dataset_list.html',
+        when('/data', {
+            templateUrl: 'data_list.html',
             controller: 'ListDataCtrl'
         }).
         when('/ffts', {
-            templateUrl: 'heuristic_list.html',
+            templateUrl: 'heur_list.html',
             controller: 'ListFftCtrl'
         }).
-        when('/heuristics', {
-            templateUrl: 'heuristic_list.html',
+        when('/heur', {
+            templateUrl: 'heur_list.html',
             controller: 'ListHeurCtrl'
         }).
-        when('/datasets/:dataset_id', {
-            templateUrl: 'dataset_show.html',
+        when('/data/:dataset_id', {
+            templateUrl: 'data_show.html',
             controller: 'ShowDataCtrl'
         }).
-        when('/new_dataset', {
-            templateUrl: 'dataset_show.html',
+        when('/new_data', {
+            templateUrl: 'data_show.html',
             controller: 'UploadDataCtrl'
         }).
-        when('/heuristics/:heuristic_id', {
+        when('/heur/:heuristic_id', {
             templateUrl: 'heur.html',
             controller: 'ShowHeurCtrl'
         }).
-        when('/:dataset_id/:heuristic_abbr', {
+        when('/data/:dataset_id/:heuristic_abbr', {
             templateUrl: 'heur.html',
             controller: 'CreateHeurCtrl'
         }).
-        when('/heuristics/:heuristic_id/choose_data', {
-            templateUrl: 'dataset_list.html',
+        when('/heur/:heuristic_id/choose_data', {
+            templateUrl: 'data_list.html',
             controller: 'ChooseDataCtrl'
         }).
-        when('/heuristics/:heuristic_id/datasets/:dataset_id', {
+        when('/heur/:heuristic_id/data/:dataset_id', {
             templateUrl: 'heur.html',
             controller: 'ShowHeurDiffDataCtrl'
         }).
@@ -770,7 +733,7 @@ myApp.controller("ToolboxCtrl", function ($scope, $http, getDatasetInfoFactory, 
                 sharedDatasetFull.setShared(results.data);
 
                 // go to page dataset_show
-                document.location.href = '/HTML5Boilerplate/index.html#/new_dataset'; // FIX THIS!!!
+                document.location.href = '/ato/index.html#/new_data'; // FIX THIS!!!
             }
         });
     };
@@ -796,7 +759,9 @@ myApp.controller("ToolboxCtrl", function ($scope, $http, getDatasetInfoFactory, 
 
             // get all dataset_info - run AFTER scope has user_current!
             getDatasetInfoFactory.list(function(data) {
-                $scope.datasets = data;
+                // filter only private datasets
+                var myFindArray = $.grep(data, function(e){ return e.Access == 'private'; });
+                $scope.datasets = myFindArray;
 
                 // get datasets of current user
                 $scope.user_datasets = $.grep($scope.datasets, function(e){ return e.UserName == $scope.user_current; });
@@ -807,7 +772,9 @@ myApp.controller("ToolboxCtrl", function ($scope, $http, getDatasetInfoFactory, 
                 .success(function (data) {
                     console.log('SUCCESS getHeuristicInfo:');
                     console.log(data);
-                    $scope.heuristics = data;
+                    // filter only private heuristics
+                    var myFindArray = $.grep(data, function(e){ return e.Access == 'private'; });
+                    $scope.heuristics = myFindArray;
 
                     // get heuristics of current user
                     $scope.user_heuristics = $.grep($scope.heuristics, function(e){ return e.UserName == $scope.user_current; });
@@ -853,7 +820,7 @@ myApp.controller("ToolboxCtrl", function ($scope, $http, getDatasetInfoFactory, 
 
 });
 
-// angularjs for dataset_list.html
+// angularjs for data_list.html
 myApp.controller("ListDataCtrl", function($scope, $http, getDatasetInfoFactory, sharedDatasetFull, sharedDatasetName) {
 
     // change the page's title
@@ -886,7 +853,7 @@ myApp.controller("ListDataCtrl", function($scope, $http, getDatasetInfoFactory, 
                 sharedDatasetFull.setShared(results.data);
 
                 // go to page dataset_show
-                document.location.href = '/HTML5Boilerplate/index.html#/new_dataset'; // FIX THIS!!!
+                document.location.href = '/ato/index.html#/new_data'; // FIX THIS!!!
             }
         });
     };
@@ -902,7 +869,7 @@ myApp.controller("ListDataCtrl", function($scope, $http, getDatasetInfoFactory, 
 
 });
 
-// angularjs for dataset_list.html
+// angularjs for data_list.html
 myApp.controller("ChooseDataCtrl", function($scope, $routeParams, $http, getDatasetInfoFactory, sharedDatasetFull, sharedDatasetName) {
 
     console.log($routeParams);
@@ -938,7 +905,7 @@ myApp.controller("ChooseDataCtrl", function($scope, $routeParams, $http, getData
                 sharedDatasetFull.setShared(results.data);
 
                 // go to page dataset_show
-                document.location.href = '/HTML5Boilerplate/index.html#/heuristics/'+$scope.heuristic_id+'/new_data_show'; // FIX THIS!!!
+                document.location.href = '/ato/index.html#/heur/'+$scope.heuristic_id+'/new_data_show'; // FIX THIS!!!
             }
         });
     };
@@ -954,9 +921,9 @@ myApp.controller("ChooseDataCtrl", function($scope, $routeParams, $http, getData
     $scope.$on('ngFinished entry in datasets | filter:query | orderBy:sortField:reverse', function(ngRepeatFinishedEvent) { //you also get the actual event object
         console.log('NGREPEAT FINISHED -> datasets are listed');
 
-        // change hyperlink, so that it leads to #/heuristics/heur_id/datasets/data_id
+        // change hyperlink, so that it leads to #/heur/heur_id/data/data_id
         $('a.image').each(function(){
-            this.href = this.href.replace('#', '#/heuristics/'+$scope.heuristic_id);
+            this.href = this.href.replace('#', '#/heur/'+$scope.heuristic_id);
         });
     });
 
@@ -1023,7 +990,7 @@ myApp.controller('UploadDataCtrl', function ($scope, $routeParams, sharedDataset
     ButtonSaveDataset();
 });
 
-// angularjs for dataset_list.html
+// angularjs for data_list.html
 myApp.controller("ListFftCtrl", function ($scope, $http, getHeuristicInfoFactory) {
 //myApp.controller("DatasetListCtrl", function($scope, $http, datasetInfoesService) {
 
@@ -1059,7 +1026,7 @@ myApp.controller("ListFftCtrl", function ($scope, $http, getHeuristicInfoFactory
     console.log($scope);
 });
 
-// angularjs for dataset_list.html
+// angularjs for data_list.html
 myApp.controller("ListHeurCtrl", function($scope, $http, getHeuristicInfoFactory) {
 
     // change the page's title
@@ -1093,7 +1060,7 @@ myApp.controller("ListHeurCtrl", function($scope, $http, getHeuristicInfoFactory
     console.log($scope);
 });
 
-// angularjs for dataset_show.html
+// angularjs for data_show.html
 myApp.controller('ShowDataCtrl', function ($scope, $routeParams, datasetInfoesService, datasetFullsService){
 
     // change the page's title
@@ -1193,7 +1160,7 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
     myHeurInfoObj.Title = $scope.heuristic_name;
     myHeurInfoObj.Image = $scope.heuristic_icon;
     myHeurInfoObj.Date = 'NOT SAVED YET';  // FIX THIS!!!
-    //myHeurInfoObj.UserName = $scope.user_current;
+    myHeurInfoObj.UserName = 'steve@jobs.com'; // FIX THIS!!!
     myHeurInfoObj.SizeCues = 0;            // FIX THIS!!! must be updated when there are cues in the tree
     myHeurInfoObj.UsageUsers = 1;          // FIX THIS!!!
     myHeurInfoObj.UsageDatasets = 1;       // FIX THIS!!!
@@ -1230,7 +1197,9 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
             $scope.heuristic_info.CueMapping = GetCueMapping($scope.dataset_id, $scope.dataset_full);
 
             // convert values to binary
-            $scope.dataset_binary = ConvertToBinary($scope.dataset_full, $scope.dataset_original, $scope.heuristic_info.CueMapping);
+            $scope.dataset_binary = ConvertToBinary($scope.dataset_original, $scope.heuristic_info.CueMapping);
+            // bug workaround for FFT analysis
+            $scope.dataset_sorted = $scope.dataset_binary;
 
             // add the empty array for validities
             $scope.validities = [];
@@ -1280,9 +1249,6 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
 
                         // rearrange the cues by validities
                         $scope.drag_tree = OrderCuesByValidities($scope.drag_cues_list, $scope.validities);
-
-                        // move all cues to the decision tree, if cues_list is not empty (bug workaround, when runs initially)
-                        //$scope.drag_tree = $scope.drag_cues_list;
                         $scope.drag_cues_list = [];
                     }
                 }
@@ -1312,59 +1278,86 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
                     // hide contents FIX THIS!!! should be possible to expand to change split value
                     $('#criterion_place').find('.widget_content').hide();
 
-                    // calculate validities
-                    $scope.validities = GetValidities($scope.drag_criterion[0].CueName, $scope.dataset_binary);
-
                     // depending on the heuristic, do the following
                     switch ($scope.heuristic_name) {
 
                         case 'Fast-and-Frugal Tree':
 
-                            // take care of the arrows and exits
-                            //UpdateArrowsAndExits($scope.heuristic_name, 'tree');
-
-                            // get heuristic structure for scope
-                            //$scope.heuristic_info.HeuristicStructure = GetHeuristicStructure($scope.heuristic_id);
+                            // calculate validities
+                            $scope.validities = GetValidities($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.heuristic_info.CueMapping);
 
                             // analyse every cue in cues_list as one-cue-tree
                             $scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
-                                var myAnalysis = AnalyzeDataset($scope.dataset_binary, $scope.drag_criterion[0].CueName, [myCueObj]);
+                                var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_binary, $scope.drag_criterion[0].CueName, [myCueObj]);
                                 $scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
                             });
+                            // get statistics
+                            var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
+                            // update statistics
+                            $scope.general_stats = myAnalysis.general_stats;
 
                             break;
 
                         case 'Take The Best':
 
-                        // get heuristic structure for scope
-                        //$scope.heuristic_info.HeuristicStructure = GetHeuristicStructure($scope.heuristic_id);
+                            // get binary dataset except criterion
+                            $scope.dataset_binary_exceptcriterion = ConvertToBinaryExceptCriterion($scope.dataset_original, $scope.heuristic_info.CueMapping, $scope.drag_criterion[0].CueName);
 
-                            //$scope.validities = GetValidities($scope.drag_criterion[0].CueName, $scope.dataset_binary);
+                            // sort by criterion
+                            $scope.dataset_sorted = SortByCriterion($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName);
+
+                            // calculate validities
+                            $scope.validities = GetValidities($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName, $scope.heuristic_info.CueMapping);
+                            //!!! when validities are updated, in WATCH function the cues are moved from cues_list to tree
 
                             break;
 
                         case 'Minimalist':
+
+                            // get binary dataset except criterion
+                            $scope.dataset_binary_exceptcriterion = ConvertToBinaryExceptCriterion($scope.dataset_original, $scope.heuristic_info.CueMapping, $scope.drag_criterion[0].CueName);
+
+                            // sort by criterion
+                            $scope.dataset_sorted = SortByCriterion($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName);
+
+                            // calculate validities
+                            $scope.validities = GetValidities($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName, $scope.heuristic_info.CueMapping);
+
+                            // if cues_list is not empty (bug workaround, when runs initially)
+                            //if ($scope.drag_cues_list.length >0) {
+                            //    // move all cues to the decision tree
+                            //    $scope.drag_tree = $.extend(true, [], $scope.drag_cues_list); // make DEEP copy
+                            $scope.drag_tree = $scope.drag_cues_list;
+                            $scope.drag_cues_list = [];
+
+                            break;
+
                         case 'Tallying':
                         case 'Weighted Tallying':
 
-                            // move all cues to the decision tree, if cues_list is not empty (bug workaround, when runs initially)
-                            if ($scope.drag_cues_list.length >0) {
-                                $scope.drag_tree = $.merge([], $scope.drag_cues_list);  // make DEEP copy
-                                $scope.drag_cues_list = [];
-                            }
+                            // get binary dataset except criterion
+                            $scope.dataset_binary_exceptcriterion = ConvertToBinaryExceptCriterion($scope.dataset_original, $scope.heuristic_info.CueMapping, $scope.drag_criterion[0].CueName);
 
-                            // get heuristic structure for scope
-                            //$scope.heuristic_info.HeuristicStructure = GetHeuristicStructure($scope.heuristic_id);
+                            // sort by criterion
+                            $scope.dataset_sorted = SortByCriterion($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName);
 
-                            break;
+                            // calculate validities
+                            $scope.validities = GetValidities($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName, $scope.heuristic_info.CueMapping);
+
+                            // if cues_list is not empty (bug workaround, when runs initially)
+                            //if ($scope.drag_cues_list.length >0) {
+                            //    // move all cues to the decision tree
+                            //    $scope.drag_tree = $.extend(true, [], $scope.drag_cues_list); // make DEEP copy
+                            $scope.drag_tree = $scope.drag_cues_list;
+                            $scope.drag_cues_list = [];
                     }
 
                     // update general statistics
-                    var myAnalysis = AnalyzeDataset($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
+                    /*var myAnalysis = AnalyzeDataset($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
                     $scope.general_stats = myAnalysis.general_stats;
                     // tree is supposed to be empty, so no $scope.drag_tree = myAnalysis.cues_stats
                     $scope.dataset_stepinfo = myAnalysis.dataset_stepinfo;
-                    $scope.dataset_stepinfo_colheads = Object.keys($scope.dataset_stepinfo[0]);
+                    $scope.dataset_stepinfo_colheads = Object.keys($scope.dataset_stepinfo[0]);*/
 
                 // if criterion was removed
                 } else {
@@ -1377,9 +1370,6 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
 
                     // hide the shuffle buttons
                     $('#drag_cues_list').find('.button_shuffle').hide();
-
-                    // activate expand buttons
-                    //ButtonsExpand();
                 }
 
             });
@@ -1394,21 +1384,20 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
 
                     $scope.drag_tree = UpdateExitBranches($scope.heuristic_name, $scope.drag_tree);
 
-                    // take care of the arrows and exits
-                    //UpdateArrowsAndExits($scope.heuristic_name, $scope.drag_tree);
-
-                    // get heuristic structure for scope
-                    //$scope.heuristic_info.HeuristicStructure = GetHeuristicStructure($scope.heuristic_id);
+                    // get statistics
+                    var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_sorted, $scope.drag_criterion[0].CueName, $scope.drag_tree, $scope.validities);
 
                     // update statistics
-                    var myAnalysis = AnalyzeDataset($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
                     $scope.general_stats = myAnalysis.general_stats;
                     $scope.drag_tree = myAnalysis.cues_stats;
                     $scope.dataset_stepinfo = myAnalysis.dataset_stepinfo;
                     $scope.dataset_stepinfo_colheads = Object.keys($scope.dataset_stepinfo[0]);
 
-                    // activate expand buttons
-                    //ButtonsExpand();
+                    // activate sliders and swap buttons
+                    SplitValueSliderChangeSwap($scope.drag_tree);
+
+                    // activate statistics button - switch between stats of this cue & stats of the tree up to this cue
+                    ButtonsStatistics($scope.drag_tree);
                 }
             });
 
@@ -1463,6 +1452,9 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
 
         console.log('NGREPEAT FINISHED --> all cues are in tree');
 
+        // test analysis for pairs
+        //AnalyzeDatasetPairs($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
+
         // take care of the arrows and exits
         //UpdateArrowsAndExits($scope.heuristic_name, $scope.drag_tree);
 
@@ -1510,7 +1502,7 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
     console.log($scope);
 });
 
-// angularjs for dataset_show.html
+// angularjs for data_show.html
 myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicInfoesService, heuristicStructuresService, datasetFullsService, getDatasetInfoFactory){
 
     // change the page's title
@@ -1537,7 +1529,7 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
                 $scope.drag_cues_list = myLists.drag_cues_list;
 
                 // update the page's title
-                $('#page_title').html('SHOW '+$scope.heuristic_name);
+                $('#page_title').html($scope.heuristic_name);
 
             }).error(function (errdata, status, headers, config) {
                 console.log('FAIL getHeuristicInfo:');
@@ -1569,38 +1561,23 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
                 // get cue mappings with split, min, max values
                 // ALREADY HAVE IN heuristic_info.CueMapping
 
-                // convert values to binary
-                $scope.dataset_binary = ConvertToBinary($scope.dataset_full, $scope.dataset_original, $scope.heuristic_info.CueMapping);
+                // convert values to binary FOR FFT
+                $scope.dataset_binary = ConvertToBinary($scope.dataset_original, $scope.heuristic_info.CueMapping);
+                // bug workaround for FFT analysis
+                $scope.dataset_sorted = $scope.dataset_binary;
 
-                /*// take care of the cues, arrows and exits
-                RestoreCuesArrowsAndExits($scope.heuristic_name, $scope.drag_tree);
+                // add the empty array for validities
+                $scope.validities = [];
 
-                // activate expand all buttons
-                ButtonExpandAll('white_area');
+                // convert to binary except criterion FOR TTB, MINI, TALL, WETA
+                //$scope.dataset_binary_exceptcriterion = ConvertToBinaryExceptCriterion($scope.dataset_original, $scope.heuristic_info.CueMapping, $scope.drag_criterion[0].CueName);
 
-                // activate sliders and swap buttons
-                SplitValueSliderChangeSwap($scope.drag_cues_list);
-                SplitValueSliderChangeSwap($scope.drag_tree);
-
-                // activate statistics button
-                ButtonsStatistics($scope.drag_tree);*/
+                // sort by criterion FOR TTB, MINI, TALL, WETA
+                //$scope.dataset_sorted = SortByCriterion($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName);
 
                 // calculate and display validities
-                $scope.validities = GetValidities($scope.drag_criterion[0].CueName, $scope.dataset_binary);
+                //$scope.validities = GetValidities($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName, $scope.heuristic_info.CueMapping);
 
-                /*// analyse every cue in cues_list as one-cue-tree
-                $scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
-                    var myAnalysis = AnalyzeDataset($scope.dataset_binary, $scope.drag_criterion[0].CueName, [myCueObj]);
-                    $scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
-                });
-
-                // update general statistics
-                var myAnalysis = AnalyzeDataset($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
-                $scope.general_stats = myAnalysis.general_stats;
-                $scope.drag_tree = myAnalysis.cues_stats;
-                $scope.dataset_stepinfo = myAnalysis.dataset_stepinfo;
-                $scope.dataset_stepinfo_colheads = Object.keys($scope.dataset_stepinfo[0]);
-*/
                 //////////////////////////////////////////////////
                 // SHOULD BE THE SAME IN BOTH CONTROLLERS CreateHeur AND ShowHeur
                 //////////////////////////////////////////////////
@@ -1631,6 +1608,14 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
                 $scope.$watchCollection('validities', function() {
                     console.log('WATCH validities');
 
+                    /*if($scope.heuristic_name =='Take The Best') {
+                        if ($scope.validities.length>0) {
+
+                            // rearrange the cues by validities
+                            $scope.drag_tree = OrderCuesByValidities($scope.drag_cues_list, $scope.validities);
+                            $scope.drag_cues_list = [];
+                        }
+                    }*/
                     // add validity tags
                     UpdateValidityTags($scope.heuristic_name, 'tree', $scope.validities);
                 });
@@ -1657,66 +1642,47 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
                         // hide contents FIX THIS!!! should be possible to expand to change split value
                         $('#criterion_place').find('.widget_content').hide();
 
-                        // calculate validities
-                        $scope.validities = GetValidities($scope.drag_criterion[0].CueName, $scope.dataset_binary);
-
                         // depending on the heuristic, do the following
                         switch ($scope.heuristic_name) {
 
                             case 'Fast-and-Frugal Tree':
 
-                                // take care of the arrows and exits
-                                //UpdateArrowsAndExits($scope.heuristic_name, 'tree');
-
-                                // get heuristic structure for scope
-                                //$scope.heuristic_info.HeuristicStructure = GetHeuristicStructure($scope.heuristic_id);
+                                // calculate validities
+                                $scope.validities = GetValidities($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.heuristic_info.CueMapping);
 
                                 // analyse every cue in cues_list as one-cue-tree
                                 $scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
-                                    var myAnalysis = AnalyzeDataset($scope.dataset_binary, $scope.drag_criterion[0].CueName, [myCueObj]);
+                                    var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_binary, $scope.drag_criterion[0].CueName, [myCueObj]);
                                     $scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
                                 });
 
                                 break;
 
                             case 'Take The Best':
-
-                                // move all cues to the decision tree, if cues_list is not empty (bug workaround, when runs initially)
-                                if ($scope.drag_cues_list.length >0) {
-                                    // rearrange the cues by validities
-                                    $scope.drag_cues_list = OrderCuesByValidities($scope.drag_cues_list, $scope.validities);
-                                }
-
-                            // get heuristic structure for scope
-                            //$scope.heuristic_info.HeuristicStructure = GetHeuristicStructure($scope.heuristic_id);
-
-                            // don't use break to continue executing the code
-                            //break;
-
                             case 'Minimalist':
                             case 'Tallying':
                             case 'Weighted Tallying':
 
-                                // move all cues to the decision tree, if cues_list is not empty (bug workaround, when runs initially)
-                                if ($scope.drag_cues_list.length >0) {
-                                    $scope.drag_tree = $scope.drag_cues_list;
-                                    $scope.drag_cues_list = [];
-                                }
+                                // get binary dataset except criterion
+                                $scope.dataset_binary_exceptcriterion = ConvertToBinaryExceptCriterion($scope.dataset_original, $scope.heuristic_info.CueMapping, $scope.drag_criterion[0].CueName);
 
-                                // get heuristic structure for scope
-                                //$scope.heuristic_info.HeuristicStructure = GetHeuristicStructure($scope.heuristic_id);
+                                // sort by criterion
+                                $scope.dataset_sorted = SortByCriterion($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName);
+
+                                // calculate validities
+                                $scope.validities = GetValidities($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName, $scope.heuristic_info.CueMapping);
 
                                 break;
                         }
 
                         // update general statistics
-                        var myAnalysis = AnalyzeDataset($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
+                        /*var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_sorted, $scope.drag_criterion[0].CueName, $scope.drag_tree);
                         $scope.general_stats = myAnalysis.general_stats;
                         // tree is supposed to be empty, so no $scope.drag_tree = myAnalysis.cues_stats
                         $scope.dataset_stepinfo = myAnalysis.dataset_stepinfo;
-                        $scope.dataset_stepinfo_colheads = Object.keys($scope.dataset_stepinfo[0]);
+                        $scope.dataset_stepinfo_colheads = Object.keys($scope.dataset_stepinfo[0]);*/
 
-                        // if criterion was removed
+                    // if criterion was removed
                     } else {
                         // unlock the criterion area
                         $('#criterion_place').addClass('sortable_area');
@@ -1727,9 +1693,6 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
 
                         // hide the shuffle buttons
                         $('#drag_cues_list').find('.button_shuffle').hide();
-
-                        // activate expand buttons
-                        //ButtonsExpand();
                     }
 
                 });
@@ -1744,21 +1707,14 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
 
                         $scope.drag_tree = UpdateExitBranches($scope.heuristic_name, $scope.drag_tree);
 
-                        // take care of the arrows and exits
-                        //UpdateArrowsAndExits($scope.heuristic_name, $scope.drag_tree);
-
-                        // get heuristic structure for scope
-                        //$scope.heuristic_info.HeuristicStructure = GetHeuristicStructure($scope.heuristic_id);
+                        // get statistics
+                        var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_sorted, $scope.drag_criterion[0].CueName, $scope.drag_tree);
 
                         // update statistics
-                        var myAnalysis = AnalyzeDataset($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
                         $scope.general_stats = myAnalysis.general_stats;
                         $scope.drag_tree = myAnalysis.cues_stats;
                         $scope.dataset_stepinfo = myAnalysis.dataset_stepinfo;
                         $scope.dataset_stepinfo_colheads = Object.keys($scope.dataset_stepinfo[0]);
-
-                        // activate expand buttons
-                        //ButtonsExpand();
                     }
                 });
 
@@ -1885,7 +1841,7 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
     });
 });
 
-// angularjs for dataset_show.html
+// angularjs for data_show.html
 myApp.controller('ShowHeurDiffDataCtrl', function ($scope, $routeParams, $q, datasetInfoesService, heuristicInfoesService, heuristicStructuresService, datasetFullsService){
 
     // change the page's title
@@ -1949,7 +1905,7 @@ myApp.controller('ShowHeurDiffDataCtrl', function ($scope, $routeParams, $q, dat
                 // ALREADY HAVE IN heuristic_info.CueMapping
 
                 // convert values to binary
-                $scope.dataset_binary = ConvertToBinary($scope.dataset_full, $scope.dataset_original, $scope.heuristic_info.CueMapping);
+                $scope.dataset_binary = ConvertToBinary($scope.dataset_original, $scope.heuristic_info.CueMapping);
 
                 // remove cues from drag_cues_list, if there are
                 //$('#drag_cues_list .widget').remove();
@@ -1967,7 +1923,7 @@ myApp.controller('ShowHeurDiffDataCtrl', function ($scope, $routeParams, $q, dat
                 //var myCritCueId = myFind[0].CueName;
 
                 // convert values to binary
-                //$scope.dataset_binary = ConvertToBinary($scope.dataset_full, $scope.dataset_full, $scope.heuristic_info.CueMapping);
+                //$scope.dataset_binary = ConvertToBinary($scope.dataset_full, $scope.heuristic_info.CueMapping);
 
                 // calculate and display validities
                 //$scope.validities = ($scope.drag_criterion[0].CueName, $scope.dataset_binary);
