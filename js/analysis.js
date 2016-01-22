@@ -177,6 +177,7 @@ function AnalyzeDataset(myHeuristic, myDataset, myCritId, myTreeArray, myValidit
 
                 // for step info, get values
                 var innerStep = 0;
+                var stepInfo = '';
                 var myCaseStepObj = {};
                 myCaseStepObj[myCritId] = myCaseObj[myCritId];
                 myCaseStepObj.StepInfo = []; // for info about every step (stepInfo)
@@ -187,66 +188,77 @@ function AnalyzeDataset(myHeuristic, myDataset, myCritId, myTreeArray, myValidit
                 // for each tree cue
                 for (var c = 0; c < myTreeArray.length; c++) {  // CAN'T USE forEach because need to use 'break' statement
                     innerStep++;
-                    var stepInfo = 'STEP ' + innerStep.toString() + ': ';
+                    stepInfo += 'STEP '+innerStep+'. ';
 
                     var cueName = myTreeArray[c].CueName;
                     var cueValue = myCaseObj[cueName];
+                    var cueText = cueValue?'yes':'no';
 
-                    if (cueValue === 0 && myTreeArray[c].BranchNo == 'exit') {
-                        stepInfo += 'EXIT on ' + cueName + ' (Cue: 0 - ';
+                    // flip cue
+                    /*if (cueValue == 1) {
+                        var cueText = myTreeArray[c].IsFlipped? 'no':'yes';
+                    } else {  // cueValue == 0
+                        var cueText = myTreeArray[c].IsFlipped? 'yes':'no';
+                    }*/
 
-                        if (myCaseObj[myCritId] === 0) {
-                            stepInfo += 'Criterion: 0 => CORRECT REJECTION)';
+                    if (myTreeArray[c].BranchYes == 'exit' && cueValue == 1) {
+                        stepInfo += 'EXIT on ' +cueName+ ' = '+cueValue+' ('+cueText+'), ';
+                        stepInfo += 'DECISION: '+myCritId+' = 1 (yes) ';
+
+                        if (myCaseObj[myCritId] == 1) {
+                            stepInfo += '=> HIT';
+
+                            HITS++;
+                            UNDECIDED_POS--;
+                            myTreeArray[c].HITS++; // for the cue, count hit cases
+
+                        } else {  // if (myCaseObj[myCritId] == 0)
+                            stepInfo += '=> FALSE ALARM';
+
+                            FALSE_ALARMS++;
+                            UNDECIDED_NEG--;
+                            myTreeArray[c].FALSE_ALARMS++; // for the cue, count false alarm cases
+                        }
+                        myCaseStepObj.StepInfo.push(stepInfo);
+                        STEPS += innerStep;
+                        myTreeArray[c].STEPS += innerStep;  // for the cue, count steps
+                        break;
+
+                    } else if (myTreeArray[c].BranchNo == 'exit' && cueValue == 0) {
+                        stepInfo += 'EXIT on ' +cueName+ ' = '+cueValue+' ('+cueText+'), ';
+                        stepInfo += 'DECISION: '+myCritId+' = 0 (no) ';
+
+                        if (myCaseObj[myCritId] == 0) {
+                            stepInfo += '=> CORRECT REJECTION';
 
                             CORRECT_REJECTIONS++;
                             UNDECIDED_NEG--;
                             myTreeArray[c].CORRECT_REJECTIONS++; // for the cue, count correct rejection cases
-                        }
-                        else {
+
+                        } else {  // if (myCaseObj[myCritId] == 1)
+                            stepInfo += '=> MISS';
+
                             MISSES++;
                             UNDECIDED_POS--;
-                            stepInfo += 'Criterion: 1 => MISS)';
                             myTreeArray[c].MISSES++;  // for the cue, count miss cases
                         }
                         myCaseStepObj.StepInfo.push(stepInfo);
                         STEPS += innerStep;
                         myTreeArray[c].STEPS += innerStep;  // for the cue, count steps
                         break;
-                    }
-                    else if (cueValue === 0 && myTreeArray[c].BranchNo === 'continue') {
-                        stepInfo += 'CONTINUE on ' + cueName + ' (Exit: 1 - Cue: 0)';
-                        if (myCaseObj[myCritId] === 1) // for the cue, count undecided cases, split to positive and negative (by criterion value)
+
+                    } else {
+                        stepInfo += 'CONTINUE on ' +cueName+ ' = '+cueValue+' ('+cueText+'), ';
+                        //stepInfo += 'CONTINUE on ' +cueName+ ': Cue = '+cueValue?'yes':'no'+', ';
+
+                        if (myCaseObj[myCritId] == 1) {    // for the cue, count undecided cases, split to positive and negative (by criterion value)
                             myTreeArray[c].UNDECIDED_POS++;
-                        else
+
+                        } else {  // if (myCaseObj[myCritId] == 0)
                             myTreeArray[c].UNDECIDED_NEG++;
-                    }
-                    else if (cueValue === 1 && myTreeArray[c].BranchYes === 'exit') {
-                        stepInfo += 'EXIT on ' + cueName + ' (Cue: 1 - ';
-                        if (myCaseObj[myCritId] === 0) {
-                            FALSE_ALARMS++;
-                            UNDECIDED_NEG--;
-                            stepInfo += 'Criterion: 0 => FALSE ALARM)';
-                            myTreeArray[c].FALSE_ALARMS++; // for the cue, count false alarm cases
                         }
-                        else {
-                            HITS++;
-                            UNDECIDED_POS--;
-                            stepInfo += 'Criterion: 1 => HIT)';
-                            myTreeArray[c].HITS++; // for the cue, count hit cases
-                        }
-                        myCaseStepObj.StepInfo.push(stepInfo);
-                        STEPS += innerStep;
-                        myTreeArray[c].STEPS += innerStep;  // for the cue, count steps
-                        break;
                     }
-                    else {
-                        stepInfo += 'CONTINUE on ' + cueName + ' (Exit: 0 - Cue: 1)';
-                        if (myCaseObj[myCritId] === 1) // for the cue, count undecided cases, split to positive and negative (by criterion value)
-                            myTreeArray[c].UNDECIDED_POS++;
-                        else
-                            myTreeArray[c].UNDECIDED_NEG++;
-                    }
-                    myCaseStepObj.StepInfo.push(stepInfo);
+                    //myCaseStepObj.StepInfo.push(stepInfo);
                 }
 
                 // convert StepInfo from array to string
@@ -295,140 +307,61 @@ function AnalyzeDataset(myHeuristic, myDataset, myCritId, myTreeArray, myValidit
                     // for step info, get values
                     var innerStep = 0;
                     var myCaseStepObj = {};
-                    myCaseStepObj.CaseXvsCaseY = c1 + ' vs ' + c2;
+                    myCaseStepObj.Cases = (c1+1) + ' vs ' + (c2+1);
                     myCaseStepObj[myCritId] = myCase1[myCritId] + ' vs ' + myCase2[myCritId];
                     myCaseStepObj.StepInfo = []; // for info about every step (stepInfo)
                     myTreeArray.forEach(function (myCueObj) {
                         myCaseStepObj[myCueObj.CueName] = myCase1[myCueObj.CueName] + ' vs ' + myCase2[myCueObj.CueName];
-                    })
+                    });
+
+                    // reset the decision variable
+                    var myDecision = '';
 
                     // go through each tree cue with the possibility to stop the loop
                     for (var t = 0; t < myTreeArray.length; t++) {  // CAN'T USE forEach because need to use 'break' statement
                         innerStep++;
-                        var stepInfo = 'STEP ' + innerStep.toString() + ': ';
+                        var stepInfo = 'STEP '+innerStep+'. ';
 
                         var cueName = myTreeArray[t].CueName;
 
-                        // if case1 cue value is bigger than case2 cue value
-                        if (myCase1[cueName] > myCase2[cueName]) {
-                            stepInfo += 'EXIT on ' + cueName + ' (CaseX Cue > CaseY Cue), ';
+                        // if validities exist already (criterion is selected), get cue's validity, remember if it is flipped
+                        if (myValidities.length > 0) {
+                            var myFind = $.grep(myValidities, function (e) {
+                                return e.CueName == cueName;
+                            });
+                            var isValidFlipped = myFind[0].isFlipped;
+                        } else {
+                            var isValidFlipped = false;
+                        }
 
-                            // if case1 criterion value  is bigger than case2 cue value
-                            if (myCase1[myCritId] > myCase2[myCritId]) {
-                                stepInfo += 'DECISION: CaseX Criterion > CaseY Criterion => HIT';
-                                myCaseStepObj.StepInfo.push(stepInfo);
+                        // if case1 cue value is bigger than case2 cue value and validity is not flipped OR the other way around
+                        if ((myCase1[cueName] > myCase2[cueName] && isValidFlipped == false) || (myCase1[cueName] < myCase2[cueName] && isValidFlipped == true)) {
+                            stepInfo += 'EXIT on ' +cueName+ ' ('+myCase1[cueName]+' > '+myCase2[cueName]+'), ';
+                            stepInfo += 'DECISION: ';
 
-                                HITS++;                // for general stats
-                                myTreeArray[t].HITS++; // for cue stats
-                                STEPS += innerStep;
-                                myTreeArray[t].STEPS += innerStep;
-                                break;
+                            myDecision = 'true';
 
-                                // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                            } else {
-                                stepInfo += 'DECISION: CaseX Criterion > CaseY Criterion => FALSE ALARM';
-                                myCaseStepObj.StepInfo.push(stepInfo);
+                        // if case1 cue value is smaller than case2 cue value and cue's validity is not flipped OR the other way around
+                        } else if ((myCase1[cueName] < myCase2[cueName] && isValidFlipped == false) || (myCase1[cueName] > myCase2[cueName] && isValidFlipped == true)) {
+                            stepInfo += 'EXIT on ' +cueName+ ' ('+myCase1[cueName]+' < '+myCase2[cueName]+'), ';
+                            stepInfo += 'DECISION: ';
 
-                                FALSE_ALARMS++;           // for general stats
-                                myTreeArray[t].FALSE_ALARMS++;  // for cue stats
-                                STEPS += innerStep;
-                                myTreeArray[t].STEPS += innerStep;
-                                break;
-                            }
+                            myDecision = 'false';
 
-                            // if case1 cue value is smaller than case2 cue value
-                        } else if (myCase1[cueName] < myCase2[cueName]) {
-                            stepInfo += 'EXIT on ' + cueName + ' (CaseX Cue < CaseY Cue), ';
-
-                            // if case1 criterion value  is bigger than case2 criterion value
-                            if (myCase1[myCritId] > myCase2[myCritId]) {
-                                stepInfo += 'DECISION: CaseX Criterion = CaseY Criterion => MISS';
-                                myCaseStepObj.StepInfo.push(stepInfo);
-
-                                MISSES++;                // for general stats
-                                myTreeArray[t].MISSES++; // for cue stats
-                                STEPS += innerStep;
-                                myTreeArray[t].STEPS += innerStep;
-                                break;
-
-                                // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                            } else {
-                                stepInfo += 'DECISION: CaseX Criterion = CaseY Criterion => CORRECT REJECTION';
-                                myCaseStepObj.StepInfo.push(stepInfo);
-
-                                CORRECT_REJECTIONS++;           // for general stats
-                                myTreeArray[t].CORRECT_REJECTIONS++;  // for cue stats
-                                STEPS += innerStep;
-                                myTreeArray[t].STEPS += innerStep;
-                                break;
-                            }
-
-                            // if this was the last cue, guess
+                        // if this was the last cue, guess
                         } else if (t == myTreeArray.length - 1) {
-                            stepInfo += 'EXIT on ' + cueName + ' (CaseX Cue = CaseY Cue), ';
+                            stepInfo += 'EXIT on ' + cueName + ' ('+myCase1[cueName]+' = '+myCase2[cueName]+'), ';
+                            stepInfo += 'GUESS: ';
 
                             if (Math.random() < 0.5) {
-                                var myGuess = true;
-                                stepInfo += 'GUESS: CaseX Criterion > CaseY Criterion ';
+                                myDecision = 'true';
                             } else {
-                                var myGuess = false;
-                                stepInfo += 'GUESS: CaseX Criterion = CaseY Criterion ';
+                                myDecision = 'false';
                             }
 
-                            // if the prediction is true
-                            if (myGuess) {
-
-                                // if case1 criterion value  is bigger than case2 cue value
-                                if (myCase1[myCritId] > myCase2[myCritId]) {
-                                    stepInfo += ' => HIT';
-                                    myCaseStepObj.StepInfo.push(stepInfo);
-
-                                    HITS++;                // for general stats
-                                    myTreeArray[t].HITS++; // for cue stats
-                                    STEPS += innerStep;
-                                    myTreeArray[t].STEPS += innerStep;
-                                    break;
-
-                                    // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                                } else {
-                                    stepInfo += ' => FALSE ALARM';
-                                    myCaseStepObj.StepInfo.push(stepInfo);
-
-                                    FALSE_ALARMS++;           // for general stats
-                                    myTreeArray[t].FALSE_ALARMS++;  // for cue stats
-                                    STEPS += innerStep;
-                                    myTreeArray[t].STEPS += innerStep;
-                                    break;
-                                }
-                                // if the prediction is false
-                            } else {
-
-                                // if case1 criterion value  is bigger than case2 criterion value
-                                if (myCase1[myCritId] > myCase2[myCritId]) {
-                                    stepInfo += ' => MISS';
-                                    myCaseStepObj.StepInfo.push(stepInfo);
-
-                                    MISSES++;                // for general stats
-                                    myTreeArray[t].MISSES++; // for cue stats
-                                    STEPS += innerStep;
-                                    myTreeArray[t].STEPS += innerStep;
-                                    break;
-
-                                    // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                                } else {
-                                    stepInfo += ' => CORRECT REJECTION';
-                                    myCaseStepObj.StepInfo.push(stepInfo);
-
-                                    CORRECT_REJECTIONS++;           // for general stats
-                                    myTreeArray[t].CORRECT_REJECTIONS++;  // for cue stats
-                                    STEPS += innerStep;
-                                    myTreeArray[t].STEPS += innerStep;
-                                    break;
-                                }
-                            }
-                            // else, go to next cue
+                        // if neither, go to the next cue
                         } else {
-                            stepInfo += 'CONTINUE on ' + cueName + ' (CaseX Cue = CaseY Cue)';
+                        stepInfo += 'CONTINUE on ' + cueName + ' ('+myCase1[cueName]+' = '+myCase2[cueName]+')';
 
                             // if case1 criterion value  is bigger than case2 criterion value
                             if (myCase1[myCritId] > myCase2[myCritId]) {
@@ -441,6 +374,63 @@ function AnalyzeDataset(myHeuristic, myDataset, myCritId, myTreeArray, myValidit
                                 myTreeArray[t].UNDECIDED_NEG++;  // for cue stats
                             }
                         }
+
+                        //////////////////
+                        // if there was a decision/guess and prediction is true
+                        if (myDecision == 'true') {
+                            stepInfo += myCritId+' of first case is bigger ';
+
+                            // if case1 criterion value  is bigger than case2 cue value
+                            if (myCase1[myCritId] > myCase2[myCritId]) {
+                                stepInfo += '=> HIT ('+myCase1[myCritId]+' > '+myCase2[myCritId]+')';
+                                myCaseStepObj.StepInfo.push(stepInfo);
+
+                                HITS++;                // for general stats
+                                myTreeArray[t].HITS++; // for cue stats
+                                STEPS += innerStep;
+                                myTreeArray[t].STEPS += innerStep;
+                                break;
+
+                            // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
+                            } else {
+                                stepInfo += '=> FALSE ALARM ('+myCase1[myCritId]+' = '+myCase2[myCritId]+')';
+                                myCaseStepObj.StepInfo.push(stepInfo);
+
+                                FALSE_ALARMS++;           // for general stats
+                                myTreeArray[t].FALSE_ALARMS++;  // for cue stats
+                                STEPS += innerStep;
+                                myTreeArray[t].STEPS += innerStep;
+                                break;
+                            }
+                        // if there was a decision/guess and prediction is false
+                        } else if (myDecision == 'false') {
+                            stepInfo += myCritId+' of both cases are equal ';
+
+                            // if case1 criterion value  is bigger than case2 criterion value
+                            if (myCase1[myCritId] > myCase2[myCritId]) {
+                                stepInfo += '=> MISS ('+myCase1[myCritId]+' > '+myCase2[myCritId]+')';
+                                myCaseStepObj.StepInfo.push(stepInfo);
+
+                                MISSES++;                // for general stats
+                                myTreeArray[t].MISSES++; // for cue stats
+                                STEPS += innerStep;
+                                myTreeArray[t].STEPS += innerStep;
+                                break;
+
+                            // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
+                            } else {
+                                stepInfo += '=> CORRECT REJECTION ('+myCase1[myCritId]+' = '+myCase2[myCritId]+')';
+                                myCaseStepObj.StepInfo.push(stepInfo);
+
+                                CORRECT_REJECTIONS++;           // for general stats
+                                myTreeArray[t].CORRECT_REJECTIONS++;  // for cue stats
+                                STEPS += innerStep;
+                                myTreeArray[t].STEPS += innerStep;
+                                break;
+                            }
+                        }
+                        //////////////////////////
+
                         myCaseStepObj.StepInfo.push(stepInfo);
                     }
 
@@ -463,213 +453,6 @@ function AnalyzeDataset(myHeuristic, myDataset, myCritId, myTreeArray, myValidit
             break;
 
         case 'Tallying':
-
-            ////// the decision rule:
-            ////// if caseX.all cues > caseX+N.all cues , then caseX.criterion > caseX+N.criterion
-            //////            PREDICTION                           CRITERION
-            //////            true            ,                    true                  => hit
-            //////            true            ,                    false                 => false alarm
-            //////            false           ,                    true                  => miss
-            //////            false           ,                    false                 => correct rejection
-
-            // go through every case, except the last one
-            for (var c1 = 0; c1 < myDataset.length; c1++) {
-                var myCase1 = myDataset[c1];
-
-                // go through every case, except the first one
-                for (var c2 = c1 + 1; c2 < myDataset.length; c2++) {
-                    var myCase2 = myDataset[c2];
-
-                    /*console.log('CASE 1:');
-                     console.log(myCase1);
-
-                     console.log('CASE 2:');
-                     console.log(myCase2);*/
-
-                    // for step info, prepare values
-                    var innerStep = 0;
-                    var stepInfo = '';
-                    var myCaseStepObj = {};
-                    myCaseStepObj.CaseXvsCaseY = c1 + ' vs ' + c2;
-                    myCaseStepObj[myCritId] = myCase1[myCritId] + ' vs ' + myCase2[myCritId];
-                    myCaseStepObj.StepInfo = []; // for info about every step (stepInfo)
-                    myTreeArray.forEach(function (myCueObj) {
-                        myCaseStepObj[myCueObj.CueName] = myCase1[myCueObj.CueName] + ' vs ' + myCase2[myCueObj.CueName];
-                    })
-
-                    // reset sum variables
-                    var sumCase1 = 0;
-                    var sumCase2 = 0;
-
-                    // go through each tree cue
-                    for (var t = 0; t < myTreeArray.length; t++) {  // CAN'T USE forEach because need to use 'break' statement
-                        innerStep++;
-                        stepInfo += 'STEP' + innerStep.toString() + ' - ';
-
-                        var cueName = myTreeArray[t].CueName;
-
-                        // add cue values (1 or 0)
-                        sumCase1 += myCase1[cueName];
-                        sumCase2 += myCase2[cueName];
-
-                        // add stepinfo except for the last cue
-                        if (t < myTreeArray.length - 1) {
-                            stepInfo += ': CONTINUE on ' + cueName + ' (CaseX Cue Add & CaseY Cue Add), ';
-                        }
-
-                        // if case1 criterion value  is bigger than case2 criterion value
-                        if (myCase1[myCritId] > myCase2[myCritId]) {
-
-                            myTreeArray[t].UNDECIDED_POS++; // for cue stats
-                            myTreeArray[t].STEPS += innerStep;
-
-                            // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                        } else if (myCase1[myCritId] < myCase2[myCritId]) {
-
-                            myTreeArray[t].UNDECIDED_NEG++;  // for cue stats
-                            myTreeArray[t].STEPS += innerStep;
-                        }
-                    }
-
-                    // if the sum of caseX positive cues is bigger than caseY, predict caseX criterion bigger than caseY
-                    if (sumCase1 > sumCase2) {
-                        stepInfo += 'EXIT on ' + cueName + ': CaseX Cues Sum > CaseY Cues Sum (' + sumCase1.toFixed(0) + ' > ' + sumCase2.toFixed(0) +'), ';
-
-                        // if case1 criterion value  is bigger than case2 cue value
-                        if (myCase1[myCritId] > myCase2[myCritId]) {
-                            stepInfo += 'DECISION: CaseX Criterion > CaseY Criterion => HIT';
-                            //myCaseStepObj.StepInfo.push(stepInfo);
-
-                            HITS++;                // for general stats
-                            //myTreeArray[t].HITS++; // for cue stats
-                            STEPS += innerStep;
-                            //myTreeArray[t].STEPS += innerStep;
-                            //break;
-
-                            // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                        } else {
-                            stepInfo += 'DECISION: CaseX Criterion > CaseY Criterion => FALSE ALARM';
-                            //myCaseStepObj.StepInfo.push(stepInfo);
-
-                            FALSE_ALARMS++;           // for general stats
-                            //myTreeArray[t].FALSE_ALARMS++;  // for cue stats
-                            STEPS += innerStep;
-                            //myTreeArray[t].STEPS += innerStep;
-                            //break;
-                        }
-
-                        // if the sum is smaller, predict caseX criterion the same as caseY
-                    } else if (sumCase1 < sumCase2) {
-                        stepInfo += 'EXIT on ' + cueName + ': CaseX Cues Sum < CaseY Cues Sum (' + sumCase1.toFixed(0) + ' < ' + sumCase2.toFixed(0) +'), ';
-
-                        // if case1 criterion value  is bigger than case2 criterion value
-                        if (myCase1[myCritId] > myCase2[myCritId]) {
-                            stepInfo += 'DECISION: CaseX Criterion = CaseY Criterion => MISS';
-                            //myCaseStepObj.StepInfo.push(stepInfo);
-
-                            MISSES++;                // for general stats
-                            //myTreeArray[t].MISSES++; // for cue stats
-                            STEPS += innerStep;
-                            //myTreeArray[t].STEPS += innerStep;
-                            //break;
-
-                            // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                        } else {
-                            stepInfo += 'DECISION: CaseX Criterion = CaseY Criterion => CORRECT REJECTION';
-                            //myCaseStepObj.StepInfo.push(stepInfo);
-
-                            CORRECT_REJECTIONS++;           // for general stats
-                            //myTreeArray[t].CORRECT_REJECTIONS++;  // for cue stats
-                            STEPS += innerStep;
-                            //myTreeArray[t].STEPS += innerStep;
-                            //break;
-                        }
-
-                        // if the sum is equal, guess
-                    } else {
-                        stepInfo += 'EXIT on ' + cueName + ': CaseX Cues Sum = CaseY Cues Sum (' + sumCase1.toFixed(0) + ' = ' + sumCase2.toFixed(0) +'), ';
-
-                        if (Math.random() < 0.5) {
-                            var myGuess = true;
-                            stepInfo += 'GUESS: CaseX Criterion > CaseY Criterion ';
-                        } else {
-                            var myGuess = false;
-                            stepInfo += 'GUESS: CaseX Criterion = CaseY Criterion ';
-                        }
-
-                        // if the prediction is true
-                        if (myGuess) {
-
-                            // if case1 criterion value  is bigger than case2 cue value
-                            if (myCase1[myCritId] > myCase2[myCritId]) {
-                                stepInfo += ' => HIT';
-                                //myCaseStepObj.StepInfo.push(stepInfo);
-
-                                HITS++;                // for general stats
-                                //myTreeArray[t].HITS++; // for cue stats
-                                STEPS += innerStep;
-                                //myTreeArray[t].STEPS += innerStep;
-                                //break;
-
-                                // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                            } else {
-                                stepInfo += ' => FALSE ALARM';
-                                //myCaseStepObj.StepInfo.push(stepInfo);
-
-                                FALSE_ALARMS++;           // for general stats
-                                //myTreeArray[t].FALSE_ALARMS++;  // for cue stats
-                                STEPS += innerStep;
-                                //myTreeArray[t].STEPS += innerStep;
-                                //break;
-                            }
-                            // if the prediction is false
-                        } else {
-
-                            // if case1 criterion value  is bigger than case2 criterion value
-                            if (myCase1[myCritId] > myCase2[myCritId]) {
-                                stepInfo += ' => MISS';
-                                //myCaseStepObj.StepInfo.push(stepInfo);
-
-                                MISSES++;                // for general stats
-                                //myTreeArray[t].MISSES++; // for cue stats
-                                STEPS += innerStep;
-                                //myTreeArray[t].STEPS += innerStep;
-                                //break;
-
-                                // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                            } else {
-                                stepInfo += ' => CORRECT REJECTION';
-                                //myCaseStepObj.StepInfo.push(stepInfo);
-
-                                CORRECT_REJECTIONS++;           // for general stats
-                                //myTreeArray[t].CORRECT_REJECTIONS++;  // for cue stats
-                                STEPS += innerStep;
-                                //myTreeArray[t].STEPS += innerStep;
-                                //break;
-                            }
-                        }
-                    }
-
-                    myCaseStepObj.StepInfo.push(stepInfo);
-
-                    // convert StepInfo from array to string
-                    var myString = myCaseStepObj.StepInfo.toString();
-                    myCaseStepObj.StepInfo = myString.split(',').join('\n');
-
-                    // add to dataset stepinfo array
-                    myDatasetStepInfo.push(myCaseStepObj);
-
-                    /*console.log('CASE HITS: '+HITS);
-                     console.log('CASE MISSES: ' + MISSES);
-                     console.log('CASE CORRECT_REJECTIONS: ' + CORRECT_REJECTIONS);
-                     console.log('CASE FALSE_ALARMS: ' + FALSE_ALARMS);
-                     console.log('CASE UNDECIDED_POS: ' + UNDECIDED_POS);
-                     console.log('CASE UNDECIDED_NEG: ' + UNDECIDED_NEG);
-                     console.log('CASE STEPS: ' + STEPS);*/
-                }
-            }
-            break;
-
         case 'Weighted Tallying':
 
             ////// the decision rule:
@@ -688,48 +471,61 @@ function AnalyzeDataset(myHeuristic, myDataset, myCritId, myTreeArray, myValidit
                 for (var c2 = c1 + 1; c2 < myDataset.length; c2++) {
                     var myCase2 = myDataset[c2];
 
-                    /*console.log('CASE 1:');
-                     console.log(myCase1);
-
-                     console.log('CASE 2:');
-                     console.log(myCase2);*/
-
                     // for step info, prepare values
                     var innerStep = 0;
                     var stepInfo = '';
                     var myCaseStepObj = {};
-                    myCaseStepObj.CaseXvsCaseY = c1 + ' vs ' + c2;
+                    myCaseStepObj.Cases = (c1+1) + ' vs ' + (c2+1);
                     myCaseStepObj[myCritId] = myCase1[myCritId] + ' vs ' + myCase2[myCritId];
                     myCaseStepObj.StepInfo = []; // for info about every step (stepInfo)
                     myTreeArray.forEach(function (myCueObj) {
                         myCaseStepObj[myCueObj.CueName] = myCase1[myCueObj.CueName] + ' vs ' + myCase2[myCueObj.CueName];
                     })
 
-                    // reset sum variables
+                    // reset variables
                     var sumCase1 = 0;
                     var sumCase2 = 0;
+                    var myDecision = '';
 
                     // go through each tree cue
                     for (var t = 0; t < myTreeArray.length; t++) {  // CAN'T USE forEach because need to use 'break' statement
                         innerStep++;
-                        stepInfo += 'STEP' + innerStep.toString() + '. ';
+                        stepInfo += 'STEP'+innerStep+'. ';
 
                         var cueName = myTreeArray[t].CueName;
 
-                        // get cue's validity
+                        // get cue's validity, remember if it is flipped
                         var myFind = $.grep(myValidities, function (e) {
                             return e.CueName == cueName;
                         });
-                        var myValidity = myFind[0].validity;
+                        var isValidFlipped = myFind[0].isFlipped;
+                        if (myHeuristic == 'Tallying') {
+                            var myValidity = 1;
+                        } else {
+                            var myValidity = myFind[0].validity;
+                        }
 
-                        // add cue values (1 or 0) weighted  according to validity
-                        sumCase1 += myCase1[cueName] * myValidity;
-                        sumCase2 += myCase2[cueName] * myValidity;
+                        // if cue validity is not flipped
+                        if (isValidFlipped == false) {
+                            // add cue values (1 or 0) weighted  according to validity
+                            var myCase1Add = myCase1[cueName]* myValidity;
+                            var myCase2Add = myCase2[cueName]* myValidity;
+
+                        } else {
+                            // add the opposite binary values (0 or 1) weighted  according to validity
+                            var myCase1Add = myCase1[cueName]?0:1 * myValidity;
+                            var myCase2Add = myCase2[cueName]?0:1 * myValidity;
+                        }
 
                         // add stepinfo except for the last cue
                         if (t < myTreeArray.length - 1) {
-                            stepInfo += 'CONTINUE on ' + cueName + ' (CaseX Cue Add & CaseY Cue Add), ';
+                            stepInfo += ': CONTINUE on ' + cueName + ' ('+parseFloat(sumCase1.toFixed(3))+'+'+parseFloat(myCase1Add.toFixed(3))+' vs '+parseFloat(sumCase2.toFixed(3))+'+'+parseFloat(myCase2Add.toFixed(3))+'), ';
+                        } else {
+                            stepInfo += ': EXIT on ' + cueName + ' ('+parseFloat(sumCase1.toFixed(3))+'+'+parseFloat(myCase1Add.toFixed(3))+' vs '+parseFloat(sumCase2.toFixed(3))+'+'+parseFloat(myCase2Add.toFixed(3))+';  ';
                         }
+
+                        sumCase1 += myCase1Add;
+                        sumCase2 += myCase2Add;
 
                         // if case1 criterion value  is bigger than case2 criterion value
                         if (myCase1[myCritId] > myCase2[myCritId]) {
@@ -738,7 +534,7 @@ function AnalyzeDataset(myHeuristic, myDataset, myCritId, myTreeArray, myValidit
                             myTreeArray[t].STEPS += innerStep;
 
                             // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                        } else if (myCase1[myCritId] < myCase2[myCritId]) {
+                        } else {
 
                             myTreeArray[t].UNDECIDED_NEG++;  // for cue stats
                             myTreeArray[t].STEPS += innerStep;
@@ -747,122 +543,79 @@ function AnalyzeDataset(myHeuristic, myDataset, myCritId, myTreeArray, myValidit
 
                     // if the sum of caseX positive cues is bigger than caseY, predict caseX criterion bigger than caseY
                     if (sumCase1 > sumCase2) {
-                        stepInfo += 'EXIT on ' + cueName + ': CaseX Cues Sum > CaseY Cues Sum (' + sumCase1.toFixed(3) + ' > ' + sumCase2.toFixed(3) + '), ';
+                        stepInfo += parseFloat(sumCase1.toFixed(3))+' > '+parseFloat(sumCase2.toFixed(3))+'), ';
+                        stepInfo += 'DECISION: ';
 
-                        // if case1 criterion value  is bigger than case2 cue value
-                        if (myCase1[myCritId] > myCase2[myCritId]) {
-                            stepInfo += 'DECISION: CaseX Criterion > CaseY Criterion => HIT';
-                            //myCaseStepObj.StepInfo.push(stepInfo);
-
-                            HITS++;                // for general stats
-                            //myTreeArray[t].HITS++; // for cue stats
-                            STEPS += innerStep;
-                            //myTreeArray[t].STEPS += innerStep;
-                            //break;
-
-                            // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                        } else {
-                            stepInfo += 'DECISION: CaseX Criterion > CaseY Criterion => FALSE ALARM';
-                            //myCaseStepObj.StepInfo.push(stepInfo);
-
-                            FALSE_ALARMS++;           // for general stats
-                            //myTreeArray[t].FALSE_ALARMS++;  // for cue stats
-                            STEPS += innerStep;
-                            //myTreeArray[t].STEPS += innerStep;
-                            //break;
-                        }
+                        myDecision = 'true';
 
                         // if the sum is smaller, predict caseX criterion the same as caseY
                     } else if (sumCase1 < sumCase2) {
-                        stepInfo += 'EXIT on ' + cueName + ': CaseX Cues Sum < CaseY Cues Sum (' + sumCase1.toFixed(3) + ' < ' + sumCase2.toFixed(3) + '), ';
+                        stepInfo += parseFloat(sumCase1.toFixed(3))+' < '+parseFloat(sumCase2.toFixed(3))+'), ';
+                        stepInfo += 'DECISION: ';
+
+                        myDecision = 'false';
+
+                    // if the sum is equal, guess
+                    } else {
+                        stepInfo += parseFloat(sumCase1.toFixed(3))+' = '+parseFloat(sumCase2.toFixed(3))+'), ';
+                        stepInfo += 'GUESS: ';
+
+                        if (Math.random() < 0.5) {
+                            myDecision = 'true';
+                        } else {
+                            myDecision = 'false';
+                        }
+                    }
+
+                    //////////////////////
+                    // if the prediction is true
+                    if (myDecision == 'true') {
+                        stepInfo += myCritId+' of first case is bigger ';
+
+                        // if case1 criterion value  is bigger than case2 cue value
+                        if (myCase1[myCritId] > myCase2[myCritId]) {
+                            stepInfo += ' => HIT ('+myCase1[myCritId]+' > '+myCase2[myCritId]+')';
+                            //myCaseStepObj.StepInfo.push(stepInfo);
+
+                            HITS++;                // for general stats
+                            myTreeArray[myTreeArray.length-1].HITS++; // for cue stats
+                            STEPS += innerStep;
+                            myTreeArray[myTreeArray.length-1].UNDECIDED_POS--;
+
+                         // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
+                        } else {
+                            stepInfo += '=> FALSE ALARM ('+myCase1[myCritId]+' = '+myCase2[myCritId]+')';
+                            //myCaseStepObj.StepInfo.push(stepInfo);
+
+                            FALSE_ALARMS++;           // for general stats
+                            myTreeArray[myTreeArray.length-1].FALSE_ALARMS++;  // for cue stats
+                            STEPS += innerStep;
+                            myTreeArray[myTreeArray.length-1].UNDECIDED_NEG--;
+                        }
+                    } else if (myDecision == 'false') {
+                        stepInfo += myCritId+' of both cases are equal ';
 
                         // if case1 criterion value  is bigger than case2 criterion value
                         if (myCase1[myCritId] > myCase2[myCritId]) {
-                            stepInfo += 'DECISION: CaseX Criterion = CaseY Criterion => MISS';
-                            //myCaseStepObj.StepInfo.push(stepInfo);
+                            stepInfo += '=> MISS ('+myCase1[myCritId]+' > '+myCase2[myCritId]+')';
 
                             MISSES++;                // for general stats
-                            //myTreeArray[t].MISSES++; // for cue stats
+                            myTreeArray[myTreeArray.length-1].MISSES++; // for cue stats
                             STEPS += innerStep;
-                            //myTreeArray[t].STEPS += innerStep;
-                            //break;
+                            myTreeArray[myTreeArray.length-1].UNDECIDED_POS--;
 
-                            // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
+                        // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
                         } else {
-                            stepInfo += 'DECISION: CaseX Criterion = CaseY Criterion => CORRECT REJECTION';
+                            stepInfo += '=> CORRECT REJECTION ('+myCase1[myCritId]+' = '+myCase2[myCritId]+')';
                             //myCaseStepObj.StepInfo.push(stepInfo);
 
                             CORRECT_REJECTIONS++;           // for general stats
-                            //myTreeArray[t].CORRECT_REJECTIONS++;  // for cue stats
+                            myTreeArray[myTreeArray.length-1].CORRECT_REJECTIONS++;  // for cue stats
                             STEPS += innerStep;
-                            //myTreeArray[t].STEPS += innerStep;
-                            //break;
-                        }
-
-                        // if the sum is equal, guess
-                    } else {
-                        stepInfo += 'EXIT on ' + cueName + ': CaseX Cues Sum = CaseY Cues Sum (' + sumCase1.toFixed(3) + ' = ' + sumCase2.toFixed(3) + '), ';
-
-                        if (Math.random() < 0.5) {
-                            var myGuess = true;
-                            stepInfo += 'GUESS: CaseX Criterion > CaseY Criterion ';
-                        } else {
-                            var myGuess = false;
-                            stepInfo += 'GUESS: CaseX Criterion = CaseY Criterion ';
-                        }
-
-                        // if the prediction is true
-                        if (myGuess) {
-
-                            // if case1 criterion value  is bigger than case2 cue value
-                            if (myCase1[myCritId] > myCase2[myCritId]) {
-                                stepInfo += ' => HIT';
-                                //myCaseStepObj.StepInfo.push(stepInfo);
-
-                                HITS++;                // for general stats
-                                //myTreeArray[t].HITS++; // for cue stats
-                                STEPS += innerStep;
-                                //myTreeArray[t].STEPS += innerStep;
-                                //break;
-
-                                // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                            } else {
-                                stepInfo += ' => FALSE ALARM';
-                                //myCaseStepObj.StepInfo.push(stepInfo);
-
-                                FALSE_ALARMS++;           // for general stats
-                                //myTreeArray[t].FALSE_ALARMS++;  // for cue stats
-                                STEPS += innerStep;
-                                //myTreeArray[t].STEPS += innerStep;
-                                //break;
-                            }
-                            // if the prediction is false
-                        } else {
-
-                            // if case1 criterion value  is bigger than case2 criterion value
-                            if (myCase1[myCritId] > myCase2[myCritId]) {
-                                stepInfo += ' => MISS';
-                                //myCaseStepObj.StepInfo.push(stepInfo);
-
-                                MISSES++;                // for general stats
-                                //myTreeArray[t].MISSES++; // for cue stats
-                                STEPS += innerStep;
-                                //myTreeArray[t].STEPS += innerStep;
-                                //break;
-
-                                // if case1 criterion value is the same as case2 criterion value (can't be smaller, because we sorted cases)
-                            } else {
-                                stepInfo += ' => CORRECT REJECTION';
-                                //myCaseStepObj.StepInfo.push(stepInfo);
-
-                                CORRECT_REJECTIONS++;           // for general stats
-                                //myTreeArray[t].CORRECT_REJECTIONS++;  // for cue stats
-                                STEPS += innerStep;
-                                //myTreeArray[t].STEPS += innerStep;
-                                //break;
-                            }
+                            myTreeArray[myTreeArray.length-1].UNDECIDED_NEG--;
                         }
                     }
+                    ////////////////////////////////
 
                     myCaseStepObj.StepInfo.push(stepInfo);
 
@@ -882,6 +635,7 @@ function AnalyzeDataset(myHeuristic, myDataset, myCritId, myTreeArray, myValidit
                      console.log('CASE STEPS: ' + STEPS);*/
                 }
             }
+
             break;
     }
 

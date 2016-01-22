@@ -195,10 +195,10 @@ body {
 /*dataset TABLE view*/
 
 #dataset_container {
-    width: 600px;
+    width: 1000px;
     height: 400px;
     overflow: auto;
-    margin-left: 20px;
+    margin-left: 0px;
 }
 .handsontable col {
     width: 80px;
@@ -396,8 +396,8 @@ body {
     display: inline-block;
     width: 160px;
     height: 455px;
-    position: absolute;
-    left: 430px;
+    position: relative;
+    left: 130px;
     margin-top: 10px;
     vertical-align: top;
 }
@@ -413,8 +413,8 @@ body {
 #info_column {
     display: inline-block;
     width: 340px;
-    position: absolute;
-    left: 765px;
+    position: relative;
+    left: 280px;
     padding-left: 0px;
     padding-top: 8px;
     vertical-align: top;
@@ -592,7 +592,7 @@ li:not(.ui-draggable-disabled) .widget_title {
     /*left: -10px;*/
 }
 #white_area .widget_content {
-    width: 420px;
+    width: 425px;
     position: relative;
     left: -130px;
 }

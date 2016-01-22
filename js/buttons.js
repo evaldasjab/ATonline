@@ -180,7 +180,7 @@ function ButtonSwitchExit(myCueId, myExitClass) {
             scope.drag_tree[myIndex] = myCueObj;
 
             // update statistics
-            var myAnalysis = AnalyzeDataset(scope.heuristic_name, scope.dataset_binary, scope.drag_criterion[0].CueName, scope.drag_tree);
+            var myAnalysis = AnalyzeDataset(scope.heuristic_name, scope.dataset_binary, scope.drag_criterion[0].CueName, scope.drag_tree, scope.validities);
             //console.log(myAnalysis);
             scope.general_stats = myAnalysis.general_stats;
             scope.drag_tree = myAnalysis.cues_stats;
@@ -194,9 +194,6 @@ function ButtonSwitchExit(myCueId, myExitClass) {
 
         // get heuristic structure for scope
         var myHeurStr = GetHeuristicStructure();
-
-        // update scope to make ready for save
-        UpdateScope('heuristic_info.HeuristicStructure', myHeurStr);
 
         return false;                                            // Return false, prevent default action
     })
@@ -274,27 +271,39 @@ function UpdateScopeModels() {
             scope.dataset_binary = ConvertToBinary(scope.dataset_original, scope.heuristic_info.CueMapping);
             scope.dataset_sorted = scope.dataset_binary;
 
-            // bug workaround FIX THIS!!!
-            if (scope.heuristic_name != 'Fast-and-Frugal Tree') {
-                // get binary dataset except criterion
-                scope.dataset_binary_exceptcriterion = ConvertToBinaryExceptCriterion(scope.dataset_original, scope.heuristic_info.CueMapping, scope.drag_criterion[0].CueName);
-                // sort by criterion
-                scope.dataset_sorted = SortByCriterion(scope.dataset_binary_exceptcriterion, scope.drag_criterion[0].CueName);
-            }
-
             // if criterion is already selected
             if (scope.drag_criterion.length > 0) {
+
+                // bug workaround FIX THIS!!!
+                if (scope.heuristic_name != 'Fast-and-Frugal Tree') {
+                    // get binary dataset except criterion
+                    scope.dataset_binary_exceptcriterion = ConvertToBinaryExceptCriterion(scope.dataset_original, scope.heuristic_info.CueMapping, scope.drag_criterion[0].CueName);
+                    // sort by criterion
+                    scope.dataset_sorted = SortByCriterion(scope.dataset_binary_exceptcriterion, scope.drag_criterion[0].CueName);
+                }
+
                 // analyse every cue in cues_list as one-cue-tree
                 scope.drag_cues_list.forEach(function (myCueObj, myIndex) {
-                    var myAnalysis = AnalyzeDataset(scope.heuristic_name, scope.dataset_sorted, scope.drag_criterion[0].CueName, [myCueObj]);
+                    var myAnalysis = AnalyzeDataset(scope.heuristic_name, scope.dataset_sorted, scope.drag_criterion[0].CueName, [myCueObj], scope.validities);
                     scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
                 });
 
                 // update statistics
-                var myAnalysis = AnalyzeDataset(scope.heuristic_name, scope.dataset_sorted, scope.drag_criterion[0].CueName, scope.drag_tree);
+                var myAnalysis = AnalyzeDataset(scope.heuristic_name, scope.dataset_sorted, scope.drag_criterion[0].CueName, scope.drag_tree, scope.validities);
                 //console.log(myAnalysis);
                 scope.general_stats = myAnalysis.general_stats;
                 scope.drag_tree = myAnalysis.cues_stats;
+                scope.dataset_stepinfo = myAnalysis.dataset_stepinfo;
+                scope.dataset_stepinfo_colheads = Object.keys(scope.dataset_stepinfo[0]);
+
+            // if criterion is not selected
+            } else {
+
+                // analyse every cue in cues_list as one-cue-tree with itself as a criterion
+                scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
+                    var myAnalysis = AnalyzeDataset('Fast-and-Frugal Tree', scope.dataset_sorted, myCueObj.CueName, [myCueObj], scope.validities);
+                    scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
+                });
             }
 
         });
@@ -343,6 +352,9 @@ function ButtonDatasetStepInfo() {
         e.stopPropagation();   // Stop event bubbling (don't initiate other actions triggered by "mousedown", e.g. dragging)
 
         $('#dataset_container').slideToggle();
+
+        // hide general statistics column
+        //$('#stats_column').animate({width:'toggle'});
 
         return false;                                            // Return false, prevent default action
     })

@@ -485,47 +485,6 @@ function UpdateExitBranches(myHeuristicName, myTreeArray) {
 }
 
 
-function UpdateScope(myScopeKey, myScopeValue) {
-
-    var scope = angular.element(document.querySelector('#ng_territory')).scope();
-
-    // handle scope key with a child
-    var myScopeArray = myScopeKey.split(".");
-
-    if (myScopeArray.length == 1) {
-        scope.$apply(function(){
-
-            //console.log(myScopeValue);
-            //debugger;
-
-            //scope[myScopeKey] = myScopeValue;
-            //scope[myScopeKey] = angular.merge({}, scope[myScopeKey], myScopeValue);   // angular.extend(dst, src)
-            scope[myScopeKey] = $.extend(true, scope[myScopeKey], myScopeValue);   // newdefaults = $.extend(defaults, options);
-
-        });
-        console.log('UPDATE SCOPE one level:');
-        console.log(scope);
-
-    } else if (myScopeArray.length == 2) {
-
-        scope.$apply(function () {
-
-            //console.log(myScopeValue);
-
-            var myScopeParent = scope[myScopeArray[0]];
-
-            //myScopeParent[myScopeArray[1]] = myScopeValue;
-            //myScopeParent[myScopeArray[1]] = angular.merge({}, myScopeParent[myScopeArray[1]], myScopeValue);   // angular.extend(dst, src)
-            myScopeParent[myScopeArray[1]] = $.extend(true, myScopeParent[myScopeArray[1]], myScopeValue);   // newdefaults = $.extend(defaults, options);
-
-            //console.log(myScopeParent[myScopeArray[1]]);
-        });
-        console.log('UPDATE SCOPE two levels:');
-        console.log(scope);
-    };
-}
-
-
 
 
 
@@ -1152,7 +1111,7 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
     }
 
     // change the page's title
-    $('#page_title').html('NEW '+$scope.heuristic_name);
+    $('#page_title').html($scope.heuristic_name);
 
     // create heuristic_info with initial values
     var myHeurInfoObj = {};
@@ -1213,6 +1172,12 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
                 myCueObj.BranchYes = 'exit';
             });
 
+            // show how many YES and NO values are in every cue, based on the split value and flipping
+            $scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
+                var myAnalysis = AnalyzeDataset('Fast-and-Frugal Tree', $scope.dataset_sorted, myCueObj.CueName, [myCueObj], $scope.validities);
+                $scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
+            });
+
             //////////////////////////////////////////////////
             // SHOULD BE THE SAME IN BOTH CONTROLLERS CreateHeur AND ShowHeur
             //////////////////////////////////////////////////
@@ -1247,9 +1212,11 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
                 if($scope.heuristic_name =='Take The Best') {
                     if ($scope.validities.length>0) {
 
-                        // rearrange the cues by validities
-                        $scope.drag_tree = OrderCuesByValidities($scope.drag_cues_list, $scope.validities);
-                        $scope.drag_cues_list = [];
+                        if ($scope.drag_cues_list.length>0) {
+                            // rearrange the cues by validities
+                            $scope.drag_tree = OrderCuesByValidities($scope.drag_cues_list, $scope.validities);
+                            $scope.drag_cues_list = [];
+                        }
                     }
                 }
                 // add validity tags
@@ -1288,11 +1255,11 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
 
                             // analyse every cue in cues_list as one-cue-tree
                             $scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
-                                var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_binary, $scope.drag_criterion[0].CueName, [myCueObj]);
+                                var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_binary, $scope.drag_criterion[0].CueName, [myCueObj], $scope.validities);
                                 $scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
                             });
                             // get statistics
-                            var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
+                            var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree, $scope.validities);
                             // update statistics
                             $scope.general_stats = myAnalysis.general_stats;
 
@@ -1353,7 +1320,8 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
                     }
 
                     // update general statistics
-                    /*var myAnalysis = AnalyzeDataset($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
+                    /*var myAnalysis = dataset_stepinfo
+                    ($scope.dataset_binary, $scope.drag_criterion[0].CueName, $scope.drag_tree);
                     $scope.general_stats = myAnalysis.general_stats;
                     // tree is supposed to be empty, so no $scope.drag_tree = myAnalysis.cues_stats
                     $scope.dataset_stepinfo = myAnalysis.dataset_stepinfo;
@@ -1367,6 +1335,12 @@ myApp.controller('CreateHeurCtrl', function ($scope, $routeParams, datasetFullsS
                     // move all cues from tree to cues list, next to criterion
                     $scope.drag_cues_list = $.merge($scope.drag_cues_list, $scope.drag_tree);
                     $scope.drag_tree = [];
+
+                    // show how many YES and NO values are in every cue, based on the split value and flipping
+                    $scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
+                        var myAnalysis = AnalyzeDataset('Fast-and-Frugal Tree', $scope.dataset_sorted, myCueObj.CueName, [myCueObj], $scope.validities);
+                        $scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
+                    });
 
                     // hide the shuffle buttons
                     $('#drag_cues_list').find('.button_shuffle').hide();
@@ -1608,14 +1582,16 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
                 $scope.$watchCollection('validities', function() {
                     console.log('WATCH validities');
 
-                    /*if($scope.heuristic_name =='Take The Best') {
+                    if($scope.heuristic_name =='Take The Best') {
                         if ($scope.validities.length>0) {
 
-                            // rearrange the cues by validities
-                            $scope.drag_tree = OrderCuesByValidities($scope.drag_cues_list, $scope.validities);
-                            $scope.drag_cues_list = [];
+                            if ($scope.drag_cues_list.length>0) {
+                                // rearrange the cues by validities
+                                $scope.drag_tree = OrderCuesByValidities($scope.drag_cues_list, $scope.validities);
+                                $scope.drag_cues_list = [];
+                            }
                         }
-                    }*/
+                    }
                     // add validity tags
                     UpdateValidityTags($scope.heuristic_name, 'tree', $scope.validities);
                 });
@@ -1652,7 +1628,7 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
 
                                 // analyse every cue in cues_list as one-cue-tree
                                 $scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
-                                    var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_binary, $scope.drag_criterion[0].CueName, [myCueObj]);
+                                    var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_binary, $scope.drag_criterion[0].CueName, [myCueObj], $scope.validities);
                                     $scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
                                 });
 
@@ -1671,6 +1647,12 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
 
                                 // calculate validities
                                 $scope.validities = GetValidities($scope.dataset_binary_exceptcriterion, $scope.drag_criterion[0].CueName, $scope.heuristic_info.CueMapping);
+
+                                // move cues to the tree, if cues_list is not empty (in the beginning)
+                                if ($scope.drag_cues_list.length > 0) {
+                                    $scope.drag_tree = $scope.drag_cues_list;
+                                    $scope.drag_cues_list = [];
+                                }
 
                                 break;
                         }
@@ -1708,7 +1690,7 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
                         $scope.drag_tree = UpdateExitBranches($scope.heuristic_name, $scope.drag_tree);
 
                         // get statistics
-                        var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_sorted, $scope.drag_criterion[0].CueName, $scope.drag_tree);
+                        var myAnalysis = AnalyzeDataset($scope.heuristic_name, $scope.dataset_sorted, $scope.drag_criterion[0].CueName, $scope.drag_tree, $scope.validities);
 
                         // update statistics
                         $scope.general_stats = myAnalysis.general_stats;
@@ -1728,6 +1710,12 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
 
                     // remove tags
                     UpdateValidityTags($scope.heuristic_name, 'drag_cues_list');
+
+                    // show how many YES and NO values are in every cue, based on the split value and flipping
+                    $scope.drag_cues_list.forEach(function(myCueObj, myIndex) {
+                        var myAnalysis = AnalyzeDataset('Fast-and-Frugal Tree', $scope.dataset_sorted, myCueObj.CueName, [myCueObj], $scope.validities);
+                        $scope.drag_cues_list[myIndex] = myAnalysis.cues_stats[0];
+                    });
                 });
 
                 //////////////////////////////////////////////////
@@ -1775,7 +1763,7 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
     // execute function when ng-repeat is done
     $scope.$on('ngFinished cue in drag_cues_list', function(ngRepeatFinishedEvent) { //you also get the actual event object
 
-        console.log('NGREPEAT FINISHED -> cues are listed');
+        console.log('NGREPEAT FINISHED -> cues in list are listed');
 
         // activate expand all buttons
         ButtonExpandAll('blue_area');
@@ -1788,10 +1776,16 @@ myApp.controller('ShowHeurCtrl', function ($scope, $routeParams, $q, heuristicIn
     // execute function when ng-repeat is done
     $scope.$on('ngFinished cue in drag_tree', function(ngRepeatFinishedEvent) { //you also get the actual event object
 
-        console.log('NGREPEAT FINISHED -> cues are listed');
+        console.log('NGREPEAT FINISHED -> cues in tree are listed');
 
         // take care of the arrows and exits
         UpdateArrowsAndExits($scope.heuristic_name, $scope.drag_tree);
+
+        // if validities exist
+        if ($scope.validities) {
+            // add validity tags
+            UpdateValidityTags($scope.heuristic_name, 'tree', $scope.validities);
+        }
 
         // activate expand buttons
         ButtonsExpand();
