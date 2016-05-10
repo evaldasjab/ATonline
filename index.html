@@ -10,45 +10,22 @@
 
         <link rel="apple-touch-icon" href="boilerplatestuff/apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
-        <link href='http://fonts.googleapis.com/css?family=Offside' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="js/vendor/jquery-ui-1.11.4/jquery-ui.css">
+        <!--<link href='http://fonts.googleapis.com/css?family=Offside' rel='stylesheet' type='text/css'>                 UNCOMMENT!!!!-->
+        <link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="bower_components/handsontable/dist/handsontable.full.min.css">
+        <link rel="stylesheet" type="text/css" href="bower_components/angularjs-slider/dist/rzslider.css">
         <link rel="stylesheet" type="text/css" href="css/normalize.css">
         <link rel="stylesheet" type="text/css" href="css/main.css">
+        <!--<link rel="stylesheet" type="text/css" ng-href="css/color_{{color_theme}}.css">-->
 
     </head>
-    <body>
+    <body ng-controller="MainCtrl">
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <!-- Add your site or application content here -->
-        <!--<p>Hello world! This is HTML5 Boilerplate.</p>-->
 
-
-<div class="blue_area" id="blue_area_top">
-    <h1 id="page_title">ADAPTIVE TOOLBOX Online</h1>
-    <img id="mpib_logo" src="img/mpib_logo.jpg" alt="Max Planck Institute for Human Development">
-
-    <nav class="navbar navbar-default" role="navigation">
-        <!-- Toggle get grouped for better mobile display -->
-        <!--            <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search"><i class="glyphicon glyphicon-search"></i></button>
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#login"><i class="glyphicon glyphicon-user"></i></button>
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">Menu</i></button>
-                        &lt;!&ndash;<a class="navbar-brand" href="#">Brand</a>&ndash;&gt;
-                    </div>-->
-
-        <ul class="" id="menu">
-            <li id="menu_mytoolbox" class="inline"><a href="index.html#/">MY TOOLBOX</a></li>
-            <li id="menu_datasets" class="inline"><a href="index.html#/data">DATASETS</a></li>
-            <li id="menu_ffts" class="inline"><a href="index.html#/ffts">FAST-AND-FRUGAL TREES</a></li>
-            <li id="menu_heuristics" class="inline"><a href="index.html#/heuristics">OTHER HEURISTICS</a></li>
-        </ul>
-    </nav>
-
-</div>
-
+<!--here used to be blue header with the title-->
 
 
 
@@ -63,15 +40,21 @@
         All rights reserved.</p>
 </footer>
 
-
-
-
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/{{JQUERY_VERSION}}/jquery.min.js"></script>-->
         <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>-->
 
         <!--libraries and plugins-->
-        <script src="js/vendor/jquery-1.11.3.min.js"></script>
-        <script src="js/vendor/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+        <script src="bower_components/handsontable/dist/handsontable.full.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
+        <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/ngHandsontable/dist/ngHandsontable.min.js"></script>
+        <script src="bower_components/mathjs/dist/math.js"></script>
+
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
         <script src="js/vendor/papaparse.min.js"></script>
         <script src="js/vendor/list.js"></script>
@@ -81,26 +64,28 @@
         <script src="js/vendor/FileSaver.min.js"></script>
         <script src="js/vendor/canvas-toBlob.js"></script>
         <script src="js/vendor/Blob.js"></script>
-
-        <script src="bower_components/handsontable/dist/handsontable.full.js"></script>
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-route/angular-route.js"></script>
-        <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
-        <script src="bower_components/ngHandsontable/dist/ngHandsontable.min.js"></script>
-
-
+        <script src="js/vendor/spin.min.js"></script>
 
         <!--web api scripts-->
         <!--<script src="http://10.211.55.3:62417/Client/AngularJS"></script>-->
         <script src="js/api/evoapp.services.js"></script>
         <script src="js/api/jquery.evoapp-services.js"></script>
 
-        <!--custom scripts-->
+        <!--my scripts-->
+        <script src="js/conversions.js"></script>
+        <script src="js/dragging.js"></script>
         <script src="js/arrows.js"></script>
         <script src="js/buttons.js"></script>
         <script src="js/analysis.js"></script>
-        <script src="js/TreeStatistics.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/statistics.js"></script>
+        <script src="js/buttons_in_scope.js"></script>
+
+        <script src="js/MyApp.js"></script>  <!--MainCtrl-->
+
+        <script src="js/ToolCtrl.js"></script>
+        <script src="js/DataCtrl.js"></script>
+        <script src="js/FftCtrl.js"></script>
+        <script src="js/HeurCtrl.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <!--<script>

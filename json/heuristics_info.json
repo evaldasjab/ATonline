@@ -9,7 +9,7 @@
         "size_cues": "3",
         "usage_users": "5",
         "usage_datasets": "2",
-        "description": "Infer which of two alternatives has the higher value by (a) searching through cues in order of validity, (b) stopping the search as soon as a cue discriminates, (c) choosing the alternative this cue favors. Can predict as accurately as or more than multiple regression, neural networks, exemplar models, and classification and regression trees."
+        "description": "Infer which of two alternatives has the higher value by (a) searching through cues in order of validity, (b) stopping the search as soon as a cue discrateiminates, (c) choosing the alternative this cue favors. Can predict as accurately as or more than multiple regression, neural networks, exemplar models, and classification and regression trees."
     },
     {
         "heur_id": 2,

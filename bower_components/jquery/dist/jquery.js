@@ -1374,7 +1374,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			bp.unshift( cur );
 		}
 
-		// Walk down the tree looking for a discrepancy
+		// Walk down the tree looking for a discrateepancy
 		while ( ap[i] === bp[i] ) {
 			i++;
 		}

@@ -1,0 +1,758 @@
+
+<div id="blue_area_top" class="blue_area" ng-class="color_theme">
+    <h1 id="page_title">ADAPTIVE TOOLBOX Online</h1>
+    <img id="mpib_logo" src="img/MPIB_Logo_weiss.png" alt="Max Planck Institute for Human Development in Berlin, Germany">
+
+    <ul class="" id="menu">
+        <li id="menu_mytoolbox" class="inline" ng-class="{'active':heuristic_info.Access =='private'}" title="Private datasets and tasks - visible only to me"><a href="index.html#/">MY TOOLBOX</a></li>
+        <li id="menu_datasets" class="inline" title="Public datasets - visible to all users"><a href="index.html#/data">DATASETS</a></li>
+        <li id="menu_fft" class="inline" title="Public tasks - visible to all users"><a href="index.html#/fft">CLASSIFICATION TASKS</a></li>
+        <li id="menu_heuristics" class="inline" ng-class="{'active':heuristic_info.Access =='public'}" title="Public tasks - visible to all users"><a href="index.html#/heur">COMPARISON TASKS</a></li>
+    </ul>
+</div>
+
+<div id="blue_area" class="blue_area page_area" ng-class="color_theme">
+
+    <div>
+        <button id="save" class="button_action" disabled>Save Copy To My Toolbox</button>
+        <button id="publish" class="button_action" disabled>Publish To All Users</button>
+        <button id="choose_dataset" class="button_action" disabled>Choose Different Dataset</button>
+        <button id="remove" class="button_action" disabled>Remove From My Toolbox</button>
+
+<!--        <button class="button_grey button_selectdata button_on disabled" id="button_allcases">All Cases</button>
+        <button class="button_grey button_selectdata disabled" id="button_training">Training</button>
+        <button class="button_grey button_selectdata disabled" id="button_testing"> Testing</button>-->
+    </div>
+
+
+    <div id="horiz_scroll"> <!-- need this and #drag_cues_list to make the scroll work -->
+
+        <ul ui-sortable="sortableOptions" ng-model="drag_cues_list" id="drag_cues_list" class="sortable_area"> <!-- need this and #horiz_scroll to make the scroll work -->
+
+            <li class="widget" ng-repeat="cue in drag_cues_list" on-finish-render="ngFinishedCuesList" id="{{cue.CueName}}" name="{{cue.CueName}}">
+                <div class="widget_head" ng-class="color_theme">
+                    <div ng-click="ButtonDisableCue($event)" title="Don't Use this Cue in the Prediction">
+                        <svg class="button_control button_disable" height="20" width="20">
+                            <line x1="5" y1="5" x2="15" y2="15"/>
+                            <line x1="5" y1="15" x2="15" y2="5"/>
+                        </svg>
+                    </div>
+                    <div class="widget_title" >
+                        <span ng-marquee-overflow title="{{cue.CueName}}">{{cue.CueName}}</span>
+                    </div>
+                    <div class="button_expand_div" ng-click="cue.WidgetExpand=!cue.WidgetExpand; ButtonExpandCue($event)" title="Expand/Collapse the Cue">
+                        <svg class="button_control button_expand" height="20" width="20">
+                            <polyline class="down" ng-hide="cue.WidgetExpand" points="3 7,10 14,17 7"/>
+                            <polyline class="up" ng-show="cue.WidgetExpand" points="3 13,10 6,17 13"/>
+                        </svg>
+                    </div>
+
+                </div>
+                <!--<div class="widget_content" style="display: none;">-->
+                <div class="widget_content" style="display: none">
+                    <div class="unsortable">
+                        <table class="split_table">
+                            <tr><td class="table_title" colspan="5">SPLIT OF CUE'S VALUES</td></tr>
+                            <tr>
+                                <th>min</th>
+                                <th class="cell_exit" title="Values between MIN (included) and SPLIT (included) are...">
+                                    <input ng-show="cue.IsFlipped" ng-model="cue.BranchYesName" type="text"/>
+                                    <input ng-show="!cue.IsFlipped" ng-model="cue.BranchNoName" type="text"/>
+                                    <!--{{cue.IsFlipped?'yes':'no'}}-->
+                                </th>
+                                <td class="swap" ng-click="cue.IsFlipped=!cue.IsFlipped;ConvertToBinary()" title="Swap YES and NO Ranges">
+                                    <svg class="button_swap" height="20" width="40">
+                                        <polyline class="left" points="9 3,2 10,9 17"/>
+                                        <polyline class="right" points="31 3,38 10,31 17"/>
+                                        <line x1="2" y1="10" x2="38" y2="10"/>
+                                    </svg>
+                                </td>
+                                <th class="cell_exit" title="Values between SPLIT (excluded) and MAX (included) are...">
+                                    <input ng-show="!cue.IsFlipped" ng-model="cue.BranchYesName" type="text"/>
+                                    <input ng-show="cue.IsFlipped" ng-model="cue.BranchNoName" type="text"/>
+                                    <!--{{cue.IsFlipped?'no':'yes'}}-->
+                                </th>
+                                <th>max</th></tr>
+                            <tr>
+                                <td class="cell_values" title="Minimum Value">{{cue.MinValue}}</td>
+                                <th class="cell_values cell_exit">{{cue.IsFlipped?cue.CasesYes:cue.CasesNo}}</th>
+                                <td class="cell_values">
+                                    <input ng-model="cue.SplitValue" ng-change="ConvertToBinary()" type="number" title="Split Value">
+                                </td>
+                                <th class="cell_values cell_exit">{{cue.IsFlipped?cue.CasesNo:cue.CasesYes}}</th>
+                                <td class="cell_values" title="Maximum Value">{{cue.MaxValue}}</td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<td class="stats_slider" colspan="5">
+                                    <div class="split_slider" title="Change the Split Value"></div>
+                                </td>-->
+                            <!--</tr>-->
+                        </table>
+                        <div class="ng_slider" ng-mouseup="ConvertToBinary()">
+                            <rzslider rz-slider-model="cue.SplitValue"
+                                      rz-slider-options="{
+                                                floor: cue.MinValue,
+                                                ceil: cue.MaxValue,
+                                                step:0.5,
+                                                precision:1,
+                                                hidePointerLabels:true,
+                                                hideLimitLabels:true
+                                              }">
+                            </rzslider>
+                        </div>
+                    </div>
+                </div>
+                <!--<ul class="arrows_exits">
+                    &lt;!&ndash;here will be added all arrows and exits&ndash;&gt;
+                </ul>-->
+            </li>
+        </ul>
+
+    </div>
+
+    <svg class="buttons_controls button_expand_all" ng-click="ButtonExpandAllCues(drag_cues_list)" id="button_expand_all_blue" height="20" width="20">
+        <!--<polyline class="down" points="3 7,10 14,17 7"/>-->
+        <polyline class="up" points="3 13,10 6,17 13"/>
+    </svg>
+
+</div>
+
+<div id="white_area" class="page_area">
+
+    <svg class="buttons_controls button_expand_all" ng-click="ButtonExpandAllCues(drag_tree)" id="button_expand_all_white"  height="20" width="20">
+        <polyline class='down' points="3 7,10 14,17 7"/>
+        <!--<polyline class="up" points="3 13,10 6,17 13"/>-->
+    </svg>
+
+    <div id="stats_column">
+        <div id="criterion_area"> Criterion:
+            <div id="criterion_placeholder" ng-class="color_theme">
+                <!--here will be dragged criterion-->
+            </div>
+
+            <ul ui-sortable="sortableOptions" ng-model="drag_criterion" id="criterion_place" class="sortable_area">
+                <li ng-repeat="cue in drag_criterion" on-finish-render="ngFinishedCriterion" id="{{cue.CueName}}" name="{{cue.CueName}}" class="widget">
+                    <div class="widget_head" ng-class="color_theme">
+                        <div class="widget_title" >
+                            <span ng-marquee-overflow title="{{cue.CueName}}">{{cue.CueName}}</span>
+                        </div>
+                        <div ng-click="cue.WidgetExpand=!cue.WidgetExpand; ButtonExpandCue($event)" title="Expand/Collapse the Cue">
+                            <svg class="button_control button_expand" height="20" width="20">
+                                <polyline class="down" ng-hide="cue.WidgetExpand" points="3 7,10 14,17 7"/>
+                                <polyline class="up" ng-show="cue.WidgetExpand" points="3 13,10 6,17 13"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="widget_content" style="display: none">
+                        <div class="unsortable">
+                            <table class="split_table">
+                                <tr>
+                                    <th></th>
+                                    <th>min</th>
+                                    <th></th>
+                                    <th>max</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td class="cell_values"></td>
+                                    <td class="cell_values" title="Minimum Value">{{cue.MinValue}}</td>
+                                    <td class="cell_values"></td>
+                                    <td class="cell_values" title="Maximum Value">{{cue.MaxValue}}</td>
+                                    <td class="cell_values"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!--<div id="cases_container">-->
+            <table class="usage_table">
+                <tr>
+                    <th class="table_title" ng-class="color_theme" colspan="2">SPLIT OF DATASET'S CASES</th>
+                    <td><button id="shuffle_cases" class="button_stat" ng-click="ButtonShuffleDatasetCases()">Shuffle Cases</button></td>
+                </tr>
+                <tr>
+                    <th class="valid_header" ng-click="DataSplitCases('training')" ng-class="{'valid_sort_by color_heur':dataset_split.AnalMode =='training'}">Training</th>
+                    <th class="valid_header" ng-click="DataSplitCases('testing')" ng-class="{'valid_sort_by color_heur':dataset_split.AnalMode =='testing'}">Testing</th>
+                    <th class="valid_header" ng-click="DataSplitCases('allcases')" ng-class="{'valid_sort_by color_heur':dataset_split.AnalMode =='allcases'}">All Cases</th>
+                </tr>
+                <td class="cell_datasplit" ng-class="{'valid_sort_column color_heur':dataset_split.AnalMode =='training'}"><input type="number" ng-model="dataset_split.TrainNum" ng-change="DataCountCases('TrainNum')" /></td>
+                <td class="cell_datasplit" ng-class="{'valid_sort_column color_heur':dataset_split.AnalMode =='testing'}">{{dataset_split.AllCases-dataset_split.TrainNum}}</td>
+                <td class="cell_datasplit" ng-class="{'valid_sort_column color_heur':dataset_split.AnalMode =='allcases'}">{{dataset_split.AllCases}}</td>
+                </tr>
+                </tr>
+                <td class="cell_datasplit" ng-class="{'valid_sort_column color_heur':dataset_split.AnalMode =='training'}"><input type="number" ng-model="dataset_split.TrainPerc" ng-change="DataCountCases('TrainPerc')" /><span>%</span></td>
+                <td class="cell_datasplit" ng-class="{'valid_sort_column color_heur':dataset_split.AnalMode =='testing'}">{{dataset_split.TestPerc}} %</td>
+                <td class="cell_datasplit" ng-class="{'valid_sort_column color_heur':dataset_split.AnalMode =='allcases'}">{{dataset_split.TrainPerc+dataset_split.TestPerc}} %</td>
+                </tr>
+                <!--<tr>
+                    <td colspan="3"><div id="datasplit_slider" title="Split Dataset's Cases"></div></td>
+                </tr>-->
+            </table>
+        <!--</div>-->
+        <div class="ng_slider" ng-mouseup="DataCountCases('TrainNum')">
+            <rzslider rz-slider-model="dataset_split.TrainNum"
+                      rz-slider-options="{
+                                                floor: 0,
+                                                ceil: dataset_split.AllCases,
+                                                step:1,
+                                                precision:1,
+                                                hidePointerLabels:true,
+                                                hideLimitLabels:true
+                                              }">
+            </rzslider>
+        </div>
+
+        <!--<div id="valid_container">-->
+             <table class="usage_table">
+                 <tr>
+                     <th class="table_title" ng-class="color_theme" colspan="6">ECOL. VALIDITIES & DISC. RATES</th>
+                 </tr>
+                <tr>
+                    <th>No.</th>
+                    <th class="valid_header" ng-click="OrderValiditiesTable('CueName')" ng-class="{'valid_sort_by color_heur':validities_ordered_by =='CueName'}">Cue</th>
+                    <th class="valid_header" ng-click="OrderValiditiesTable('validity')" ng-class="{'valid_sort_by color_heur':validities_ordered_by =='validity'}">Valid.</th>
+                    <th class="valid_header" ng-click="OrderValiditiesTable('discrate')" ng-class="{'valid_sort_by color_heur':validities_ordered_by =='discrate'}">Discr.</th>
+                    <th class="valid_header" ng-click="OrderValiditiesTable('success')" ng-class="{'valid_sort_by color_heur':validities_ordered_by =='success'}">Success</th>
+                    <th class="valid_header" ng-click="OrderValiditiesTable('isFlipped')" ng-class="{'valid_sort_by color_heur':validities_ordered_by =='isFlipped'}">Flipped</th>
+                </tr>
+                 <!--<tr ng-repeat="validObj in validities | orderBy : sortField : sortReverse">-->
+                 <tr ng-repeat="validObj in validities">
+                     <td><div class="valid_index">{{$index+1}}</div></td>
+                     <td ng-class="{'valid_sort_column color_heur':validities_ordered_by =='CueName'}">{{validObj.CueName | limitTo:7}}</td>
+                     <td ng-class="{'valid_sort_column color_heur':validities_ordered_by =='validity'}">{{validObj.validity | number:3}}</td>
+                     <td ng-class="{'valid_sort_column color_heur':validities_ordered_by =='discrate'}">{{validObj.discrate | number:3}}</td>
+                     <td ng-class="{'valid_sort_column color_heur':validities_ordered_by =='success'}">{{validObj.success | number:3}}</td>
+                     <td ng-class="{'valid_sort_column color_heur':validities_ordered_by =='isFlipped'}">{{validObj.isFlipped?'yes':'no'}}</td>
+                 </tr>
+             </table>
+        <!--</div>-->
+
+        <!--<div id="stats_container" class="inline">-->
+            <div id="cont_number">
+                <table id="contingency_number" class="eval_table" >
+                    <tr>
+                        <td class="stats_header table_title" ng-class="color_theme" colspan="5">TREE'S CONTINGENCY TABLE
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table_header"></td>
+                        <td class="table_header" colspan="3">PREDICTION</td>
+                        <td class="table_header" ng-click="ButtonContingencyTableShowPercent()" title="Show Percentage">
+                            <svg class="button_stat" height="20" width="40">
+                                <polyline class="up" points="8 9,15 2,22 9"/>
+                                <line x1="15" y1="2" x2="15" y2="18"/>
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th title="Correct Predictions">corr</th>
+                        <th title="Incorrect Predictions">incorr</th>
+                        <th title="Undecidable Predictions">und</th>
+                        <th>sum</th>
+                    </tr>
+                    <tr>
+                        <th class="cell_values">decide</td>
+                        <td class="cell_values success" title="Decided Hits">{{general_stats.HITS_DECIDE}}</td>
+                        <td class="cell_values fail" title="Decided Misses">{{general_stats.MISSES_DECIDE}}</td>
+                        <td class="cell_values undecided" title="Decided Undecidable">{{general_stats.UNDECIDABLE_DECIDE}}</td>
+                        <td class="cell_values">{{general_stats.DECIDE_SUM}}</td>
+                    </tr>
+                    <tr>
+                        <th class="cell_values">guess</th>
+                        <td class="cell_values success" title="Guessed Hits">{{general_stats.HITS_GUESS}}</td>
+                        <td class="cell_values fail" title="Guessed Misses">{{general_stats.MISSES_GUESS}}</td>
+                        <td class="cell_values undecided" title="Guessed Undecidable">{{general_stats.UNDECIDABLE_GUESS}}</td>
+                        <td class="cell_values">{{general_stats.GUESS_SUM}}</td>
+                    </tr>
+                    <tr>
+                        <th class="cell_values">sum</th><td class="cell_values">{{general_stats.HITS}}</td>
+                        <td class="cell_values">{{general_stats.MISSES}}</td>
+                        <td class="cell_values">{{general_stats.UNDECIDABLE}}</td>
+                        <td class="cell_values">{{general_stats.SUM_SUM}}*</td>
+                    </tr>
+                    <tr><th colspan="6">*number of paired comparisons</th></tr>
+                    <tr><th></th></tr>
+                </table>
+            </div>
+
+            <div id="cont_percent" style="display: none">
+                <table class="eval_table">
+                    <tr>
+                        <td class="stats_header table_title" ng-class="color_theme" colspan="5">TREE'S CONTINGENCY TABLE
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table_header"></td>
+                        <td class="table_header" colspan="3">PREDICTION</td>
+                        <td ng-click="ButtonContingencyTableShowPercent()" title="Show Numbers">
+                            <svg class="button_stat" height="20" width="40">
+                                <polyline class="down" points="8 11,15 18,22 11"/>
+                                <line x1="15" y1="2" x2="15" y2="18"/>
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th title="Correct Predictions">corr</th>
+                        <th title="Incorrect Predictions">incorr</th>
+                        <th title="Undecidable Predictions">und</th>
+                        <th>sum</th>
+                    </tr>
+                    <tr>
+                        <th class="cell_values">decide</td>
+                        <td class="cell_values success" title="Decided Hits">{{general_stats.HITS_DECIDE/general_stats.SUM_SUM*100 | number :1}}%</td>
+                        <td class="cell_values fail" title="Decided Misses">{{general_stats.MISSES_DECIDE/general_stats.SUM_SUM | percentage :1}}</td>
+                        <td class="cell_values undecided" title="Decided Undecidable">{{general_stats.UNDECIDABLE_DECIDE/general_stats.SUM_SUM | percentage :1}}</td>
+                        <td class="cell_values">{{general_stats.DECIDE_SUM/general_stats.SUM_SUM | percentage :1}}</td>
+                    </tr>
+                    <tr>
+                        <th class="cell_values">guess</th>
+                        <td class="cell_values success" title="Guessed Hits">{{general_stats.HITS_GUESS/general_stats.SUM_SUM | percentage :1}}</td>
+                        <td class="cell_values fail" title="Guessed Misses">{{general_stats.MISSES_GUESS/general_stats.SUM_SUM | percentage :1}}</td>
+                        <td class="cell_values undecided" title="Guessed Undecidable">{{general_stats.UNDECIDABLE_GUESS/general_stats.SUM_SUM | percentage :1}}</td>
+                        <td class="cell_values">{{general_stats.GUESS_SUM/general_stats.SUM_SUM | percentage :1}}</td>
+                    </tr>
+                    <tr>
+                        <th class="cell_values">sum</th><td class="cell_values">{{general_stats.HITS/general_stats.SUM_SUM | percentage :1}}</td>
+                        <td class="cell_values">{{general_stats.MISSES/general_stats.SUM_SUM | percentage :1}}</td>
+                        <td class="cell_values">{{general_stats.UNDECIDABLE/general_stats.SUM_SUM | percentage :1}}</td>
+                        <td class="cell_values">{{general_stats.SUM_SUM/general_stats.SUM_SUM | percentage :1}}*</td>
+                    </tr>
+                    <tr><th colspan="6">*percentage of paired comparisons</th></tr>
+                    <tr><th></th></tr>
+                </table>
+            </div>
+
+            <table class="eval_table">
+                <tr><td class="stats_header table_title" ng-class="color_theme" colspan="5">TREE'S STATISTICS</td></tr>
+                <tr>
+                    <th></th>
+                    <th title="Includes decisions and guesses">Accuracy</th>
+                    <th></th>
+                    <th>Frugality</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td class="cell_values"></td>
+                    <td class="cell_values" title="Accuracy - includes decisions and guesses">{{general_stats.PHITS}}</td>
+                    <td class="cell_values"></td>
+                    <td class="cell_values" title="Frugality">{{general_stats.FRUGALITY}}</td>
+                    <td class="cell_values"></td>
+                </tr>
+                <tr>
+                    <th></th>
+                </tr>
+            </table>
+        <!--</div>-->
+
+        <div>
+            <button id="shuffle_100" ng-click="ButtonReshuffle100()" class="button_action button_smaller"kun>
+                Reshuffle Cases
+                <input type="number" id="reshuffle_cycles" ng-click="$event.stopPropagation();" class="cell_values" ng-model="dataset_split.ReshuffleCycles" />
+                Times</button>
+
+            <div id="shuffle_100_table" style="display:none">
+                <table class="eval_table">
+                    <tr><td class="stats_header table_title" ng-class="color_theme" colspan="5">AVERAGE TESTING STATISTICS</td></tr>
+                    <tr>
+                        <th></th>
+                        <th>Accuracy</th>
+                        <th></th>
+                        <th>Frugality</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td class="cell_values"></td>
+                        <td class="cell_values" title="Accuracy">{{general_stats.PHITS_100 | number:3}}</td>
+                        <td class="cell_values"></td>
+                        <td class="cell_values" title="Frugality">{{general_stats.FRUGALITY_100 | number:3}}</td>
+                        <td class="cell_values"></td>
+                    </tr>
+                    <tr><th></th></tr>
+                </table>
+            </div>
+        </div>
+
+        <div>
+            <table class="eval_table" >
+                <tr>
+                    <td class="table_title" ng-class="color_theme" colspan="5">COMPETITION</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Accuracy</th>
+                    <th></th>
+                    <th>Frugality</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td class="table_header_grey" colspan="5">Unit-Weight Linear Model</td>
+                </tr>
+
+                <tr>
+                    <td class="cell_values"></td>
+                    <td class="cell_values">{{unit_weight_linear_model.PHITS}}</td>
+                    <td class="cell_values"></td>
+                    <td class="cell_values">{{unit_weight_linear_model.FRUGALITY}}</td>
+                    <td class="cell_values"></td>
+                </tr>
+                <tr>
+                    <td class="table_header_grey" colspan="5">Weighted Linear Model</td>
+                </tr>
+                <tr>
+                    <td class="cell_values"></td>
+                    <td class="cell_values">{{weighted_linear_model.PHITS}}</td>
+                    <td class="cell_values"></td>
+                    <td class="cell_values">{{weighted_linear_model.FRUGALITY}}</td>
+                    <td class="cell_values"></td>
+                </tr>
+                <tr>
+                    <td class="table_header_grey" colspan="5">Multiple Linear Regression</td>
+                </tr>
+                <tr>
+                    <td class="cell_values"></td>
+                    <td class="cell_values">{{multi_linear_regression.PHITS}}</td>
+                    <td class="cell_values"></td>
+                    <td class="cell_values">{{multi_linear_regression.FRUGALITY}}</td>
+                    <td class="cell_values"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+<!--    <div class="columns">
+        &lt;!&ndash;<div class="drophere disabled" id="drophere_tree0">Drop the cues here!</div>&ndash;&gt;
+    </div>-->
+    <ul ui-sortable="sortableOptions" ng-model="drag_tree" id="tree" class="">
+        <li class="widget" ng-repeat="cue in drag_tree" on-finish-render="ngFinishedTree" id="{{cue.CueName}}" name="{{cue.CueName}}">
+            <div class="widget_head" ng-class="color_theme">
+                <div class="widget_tags">
+                    <!--here will be added the validity tag, multiply icons etc.-->
+                    <div ng-show="heuristic_name=='Take The Best'" class="widget_validity validity_ttb">
+                        {{$index+1}}
+                    </div>
+                    <div ng-show="heuristic_name=='Weighted Tallying'">
+                        <svg class="widget_multiply" height="20" width="20">
+                            <polyline points="4 17, 17 4"/><polyline points="4 4, 17 17"/></svg>
+                        <div class="widget_validity validity_weta">{{cue.ValidIndex}}</div>
+                    </div>
+                </div>
+                <div ng-show="heuristic_name=='Minimalist'" ng-click="ButtonShuffleOrderOfCues()" title="Shuffle Cues">
+                    <svg class="button_control button_shuffle" height="20" width="20">
+                        <polyline points="4 17, 17 4"/>
+                        <polyline points="4 4, 9 9"/>
+                        <polyline points="12 12, 17 17"/>
+                        <polyline points="13 4, 17 4, 17 8"/>
+                        <polyline points="13 17, 17 17, 17 13"/>
+                    </svg>
+                </div>
+                <div class="widget_title" >
+                    <span ng-marquee-overflow title="{{cue.CueName}}">{{cue.CueName}}</span>
+                </div>
+                <div class="button_expand_div" ng-click="cue.WidgetExpand=!cue.WidgetExpand; ButtonExpandCue($event)" title="Expand/Collapse the Cue">
+                    <svg class="button_control button_expand" height="20" width="20">
+                        <polyline class="down" ng-hide="cue.WidgetExpand" points="3 7,10 14,17 7"/>
+                        <polyline class="up" ng-show="cue.WidgetExpand" points="3 13,10 6,17 13"/>
+                    </svg>
+                </div>
+
+            </div>
+            <!--<div class="widget_content" style="display: none;">-->
+            <div class="widget_content" style="display: none">
+                <div class="unsortable inline">
+
+                    <table class="split_table">
+                        <tr><td class="table_title" ng-class="color_theme" colspan="5">SPLIT OF CUE'S VALUES</td></tr>
+                        <tr>
+                            <th>min</th>
+                            <th class="cell_exit" title="Values between MIN (included) and SPLIT (included) are...">
+                                <input ng-show="cue.IsFlipped" ng-model="cue.BranchYesName" type="text"/>
+                                <input ng-show="!cue.IsFlipped" ng-model="cue.BranchNoName" type="text"/>
+                                <!--{{cue.IsFlipped?'yes':'no'}}-->
+                            </th>
+                            <td class="swap" ng-click="cue.IsFlipped=!cue.IsFlipped;ConvertToBinary()" title="Swap YES and NO Ranges">
+                                <svg class="button_swap" height="20" width="40">
+                                    <polyline class="left" points="9 3,2 10,9 17"/>
+                                    <polyline class="right" points="31 3,38 10,31 17"/>
+                                    <line x1="2" y1="10" x2="38" y2="10"/>
+                                </svg>
+                            </td>
+                            <th class="cell_exit" title="Values between SPLIT (excluded) and MAX (included) are...">
+                                <input ng-show="!cue.IsFlipped" ng-model="cue.BranchYesName" type="text"/>
+                                <input ng-show="cue.IsFlipped" ng-model="cue.BranchNoName" type="text"/>
+                                <!--{{cue.IsFlipped?'no':'yes'}}-->
+                            </th>
+                            <th>max</th>
+                        </tr>
+                        <tr>
+                            <td class="cell_values" title="Minimum Value">{{cue.MinValue}}</td>
+                            <th class="cell_values cell_exit">{{cue.IsFlipped?cue.CasesYes:cue.CasesNo}}</th>
+                            <td class="cell_values">
+                                <input ng-model="cue.SplitValue" ng-change="ConvertToBinary()" type="number" title="Split Value">
+                            </td>
+                            <th class="cell_values cell_exit">{{cue.IsFlipped?cue.CasesNo:cue.CasesYes}}</th>
+                            <td class="cell_values" title="Maximum Value">{{cue.MaxValue}}</td>
+                        </tr>
+                        <!--<tr>
+                            <td class="stats_slider" colspan="5">
+                                <div class="split_slider" title="Change the Split Value"></div>
+                            </td>
+                        </tr>-->
+                    </table>
+                    <div class="ng_slider" ng-mouseup="ConvertToBinary()">
+                        <rzslider rz-slider-model="cue.SplitValue"
+                                  rz-slider-options="{
+                                                floor: cue.MinValue,
+                                                ceil: cue.MaxValue,
+                                                step:0.5,
+                                                precision:1,
+                                                hidePointerLabels:true,
+                                                hideLimitLabels:true
+                                              }">
+                        </rzslider>
+                    </div>
+
+                    <div class="stat_cue">
+                        <table class="eval_table">
+                            <tr>
+                                <td class="stats_header table_title" ng-class="color_theme" colspan="5">STATS OF THIS CUE</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>Accuracy</th>
+                                <th></th>
+                                <th>Frugality</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td class="cell_values"></td>
+                                <td class="cell_values" title="Accuracy">{{cue.PHITS}}</td>
+                                <td class="cell_values_narrow"></td>
+                                <td class="cell_values" title="Frugality">{{cue.FRUGALITY}}</td>
+                                <td class="cell_values"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="stat_tree" style="display: none">
+                        <table class="eval_table">
+                            <tr>
+                                <td class="stats_header table_title" ng-class="color_theme" colspan="5">STATS OF TREE UP TO THIS CUE</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>Accuracy</th>
+                                <th></th>
+                                <th>Frugality</th>
+                            </tr>
+                            <tr>
+                                <td class="cell_values"></td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.PHITS}}</td>
+                                <td class="cell_values_narrow"></td>
+                                <td class="cell_values" title="Frugality">{{cue.treeUpToThisCue.FRUGALITY}}</td>
+                                <td class="cell_values"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="unsortable inline">
+                    <div class="conting_cue">
+                        <table class="eval_table">
+                            <tr>
+                                <td class="stats_header table_title" ng-class="color_theme" colspan="5">CUE'S CONTINGENCY TABLE</td>
+                                <td><svg class="button_stat" ng-click="ButtonsChangeCueStats($event)" height="20" width="40">
+                                        <polyline class="up" points="8 9,15 2,22 9"/>
+                                        <line x1="15" y1="2" x2="15" y2="18"/></svg>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table_header"></td>
+                                <th colspan="3" class="table_header">different</th>
+                                <th></th>
+                                <th class="table_header cell_leftborder">equal</th>
+                            </tr>
+                            <tr>
+                                <td class="table_header">PREDICTION</td>
+                                <th title="Correct Predictions">corr</th>
+                                <th title="Incorrect Predictions">incorr</th>
+                                <th title="Undecidable Predictions">und</th>
+                                <th class="cell_values">sum</th>
+                                <th class="cell_values cell_leftborder"></th>
+                            </tr>
+                            <tr>
+                                <th class="cell_values">decide</td>
+                                <td class="cell_values success"title="Decided Hits">{{cue.HITS_DECIDE}}</td>
+                                <td class="cell_values fail" title="Decided Misses">{{cue.MISSES_DECIDE}}</td>
+                                <td class="cell_values undecided" title="Decided Undecidable">{{cue.UNDECIDABLE_DECIDE}}</td>
+                                <td class="cell_values">{{cue.DECIDE_SUM}}</td>
+                                <td rowspan="2" class="cell_values cell_leftborder">{{cue.EQUAL}}</td>
+                            </tr>
+                            <tr>
+                                <th class="cell_values">guess</th>
+                                <td class="cell_values success" title="Guessed Hits">{{cue.HITS_GUESS}}</td>
+                                <td class="cell_values fail" title="Guessed Misses">{{cue.MISSES_GUESS}}</td>
+                                <td class="cell_values undecided" title="Guessed Undecidable">{{cue.UNDECIDABLE_GUESS}}</td>
+                                <td class="cell_values">{{cue.GUESS_SUM}}</td>
+                            </tr>
+                            <tr>
+                                <th class="cell_values">sum</th>
+                                <td class="cell_values">{{cue.HITS}}</td>
+                                <td class="cell_values">{{cue.MISSES}}</td>
+                                <td class="cell_values">{{cue.UNDECIDABLE}}</td>
+                                <td class="cell_values">{{cue.SUM_SUM}}</td>
+                                <td class="cell_values cell_leftborder">{{cue.SUM_EQUAL}}</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="conting_tree" style="display: none">
+                        <table class="eval_table">
+                            <tr>
+                                <td class="stats_header table_title" ng-class="color_theme" colspan="5">TREE UP TO THIS CUE</td>
+                                <td><svg class="button_stat" ng-click="ButtonsChangeCueStats($event)" height="20" width="40">
+                                    <polyline class="down" points="8 11,15 18,22 11"/>
+                                    <line x1="15" y1="2" x2="15" y2="18"/></svg>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table_header"></td><th colspan="3" class="table_header">different</th>
+                                <th></th>
+                                <th class="table_header cell_leftborder">equal</th>
+                            </tr>
+                            <tr>
+                                <td class="table_header">PREDICTION</td>
+                                <th title="Correct Predictions">corr</th>
+                                <th title="Incorrect Predictions">incorr</th>
+                                <th title="Undecidable Predictions">und</th>
+                                <th class="cell_values">sum</th>
+                                <th class="cell_values cell_leftborder"></th>
+                            </tr>
+                            <tr>
+                                <th class="cell_values">decide</td>
+                                <td class="cell_values success"title="Decided Hits">{{cue.treeUpToThisCue.HITS_DECIDE}}</td>
+                                <td class="cell_values fail" title="Decided Misses">{{cue.treeUpToThisCue.MISSES_DECIDE}}</td>
+                                <td class="cell_values undecided" title="Decided Undecidable">{{cue.treeUpToThisCue.UNDECIDABLE_DECIDE}}</td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.DECIDE_SUM}}</td>
+                                <td rowspan="2" class="cell_values cell_leftborder">{{cue.treeUpToThisCue.EQUAL}}</td>
+                            </tr>
+                            <tr>
+                                <th class="cell_values">guess</th>
+                                <td class="cell_values success" title="Guessed Hits">{{cue.treeUpToThisCue.HITS_GUESS}}</td>
+                                <td class="cell_values fail" title="Guessed Misses">{{cue.treeUpToThisCue.MISSES_GUESS}}</td>
+                                <td class="cell_values undecided" title="Guessed Undecidable">{{cue.treeUpToThisCue.UNDECIDABLE_GUESS}}</td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.GUESS_SUM}}</td>
+                            </tr>
+                            <tr>
+                                <th class="cell_values">sum</th>
+                                <td class="cell_values">{{cue.treeUpToThisCue.HITS}}</td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.MISSES}}</td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.UNDECIDABLE}}</td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.SUM_SUM}}</td>
+                                <td class="cell_values cell_leftborder">{{cue.treeUpToThisCue.SUM_EQUAL}}</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="arrows_exits">
+                <!--here will be added all arrows and exits-->
+                <div class="arrow_down">
+                    <svg class="cue_arrow" height="40" width="40">
+                        <line x1="20" y1="0" x2="20" y2="40"></line>
+                        <line x1="5" y1="25" x2="20" y2="40"></line>
+                        <line x1="35" y1="25" x2="20" y2="40"></line>
+                        <text ng-show="heuristic_name=='Take The Best' || heuristic_name=='Minimalist' || $last"
+                              id="cue_arrow_text" text-anchor="middle" x="20" y="23" font-size="10px" stroke-width="1" stroke="none" fill="black">
+                            equal
+                        </text>
+                    </svg>
+                    <!--<div ng-show="heuristic_name=='Take The Best'" class="exit_arrow_text">
+                        equal
+                    </div>-->
+                </div>
+                <div ng-show="cue.BranchNoExit" class="exit_down exit_widget unsortable">
+                    <div class="exit_widget_title"><span>guess</span></div>
+                    <svg class="exit_arrow" height="45" width="45"></svg>
+                </div>
+                <div ng-show="cue.BranchYesExit" id="exit_right" class="exit_right exit_widget unsortable">
+                    <div class="exit_widget_title"><span>decide</span></div>
+                    <svg class="exit_arrow" height="45" width="45">
+                        <line x1="0" y1="0" x2="45" y2="45"></line>
+                        <line x1="44" y1="25" x2="44" y2="44"></line>
+                        <line x1="25" y1="44" x2="44" y2="44"></line>
+                        <text ng-show="heuristic_name=='Take The Best' || heuristic_name=='Minimalist' || $last"
+                            text-anchor="middle" x="22" y="25" font-size="10px" stroke-width="1" stroke="none" fill="black">
+                            different
+                        </text>
+                    </svg>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <!--<div class="columns">
+        </div>-->
+
+    <div id="heur_info_column" class="info_column inline">
+
+        <button id="button_stepinfo" ng-click="ButtonShowDatasetStepInfo($event)" class="button_action">
+            Step-By-Step Decisions
+            <svg class="button_stat" height="20" width="40"><polyline class="up" points="8 9,15 2,22 9"/>
+                <polyline class="down" points="8 11,15 18,22 11"/><line x1="15" y1="2" x2="15" y2="18"/>
+            </svg>
+        </button>
+        <div id="dataset_stepinfo_container" style="display: none">
+            <!--<div id="dataset_container"></div>-->
+            <!--<hot-table datarows="dataset_stepinfo" col-headers="dataset_stepinfo_colheads" row-headers="true" settings=""></hot-table>-->
+
+        </div>
+
+        <div class="titleblock">
+
+            <h2 class="title">
+                <input ng-model="heuristic_info.Title" class="input_title" type="text"/>
+            </h2>
+
+            <div>
+                <div class="inline" title="{{heuristic_info.Access}} access">
+                    <img ng-src="img/{{heuristic_info.Access}}/icon_{{heuristic_info.Access}}_600.jpg">
+                    <!--<h4 class="access">{{heuristic_info.Access}} access</h4>-->
+                </div>
+                <div class="infoblock inline">
+                    <h4 class="heuristic">{{heuristic_info.DecisionAlgorithm}} algorithm</h4>
+                    <h4 class="date">{{heuristic_info.Date | date:'yyyy-MM-dd, HH:mm'}}</h4>
+                    <h4 class="username">By {{heuristic_info.UserName}}</h4>
+                    <!--<h4 class="date">{{heuristic_info.Date | date:'yyyy-MM-dd, HH:mm'}} by {{heuristic_info.UserName}}</h4>-->
+                    <h4 class="size">{{heuristic_info.SizeCues}} cues</h4>
+                </div>
+            </div>
+
+            <div class="details">
+                <textarea ng-model="heuristic_info.Description" placeholder="Describe your task here..." type="text"/>
+            </div>
+        </div>
+
+        <h4><br></h4>
+        <h4>Using the dataset:</h4>
+        <h3 class="title">{{dataset_info.Title}}</h3>
+        <h5 class="date">{{dataset_info.Date | date:'yyyy-MM-dd, HH:mm'}} by {{dataset_info.UserName}}</h5>
+
+        <table class="usage_table" >
+            <tr><th class="table_title" ng-class="color_theme" colspan="3">USAGE</th></tr>
+            <tr><th>Dataset</th><th>Date</th><th>User</th></tr>
+            <tr><td>data_CCU_89.csv</td><td>17.08.2015</td><td>H.Neth</td></tr>
+            <tr><td>data_CCU_89.csv</td><td>15.08.2015</td><td>E.Jablonskis</td></tr>
+            <tr><td>data_CCU_240.csv</td><td>09.08.2015</td><td>L.Schooler</td></tr>
+        </table>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,769 @@
+
+<div id="blue_area_top" class="blue_area" ng-class="color_theme">
+    <h1 id="page_title">ADAPTIVE TOOLBOX Online</h1>
+    <img id="mpib_logo" src="img/MPIB_Logo_weiss.png" alt="Max Planck Institute for Human Development in Berlin, Germany">
+
+    <ul class="" id="menu">
+        <li id="menu_mytoolbox" class="inline" ng-class="{'active':heuristic_info.Access =='private'}" title="Private datasets and tasks - visible only to me"><a href="index.html#/">MY TOOLBOX</a></li>
+        <li id="menu_datasets" class="inline" title="Public datasets - visible to all users"><a href="index.html#/data">DATASETS</a></li>
+        <li id="menu_fft" class="inline" ng-class="{'active':heuristic_info.Access =='public'}" title="Public tasks - visible to all users"><a href="index.html#/fft">CLASSIFICATION TASKS</a></li>
+        <li id="menu_heuristics" class="inline" title="Public tasks - visible to all users"><a href="index.html#/heur">COMPARISON TASKS</a></li>
+    </ul>
+</div>
+
+<div id="blue_area" class="blue_area page_area" ng-class="color_theme">
+
+    <div>
+        <button id="save" class="button_action" disabled>Save Copy To My Toolbox</button>
+        <button id="publish" class="button_action" disabled>Publish To All Users</button>
+        <button id="choose_dataset" class="button_action" disabled>Choose Different Dataset</button>
+        <button id="remove" class="button_action" disabled>Remove From My Toolbox</button>
+
+<!--        <button class="button_grey button_selectdata button_on disabled" id="button_allcases">All Cases</button>
+        <button class="button_grey button_selectdata disabled" id="button_training">Training</button>
+        <button class="button_grey button_selectdata disabled" id="button_testing"> Testing</button>-->
+    </div>
+
+
+    <div id="horiz_scroll"> <!-- need this and #drag_cues_list to make the scroll work -->
+
+        <ul ui-sortable="sortableOptions" ng-model="drag_cues_list" id="drag_cues_list" class="sortable_area"> <!-- need this and #horiz_scroll to make the scroll work -->
+
+            <li class="widget" ng-repeat="cue in drag_cues_list" on-finish-render="ngFinishedCuesList" id="{{cue.CueName}}" name="{{cue.CueName}}">
+                <div class="widget_head" ng-class="color_theme">
+                    <div ng-click="ButtonDisableCue($event)" title="Don't Use this Cue in the Prediction">
+                        <svg class="button_control button_disable" height="20" width="20">
+                            <line x1="5" y1="5" x2="15" y2="15"/>
+                            <line x1="5" y1="15" x2="15" y2="5"/>
+                        </svg>
+                    </div>
+                    <div class="widget_title">
+                        <span ng-marquee-overflow title="{{cue.CueName}}">{{cue.CueName}}</span>
+                    </div>
+                    <div class="button_expand_div" ng-click="cue.WidgetExpand=!cue.WidgetExpand; ButtonExpandCue($event)" title="Expand/Collapse the Cue">
+                        <svg class="button_control button_expand" height="20" width="20">
+                            <polyline class="down" ng-hide="cue.WidgetExpand" points="3 7,10 14,17 7"/>
+                            <polyline class="up" ng-show="cue.WidgetExpand" points="3 13,10 6,17 13"/>
+                        </svg>
+                    </div>
+
+                </div>
+                <!--<div class="widget_content" style="display: none;">-->
+                <div class="widget_content" style="display: none">
+                    <div class="unsortable">
+                        <table class="split_table">
+                            <tr><td class="table_title" colspan="5">SPLIT OF CUE'S VALUES</td></tr>
+                            <tr>
+                                <th>min</th>
+                                <th class="cell_exit" title="Values between MIN (included) and SPLIT (included) are...">
+                                    <input ng-show="cue.IsFlipped" ng-model="cue.BranchYesName" type="text"/>
+                                    <input ng-show="!cue.IsFlipped" ng-model="cue.BranchNoName" type="text"/>
+                                    <!--{{cue.IsFlipped?'yes':'no'}}-->
+                                </th>
+                                <td class="swap" ng-click="cue.IsFlipped=!cue.IsFlipped;ConvertToBinary()" title="Swap YES and NO Ranges">
+                                    <svg class="button_swap" height="20" width="40">
+                                        <polyline class="left" points="9 3,2 10,9 17"/>
+                                        <polyline class="right" points="31 3,38 10,31 17"/>
+                                        <line x1="2" y1="10" x2="38" y2="10"/>
+                                    </svg>
+                                </td>
+                                <th class="cell_exit" title="Values between SPLIT (excluded) and MAX (included) are...">
+                                    <input ng-show="!cue.IsFlipped" ng-model="cue.BranchYesName" type="text"/>
+                                    <input ng-show="cue.IsFlipped" ng-model="cue.BranchNoName" type="text"/>
+                                    <!--{{cue.IsFlipped?'no':'yes'}}-->
+                                </th>
+                                <th>max</th></tr>
+                            <tr>
+                                <td class="cell_values" title="Minimum Value">{{cue.MinValue}}</td>
+                                <th class="cell_values cell_exit">{{cue.IsFlipped?cue.CasesYes:cue.CasesNo}}</th>
+                                <td class="cell_values">
+                                    <input ng-model="cue.SplitValue" ng-change="ConvertToBinary()" type="number" title="Split Value">
+                                </td>
+                                <th class="cell_values cell_exit">{{cue.IsFlipped?cue.CasesNo:cue.CasesYes}}</th>
+                                <td class="cell_values" title="Maximum Value">{{cue.MaxValue}}</td>
+                            </tr>
+                            <!--<tr>
+                                <td class="stats_slider" colspan="5"><div class="split_slider" title="Change the Split Value"></div></td>
+                                <md-slider ng-model="cue.SplitValue" min="cue.MinValue" max="cue.MaxValue"></md-slider>
+                            </tr>-->
+                        </table>
+                        <div class="ng_slider" ng-mouseup="ConvertToBinary()">
+                            <rzslider rz-slider-model="cue.SplitValue"
+                                      rz-slider-options="{
+                                                floor: cue.MinValue,
+                                                ceil: cue.MaxValue,
+                                                step:0.5,
+                                                precision:1,
+                                                hidePointerLabels:true,
+                                                hideLimitLabels:true
+                                              }">
+                            </rzslider>
+                        </div>
+                    </div>
+                    <ul class="stat_cue_header unsortable">
+                        <li class="inline stat_cue unsortable">
+                            <table class="eval_table">
+                                <tr>
+                                    <td class="stats_header table_title" colspan="6">STATS OF ONE-CUE-TREE</td>
+                                </tr>
+                                <tr>
+                                    <td class="cell_title"></td>
+                                    <td></td>
+                                    <td class="table_header" colspan="4">PREDICTIONS</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <th><div class="cell_title">{{drag_criterion[0].BranchYesName}}</div></th>
+                                    <th><div class="cell_title">{{drag_criterion[0].BranchNoName}}</div></th>
+                                    <th>und</th>
+                                    <th>sum</th>
+                                </tr>
+                                <tr>
+                                    <td class="cell_title_narrow"></td>
+                                    <th class="cell_title"><div class="cell_title">{{drag_criterion[0].BranchYesName}}</div></td>
+                                    <td class="success" title="Hits">{{cue.HITS}}</td>
+                                    <td class="fail" title="Misses">{{cue.MISSES}}</td>
+                                    <td class="undecided" title="Undecided Positive">{{cue.UNDECIDED_POS}}</td>
+                                    <td class="cell_values">{{cue.CRIT_YES_SUM}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cell_title_narrow"></td>
+                                    <th class="cell_title"><div class="cell_title">{{drag_criterion[0].BranchNoName}}</div></th>
+                                    <td class="fail" title="False Alarms">{{cue.FALSE_ALARMS}}</td>
+                                    <td class="success" title="Correct Rejections">{{cue.CORRECT_REJECTIONS}}</td>
+                                    <td class="undecided" title="Undecided Negative">{{cue.UNDECIDED_NEG}}</td>
+                                    <td class="cell_values">{{cue.CRIT_NO_SUM}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cell_title_narrow"></td>
+                                    <th class="cell_title">sum</th>
+                                    <td class="cell_values">{{cue.PRED_YES_SUM}}</td>
+                                    <td class="cell_values">{{cue.PRED_NO_SUM}}</td>
+                                    <td class="cell_values">{{cue.PRED_UND_SUM}}</td>
+                                    <td class="cell_values">{{cue.PRED_SUM_SUM}}</td>
+                                </tr>
+                            </table>
+                            <div class="table_header_rotated">CRITERION</div>
+                            <table class="eval_table">
+                                <tr>
+                                    <th colspan="2" title="Probability of Hits">p(H)</th>
+                                    <th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th>
+                                    <th title="D prime">d&#8242</th>
+                                    <th title="Frugality">Frug</th>
+                                    <th title="C or Bias">Bias</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="cell_values" title="Probability of Hits">{{cue.PHITS}}</td>
+                                    <td class="cell_values" title="Probability of Hits - Probability of False Alarms">{{cue.PHITSMINUSPFA}}</td>
+                                    <td class="cell_values" title="D prime">{{cue.DPRIME}}</td>
+                                    <td class="cell_values" title="Frugality">{{cue.FRUGALITY}}</td>
+                                    <td class="cell_values" title="C or Bias">{{cue.BIAS}}</td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+                <!--<ul class="arrows_exits">
+                    &lt;!&ndash;here will be added all arrows and exits&ndash;&gt;
+                </ul>-->
+            </li>
+        </ul>
+
+    </div>
+
+    <svg class="buttons_controls button_expand_all" ng-click="ButtonExpandAllCues(drag_cues_list)" id="button_expand_all_blue" height="20" width="20">
+        <!--<polyline class="down" points="3 7,10 14,17 7"/>-->
+        <polyline class="up" points="3 13,10 6,17 13"/>
+    </svg>
+
+</div>
+
+<div id="white_area" class="page_area">
+
+    <svg class="buttons_controls button_expand_all" ng-click="ButtonExpandAllCues(drag_tree)" id="button_expand_all_white"  height="20" width="20">
+        <polyline class='down' points="3 7,10 14,17 7"/>
+        <!--<polyline class="up" points="3 13,10 6,17 13"/>-->
+    </svg>
+
+    <div id="stats_column">
+        <div id="criterion_area"> Criterion:
+            <div id="criterion_placeholder" ng-class="color_theme">
+                <!--here will be dragged criterion-->
+            </div>
+
+            <ul ui-sortable="sortableOptions" ng-model="drag_criterion" id="criterion_place" class="sortable_area">
+                <li ng-repeat="cue in drag_criterion" on-finish-render="ngFinishedCriterion" id="{{cue.CueName}}" name="{{cue.CueName}}" class="widget">
+                    <div class="widget_head" ng-class="color_theme">
+                        <div class="widget_title" >
+                            <span ng-marquee-overflow title="{{cue.CueName}}">{{cue.CueName}}</span>
+                        </div>
+                        <div ng-click="cue.WidgetExpand=!cue.WidgetExpand; ButtonExpandCue($event)" title="Expand/Collapse the Cue">
+                            <svg class="button_control button_expand" height="20" width="20">
+                                <polyline class="down" ng-hide="cue.WidgetExpand" points="3 7,10 14,17 7"/>
+                                <polyline class="up" ng-show="cue.WidgetExpand" points="3 13,10 6,17 13"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <!--<div class="widget_content" ng-show="cue.WidgetExpand">-->
+                    <div class="widget_content" style="display: none">
+                        <div class="unsortable">
+                            <table class="split_table">
+                                <tr>
+                                    <td class="table_title" ng-class="color_theme" colspan="5">SPLIT OF CUE'S VALUES</td>
+                                </tr>
+                                <tr>
+                                    <th>min</th>
+                                    <th class="cell_exit" title="Values between MIN (included) and SPLIT (included) are...">
+                                        <input ng-show="cue.IsFlipped" ng-model="cue.BranchYesName" type="text"/>
+                                        <input ng-show="!cue.IsFlipped" ng-model="cue.BranchNoName" type="text"/>
+                                        <!--{{cue.IsFlipped?'yes':'no'}}-->
+                                    </th>
+                                    <td class="swap" ng-click="cue.IsFlipped=!cue.IsFlipped;ConvertToBinary()" title="Swap YES and NO Ranges">
+                                        <svg class="button_swap" height="20" width="40">
+                                            <polyline class="left" points="9 3,2 10,9 17"/>
+                                            <polyline class="right" points="31 3,38 10,31 17"/>
+                                            <line x1="2" y1="10" x2="38" y2="10"/>
+                                        </svg>
+                                    </td>
+                                    <th class="cell_exit" title="Values between SPLIT (excluded) and MAX (included) are...">
+                                        <input ng-show="!cue.IsFlipped" ng-model="cue.BranchYesName" type="text"/>
+                                        <input ng-show="cue.IsFlipped" ng-model="cue.BranchNoName" type="text"/>
+                                        <!--{{cue.IsFlipped?'no':'yes'}}-->
+                                    </th>
+                                    <th>max</th></tr>
+                                <tr>
+                                    <td class="cell_values" title="Minimum Value">{{cue.MinValue}}</td>
+                                    <th class="cell_values cell_exit">{{cue.IsFlipped?cue.CasesYes:cue.CasesNo}}</th>
+                                    <td class="cell_values">
+                                        <input ng-model="cue.SplitValue" ng-change="ConvertToBinary()" type="number" title="Split Value">
+                                    </td>
+                                    <th class="cell_values cell_exit">{{cue.IsFlipped?cue.CasesNo:cue.CasesYes}}</th>
+                                    <td class="cell_values" title="Maximum Value">{{cue.MaxValue}}</td>
+                                </tr>
+                                <!--<tr>
+                                    <td class="stats_slider" colspan="5"><div class="split_slider" title="Change the Split Value"></div></td>
+                                </tr>-->
+                            </table>
+                            <div class="ng_slider" ng-mouseup="ConvertToBinary()">
+                                <rzslider rz-slider-model="cue.SplitValue"
+                                          rz-slider-options="{
+                                                floor: cue.MinValue,
+                                                ceil: cue.MaxValue,
+                                                step:0.5,
+                                                precision:1,
+                                                hidePointerLabels:true,
+                                                hideLimitLabels:true
+                                              }">
+                                </rzslider>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!--<div id="cases_container">-->
+            <table class="usage_table">
+                <tr>
+                    <th class="table_title" ng-class="color_theme" colspan="2">SPLIT OF DATASET'S CASES</th>
+                    <td><button id="shuffle_cases" class="button_stat" ng-click="ButtonShuffleDatasetCases()">Shuffle Cases</button></td>
+                </tr>
+                <tr>
+                    <th class="valid_header" ng-click="DataSplitCases('training')" ng-class="{'valid_sort_by color_fft':dataset_split.AnalMode =='training'}">Training</th>
+                    <th class="valid_header" ng-click="DataSplitCases('testing')" ng-class="{'valid_sort_by color_fft':dataset_split.AnalMode =='testing'}">Testing</th>
+                    <th class="valid_header" ng-click="DataSplitCases('allcases')" ng-class="{'valid_sort_by color_fft':dataset_split.AnalMode =='allcases'}">All Cases</th>
+                </tr>
+                    <td class="cell_datasplit" ng-class="{'valid_sort_column color_fft':dataset_split.AnalMode =='training'}"><input type="number" ng-model="dataset_split.TrainNum" ng-change="DataCountCases('TrainNum')" /></td>
+                    <td class="cell_datasplit" ng-class="{'valid_sort_column color_fft':dataset_split.AnalMode =='testing'}">{{dataset_split.AllCases-dataset_split.TrainNum}}</td>
+                    <td class="cell_datasplit" ng-class="{'valid_sort_column color_fft':dataset_split.AnalMode =='allcases'}">{{dataset_split.AllCases}}</td>
+                </tr>
+                </tr>
+                    <td class="cell_datasplit" ng-class="{'valid_sort_column color_fft':dataset_split.AnalMode =='training'}"><input type="number" ng-model="dataset_split.TrainPerc" ng-change="DataCountCases('TrainPerc')" /><span>%</span></td>
+                    <td class="cell_datasplit" ng-class="{'valid_sort_column color_fft':dataset_split.AnalMode =='testing'}">{{dataset_split.TestPerc}} %</td>
+                    <td class="cell_datasplit" ng-class="{'valid_sort_column color_fft':dataset_split.AnalMode =='allcases'}">{{dataset_split.TrainPerc+dataset_split.TestPerc}} %</td>
+                </tr>
+            </table>
+            <div class="ng_slider" ng-mouseup="DataCountCases('TrainNum')">
+                <rzslider rz-slider-model="dataset_split.TrainNum"
+                          rz-slider-options="{
+                                                floor: 0,
+                                                ceil: dataset_split.AllCases,
+                                                step:1,
+                                                precision:1,
+                                                hidePointerLabels:true,
+                                                hideLimitLabels:true
+                                              }">
+                </rzslider>
+            </div>
+        <!--</div>-->
+
+        <!--<div id="stats_container" class="inline">-->
+            <div class="table_header_rotated">CRITERION</div>
+            <table class="eval_table">
+                <tr><td class="stats_header table_title" ng-class="color_theme" colspan="6">TREE'S CONTINGENCY TABLE</td></tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <td class="table_header" colspan="4">PREDICTION</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th><input ng-model="drag_criterion[0].BranchYesName" class="cell_title" type="text"/></th>
+                    <th><input ng-model="drag_criterion[0].BranchNoName" class="cell_title" type="text"/></th>
+                    <th>und</th>
+                    <th>sum</th>
+                </tr>
+                <tr>
+                    <td class="cell_title_narrow"></td>
+                    <th class=""><input ng-model="drag_criterion[0].BranchYesName" class="cell_title" type="text"/></td>
+                    <td class="success" title="Hits">{{general_stats.HITS}}</td>
+                    <td class="fail" title="Misses">{{general_stats.MISSES}}</td>
+                    <td class="undecided" title="Undecided Positive">{{general_stats.UNDECIDED_POS}}</td>
+                    <td class="cell_values">{{general_stats.CRIT_YES_SUM}}</td></tr>
+                <tr>
+                    <td class="cell_title_narrow"></td>
+                    <th class="cell_title"><input ng-model="drag_criterion[0].BranchNoName" class="cell_title" type="text"/></th>
+                    <td class="fail" title="False Alarms">{{general_stats.FALSE_ALARMS}}</td>
+                    <td class="success" title="Correct Rejections">{{general_stats.CORRECT_REJECTIONS}}</td>
+                    <td class="undecided" title="Undecided Negative">{{general_stats.UNDECIDED_NEG}}</td>
+                    <td class="cell_values">{{general_stats.CRIT_NO_SUM}}</td>
+                </tr>
+                <tr>
+                    <td class="cell_title_narrow"></td>
+                    <th class="cell_title">sum</th>
+                    <td class="cell_values">{{general_stats.PRED_YES_SUM}}</td>
+                    <td class="cell_values">{{general_stats.PRED_NO_SUM}}</td>
+                    <td class="cell_values">{{general_stats.PRED_UND_SUM}}</td>
+                    <td class="cell_values">{{general_stats.PRED_SUM_SUM}}*</td>
+                </tr>
+                <tr><th colspan="6">*number of classification decisions</th></tr>
+
+            </table>
+
+            <table class="eval_table">
+                <tr>
+                    <td class="stats_header table_title" ng-class="color_theme" colspan="5">TREE'S STATISTICS</td>
+                </tr>
+                <tr>
+                    <th title="Probability of Hits">p(H)</th>
+                    <th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th>
+                    <th title="D prime">d&#8242</th>
+                    <th title="Frugality">Frug</th>
+                    <th title="C or Bias">Bias</th>
+                </tr>
+                <tr>
+                    <td class="cell_values" title="Probability of Hits">{{general_stats.PHITS}}</td>
+                    <td class="cell_values" title="Probability of Hits - Probability of False Alarms">{{general_stats.PHITSMINUSPFA}}</td>
+                    <td class="cell_values" title="D prime">{{general_stats.DPRIME}}</td>
+                    <td class="cell_values" title="Frugality">{{general_stats.FRUGALITY}}</td>
+                    <td class="cell_values" title="C or Bias">{{general_stats.BIAS}}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                </tr>
+            </table>
+        <!--</div>-->
+
+        <div>
+            <button id="shuffle_100" ng-click="ButtonReshuffle100()" class="button_action button_smaller">
+                Reshuffle Cases
+                <input type="number" id="reshuffle_cycles" ng-click="$event.stopPropagation();" class="cell_values" ng-model="dataset_split.ReshuffleCycles" />
+                Times</button>
+
+            <div id="shuffle_100_table" style="display:none">
+                <table class="eval_table">
+                    <tr>
+                        <td class="stats_header table_title" ng-class="color_theme" colspan="5">AVERAGE TESTING STATISTICS</td>
+                    </tr>
+                    <tr>
+                        <th title="Probability of Hits">p(H)</th>
+                        <th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th>
+                        <th title="D prime">d&#8242</th>
+                        <th title="Frugality">Frug</th>
+                        <th title="C or Bias">Bias</th>
+                    </tr>
+                    <tr>
+                        <td class="cell_values" title="Probability of Hits">{{general_stats.PHITS_100 | number:3}}</td>
+                        <td class="cell_values" title="Probability of Hits - Probability of False Alarms">{{general_stats.PHITSMINUSPFA_100  | number:3}}</td>
+                        <td class="cell_values" title="D prime">{{general_stats.DPRIME_100  | number:3}}</td>
+                        <td class="cell_values" title="Frugality">{{general_stats.FRUGALITY_100  | number:3}}</td>
+                        <td class="cell_values" title="C or Bias">{{general_stats.BIAS_100  | number:3}}</td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!--<div>
+            <table class="eval_table" >
+                <tr>
+                    <td class="table_title" ng-class="color_theme" colspan="5">COMPETITION</td>
+                </tr>
+                <tr>
+                    <td class="table_header_grey" colspan="5">Multiple Logistic Regression</td>
+                </tr>
+                <tr>
+                    <th title="Probability of Hits">p(H)</th>
+                    <th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th>
+                    <th title="D prime">d&#8242</th>
+                    <th title="Frugality">Frug</th>
+                    <th title="C or Bias">Bias</th>
+                </tr>
+                <tr>
+                    <td class="cell_values" title="Probability of Hits">{{multi_logistic_regression.PHITS}}</td>
+                    <td class="cell_values" title="Probability of Hits - Probability of False Alarms">{{multi_logistic_regression.PHITSMINUSPFA}}</td>
+                    <td class="cell_values" title="D prime">{{multi_logistic_regression.DPRIME}}</td>
+                    <td class="cell_values" title="Frugality">{{multi_logistic_regression.FRUGALITY}}</td>
+                    <td class="cell_values" title="C or Bias">{{multi_logistic_regression.BIAS}}</td>
+                </tr>
+            </table>
+        </div>-->
+    </div>
+
+<!--    <div class="columns">
+        &lt;!&ndash;<div class="drophere disabled" id="drophere_tree0">Drop the cues here!</div>&ndash;&gt;
+    </div>-->
+    <ul ui-sortable="sortableOptions" ng-model="drag_tree" id="tree" class="">
+        <li class="widget" ng-repeat="cue in drag_tree" on-finish-render="ngFinishedTree" id="{{cue.CueName}}" name="{{cue.CueName}}">
+            <div class="widget_head" ng-class="color_theme">
+                <div class="widget_title" >
+                    <span ng-marquee-overflow title="{{cue.CueName}}">{{cue.CueName}}</span>
+                </div>
+                <div class="button_expand_div" ng-click="cue.WidgetExpand=!cue.WidgetExpand; ButtonExpandCue($event)" title="Expand/Collapse the Cue">
+                    <svg  class="button_control button_expand" height="20" width="20">
+                        <polyline class="down" ng-hide="cue.WidgetExpand" points="3 7,10 14,17 7"/>
+                        <polyline class="up" ng-show="cue.WidgetExpand" points="3 13,10 6,17 13"/></svg>
+                </div>
+
+            </div>
+            <!--<div class="widget_content" style="display: none;">-->
+            <div class="widget_content" style="display: none">
+                <div class="unsortable inline">
+
+                    <table class="split_table">
+                        <tr><td class="table_title" ng-class="color_theme" colspan="5">SPLIT OF CUE'S VALUES</td></tr>
+                        <tr>
+                            <th>min</th>
+                            <th class="cell_exit" title="Values between MIN (included) and SPLIT (included) are...">
+                                <input ng-show="cue.IsFlipped" ng-model="cue.BranchYesName" type="text"/>
+                                <input ng-show="!cue.IsFlipped" ng-model="cue.BranchNoName" type="text"/>
+                                <!--{{cue.IsFlipped?cue.BranchYesName:cue.BranchNoName}}-->
+                            </th>
+                            <td class="swap" ng-click="cue.IsFlipped=!cue.IsFlipped;ConvertToBinary()" title="Swap YES and NO Ranges">
+                                <svg class="button_swap" height="20" width="40">
+                                    <polyline class="left" points="9 3,2 10,9 17"/>
+                                    <polyline class="right" points="31 3,38 10,31 17"/>
+                                    <line x1="2" y1="10" x2="38" y2="10"/>
+                                </svg>
+                            </td>
+                            <th class="cell_exit" title="Values between SPLIT (excluded) and MAX (included) are...">
+                                <input ng-show="!cue.IsFlipped" ng-model="cue.BranchYesName" type="text"/>
+                                <input ng-show="cue.IsFlipped" ng-model="cue.BranchNoName" type="text"/>
+                                <!--{{cue.IsFlipped?cue.BranchNoName:cue.BranchYesName}}-->
+                            </th>
+                            <th>max</th></tr>
+                        <tr>
+                            <td class="cell_values" title="Minimum Value">{{cue.MinValue}}</td>
+                            <th class="cell_values cell_exit">{{cue.IsFlipped?cue.CasesYes:cue.CasesNo}}</th>
+                            <td class="cell_values">
+                                <input ng-model="cue.SplitValue" ng-change="ConvertToBinary()" type="number" title="Split Value">
+                            </td>
+                            <th class="cell_values cell_exit">{{cue.IsFlipped?cue.CasesNo:cue.CasesYes}}</th>
+                            <td class="cell_values" title="Maximum Value">{{cue.MaxValue}}</td>
+                        </tr>
+                        <!--<tr>
+                            <td class="stats_slider" colspan="5"><div class="split_slider" title="Change the Split Value"></div></td>
+                        </tr>-->
+                    </table>
+                    <div class="ng_slider" ng-mouseup="ConvertToBinary()">
+                        <rzslider rz-slider-model="cue.SplitValue"
+                                  rz-slider-options="{
+                                                floor: cue.MinValue,
+                                                ceil: cue.MaxValue,
+                                                step:0.5,
+                                                precision:1,
+                                                hidePointerLabels:true,
+                                                hideLimitLabels:true
+                                              }">
+                        </rzslider>
+                    </div>
+
+                    <div class="stat_cue">
+                        <table class="eval_table">
+                            <tr>
+                                <td class="stats_header table_title" ng-class="color_theme" colspan="6">STATS OF THIS CUE</td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" title="Probability of Hits">p(H)</th>
+                                <th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th>
+                                <th title="D prime">d&#8242</th>
+                                <th title="Frugality">Frug</th>
+                                <th title="C or Bias">Bias</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="cell_values" title="Probability of Hits">{{cue.PHITS}}</td>
+                                <td class="cell_values" title="Probability of Hits - Probability of False Alarms">{{cue.PHITSMINUSPFA}}</td>
+                                <td class="cell_values" title="D prime">{{cue.DPRIME}}</td>
+                                <td class="cell_values" title="Frugality">{{cue.FRUGALITY}}</td>
+                                <td class="cell_values" title="C or Bias">{{cue.BIAS}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="stat_tree" style="display: none">
+                        <table class="eval_table">
+                            <tr>
+                                <td class="stats_header table_title" ng-class="color_theme" colspan="6">STATS OF TREE UP TO THIS CUE</td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" title="Probability of Hits">p(H)</th>
+                                <th title="Probability of Hits - Probability of False Alarms">p(H)-p(FA)</th>
+                                <th title="D prime">d&#8242</th>
+                                <th title="Frugality">Frug</th>
+                                <th title="C or Bias">Bias</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="cell_values" title="Probability of Hits">{{cue.treeUpToThisCue.PHITS}}</td>
+                                <td class="cell_values" title="Probability of Hits - Probability of False Alarms">{{cue.treeUpToThisCue.PHITSMINUSPFA}}</td>
+                                <td class="cell_values" title="D prime">{{cue.treeUpToThisCue.DPRIME}}</td>
+                                <td class="cell_values" title="Frugality">{{cue.treeUpToThisCue.FRUGALITY}}</td>
+                                <td class="cell_values" title="C or Bias">{{cue.treeUpToThisCue.BIAS}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="unsortable inline">
+                    <div class="conting_cue">
+
+                        <table class="eval_table">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td class="stats_header table_title" ng-class="color_theme" colspan="3">THIS CUE</td>
+                                <td><svg class="button_stat" ng-click="ButtonsChangeCueStats($event)" height="20" width="40">
+                                    <polyline class="up" points="8 9,15 2,22 9"/>
+                                    <line x1="15" y1="2" x2="15" y2="18"/></svg></td>
+                            </tr>
+                            <tr>
+                                <td class="cell_title"></td>
+                                <td></td>
+                                <td class="table_header" colspan="4">PREDICTIONS</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <th><div class="cell_title">{{drag_criterion[0].BranchYesName}}</div></th>
+                                <th><div class="cell_title">{{drag_criterion[0].BranchNoName}}</div></th>
+                                <th>und</th>
+                                <th>sum</th>
+                            </tr>
+                            <tr>
+                                <td class="cell_title_narrow"></td>
+                                <th class="cell_title"><div class="cell_title">{{drag_criterion[0].BranchYesName}}</div></td>
+                                <td class="success" title="Hits">{{cue.HITS}}</td>
+                                <td class="fail" title="Misses">{{cue.MISSES}}</td>
+                                <td class="undecided" title="Undecided Positive">{{cue.UNDECIDED_POS}}</td>
+                                <td class="cell_values">{{cue.CRIT_YES_SUM}}</td>
+                            </tr>
+                            <tr>
+                                <td class="cell_title_narrow"></td>
+                                <th class="cell_title"><div class="cell_title">{{drag_criterion[0].BranchNoName}}</div></th>
+                                <td class="fail" title="False Alarms">{{cue.FALSE_ALARMS}}</td>
+                                <td class="success" title="Correct Rejections">{{cue.CORRECT_REJECTIONS}}</td>
+                                <td class="undecided" title="Undecided Negative">{{cue.UNDECIDED_NEG}}</td>
+                                <td class="cell_values">{{cue.CRIT_NO_SUM}}</td>
+                            </tr>
+                            <tr>
+                                <td class="cell_title_narrow"></td>
+                                <th class="cell_title">sum</th>
+                                <td class="cell_values">{{cue.PRED_YES_SUM}}</td>
+                                <td class="cell_values">{{cue.PRED_NO_SUM}}</td>
+                                <td class="cell_values">{{cue.PRED_UND_SUM}}</td>
+                                <td class="cell_values">{{cue.PRED_SUM_SUM}}</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </table>
+                        <div class="table_header_rotated">CRITERION</div>
+                    </div>
+                    <div class="conting_tree" style="display: none">
+                        <table class="eval_table">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td class="stats_header table_title" ng-class="color_theme" colspan="3">TREE UP TO THIS CUE</td>
+                                <td><svg class="button_stat" ng-click="ButtonsChangeCueStats($event)" height="20" width="40">
+                                    <polyline class="down" points="8 11,15 18,22 11"/>
+                                    <line x1="15" y1="2" x2="15" y2="18"/></svg></td>
+                            </tr>
+                            <tr>
+                                <td class="cell_title"></td>
+                                <td></td>
+                                <td class="table_header" colspan="4">PREDICTION</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <th><div class="cell_title">{{drag_criterion[0].BranchYesName}}</div></th>
+                                <th><div class="cell_title">{{drag_criterion[0].BranchNoName}}</div></th>
+                                <th>und</th>
+                                <th>sum</th>
+                            </tr>
+                            <tr>
+                                <td class="cell_title_narrow"></td>
+                                <th class="cell_title"><div class="cell_title">{{drag_criterion[0].BranchYesName}}</div></td>
+                                <td class="success" title="Hits">{{cue.treeUpToThisCue.HITS}}</td>
+                                <td class="fail" title="Misses">{{cue.treeUpToThisCue.MISSES}}</td>
+                                <td class="undecided" title="Undecided Positive">{{cue.treeUpToThisCue.UNDECIDED_POS}}</td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.CRIT_YES_SUM}}</td>
+                            </tr>
+                            <tr>
+                                <td class="cell_title_narrow"></td>
+                                <th class="cell_title"><div class="cell_title">{{drag_criterion[0].BranchNoName}}</div></th>
+                                <td class="fail" title="False Alarms">{{cue.treeUpToThisCue.FALSE_ALARMS}}</td>
+                                <td class="success" title="Correct Rejections">{{cue.treeUpToThisCue.CORRECT_REJECTIONS}}</td>
+                                <td class="undecided" title="Undecided Negative">{{cue.treeUpToThisCue.UNDECIDED_NEG}}</td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.CRIT_NO_SUM}}</td>
+                            </tr>
+                            <tr>
+                                <td class="cell_title_narrow"></td>
+                                <th class="cell_title">sum</th>
+                                <td class="cell_values">{{cue.treeUpToThisCue.PRED_YES_SUM}}</td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.PRED_NO_SUM}}</td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.PRED_UND_SUM}}</td>
+                                <td class="cell_values">{{cue.treeUpToThisCue.PRED_SUM_SUM}}</td>
+                            </tr>
+                            <tr><th></th></tr>
+                        </table>
+                        <div class="table_header_rotated">CRITERION</div>
+                    </div>
+                </div>
+            </div>
+            <div class="arrows_exits unsortable">
+                <!--here will be added all arrows and exits-->
+                <div ng-show="(cue.BranchNoExit&&!cue.BranchYesExit)||
+                            (!cue.BranchNoExit&&cue.BranchYesExit)" class="cue_arrow">
+                    <div>
+                        <svg height="40" width="40">
+                            <line x1="20" y1="0" x2="20" y2="40"></line>
+                            <line x1="5" y1="25" x2="20" y2="40"></line>
+                            <line x1="35" y1="25" x2="20" y2="40"></line>
+                            <!--<text id="cue_arrow_text" text-anchor="middle" x="20" y="23" font-size="10px" stroke-width="1"
+                                  stroke="none" fill="black">{{cue.BranchNoExit?cue.BranchYesName:cue.BranchNoName}}
+                            </text>-->
+                        </svg>
+                    </div>
+                    <div class="exit_arrow_text">
+                        <input ng-show="cue.BranchNoExit" ng-model="cue.BranchYesName" type="text"/>
+                        <input ng-show="!cue.BranchNoExit" ng-model="cue.BranchNoName" type="text"/>
+                    </div>
+                </div>
+                <div ng-show="cue.BranchNoExit" id="exit_left" class="exit_left exit_widget unsortable fade">
+                    <div ng-show="heuristic_info.Access=='private' && !$last" ng-click="cue.BranchNoExit=!cue.BranchNoExit;
+                                                                                        cue.BranchYesExit=!cue.BranchYesExit;
+                                                                                        GetGeneralAndTreeStats()"
+                         title="Switch EXIT Direction">
+                        <svg class="button_control button_switch switch_to_right" height="20" width="20">
+                            <polyline class="right" points="7 3,14 10,7 17"></polyline>
+                        </svg>
+                    </div>
+                    <div class="exit_widget_title"><span>decide</span></div>
+                    <svg class="exit_arrow" height="45" width="45">
+                        <line x1="0" y1="45" x2="45" y2="0"></line>
+                        <line x1="1" y1="25" x2="1" y2="44"></line>
+                        <line x1="1" y1="44" x2="20" y2="44"></line>
+                        <!-- <text text-anchor="middle" x="22" y="25" font-size="10px" stroke-width="1" stroke="none"
+                               fill="black">{{cue.BranchNoName}}
+                         </text>-->
+                    </svg>
+                    <div class="exit_arrow_text">
+                        <input ng-model="cue.BranchNoName" type="text"/>
+                    </div>
+                </div>
+                <div ng-show="cue.BranchYesExit" id="exit_right" class="exit_right exit_widget unsortable fade">
+                    <div ng-show="heuristic_info.Access=='private' && !$last" ng-click="cue.BranchNoExit=!cue.BranchNoExit;
+                                                                                        cue.BranchYesExit=!cue.BranchYesExit;
+                                                                                        GetGeneralAndTreeStats()"
+                         title="Switch EXIT Direction">
+                        <svg class="button_control button_switch switch_to_left" height="20" width="20">
+                            <polyline class="left" points="13 3,6 10,13 17"></polyline>
+                        </svg>
+                    </div>
+                    <div class="exit_widget_title"><span>decide</span></div>
+                    <svg class="exit_arrow" height="45" width="45">
+                        <line x1="0" y1="0" x2="45" y2="45"></line>
+                        <line x1="44" y1="25" x2="44" y2="44"></line>
+                        <line x1="25" y1="44" x2="44" y2="44"></line>
+                        <!--<text text-anchor="middle" x="22" y="25" font-size="10px" stroke-width="1" stroke="none"
+                              fill="black">ng-model="cue.BranchYesName"
+                        </text>-->
+                    </svg>
+                    <div class="exit_arrow_text">
+                        <input ng-model="cue.BranchYesName" type="text"/>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <!--<div class="columns">
+        </div>-->
+
+    <div id="heur_info_column" class="info_column inline">
+
+        <button id="button_stepinfo" ng-click="ButtonShowDatasetStepInfo($event)" class="button_action">
+            Step-By-Step Decisions
+            <svg class="button_stat" height="20" width="40"><polyline class="up" points="8 9,15 2,22 9"/>
+                <polyline class="down" points="8 11,15 18,22 11"/><line x1="15" y1="2" x2="15" y2="18"/>
+            </svg>
+        </button>
+        <div id="dataset_stepinfo_container" style="display: none">
+            <!--<hot-table datarows="dataset_stepinfo" col-headers="dataset_stepinfo_colheads" row-headers="true" settings=""></hot-table>-->
+
+        </div>
+
+        <div class="titleblock">
+
+            <h2 class="title">
+                <input ng-model="heuristic_info.Title" class="input_title" type="text"/>
+            </h2>
+
+            <div>
+                <div class="inline" title="{{heuristic_info.Access}} access">
+                    <img ng-src="img/{{heuristic_info.Access}}/icon_{{heuristic_info.Access}}_600.jpg">
+                    <!--<h4 class="access">{{heuristic_info.Access}} access</h4>-->
+                </div>
+                <div class="infoblock inline">
+                    <h4 class="heuristic">{{heuristic_info.DecisionAlgorithm}} algorithm</h4>
+                    <h4 class="date">{{heuristic_info.Date | date:'yyyy-MM-dd, HH:mm'}}</h4>
+                    <h4 class="username">By {{heuristic_info.UserName}}</h4>
+                    <!--<h4 class="date">{{heuristic_info.Date | date:'yyyy-MM-dd, HH:mm'}} by {{heuristic_info.UserName}}</h4>-->
+                    <h4 class="size">{{heuristic_info.SizeCues}} cues</h4>
+                </div>
+            </div>
+
+            <div class="details">
+                <textarea ng-model="heuristic_info.Description" placeholder="Describe your task here..." type="text"/>
+            </div>
+        </div>
+
+        <h4><br></h4>
+        <h4>Using the dataset:</h4>
+        <h3 class="title">{{dataset_info.Title}}</h3>
+        <h5 class="date">{{dataset_info.Date | date:'yyyy-MM-dd, HH:mm'}} by {{dataset_info.UserName}}</h5>
+
+        <!--<table class="usage_table" >
+            <tr><th class="table_title" ng-class="color_theme" colspan="3">USAGE</th></tr>
+            <tr><th>Dataset</th><th>Date</th><th>User</th></tr>
+            <tr><td>data_CCU_89.csv</td><td>17.08.2015</td><td>H.Neth</td></tr>
+            <tr><td>data_CCU_89.csv</td><td>15.08.2015</td><td>E.Jablonskis</td></tr>
+            <tr><td>data_CCU_240.csv</td><td>09.08.2015</td><td>L.Schooler</td></tr>
+        </table>-->
+    </div>
+
+</div>
+
+

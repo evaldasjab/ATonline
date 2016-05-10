@@ -1,26 +1,32 @@
 
-<div class="blue_area">
+<div id="blue_area_top" class="blue_area" ng-class="color_theme">
+    <h1 id="page_title">ADAPTIVE TOOLBOX Online</h1>
+    <img id="mpib_logo" src="img/MPIB_Logo_weiss.png" alt="Max Planck Institute for Human Development in Berlin, Germany">
+
+    <ul class="" id="menu">
+        <li id="menu_mytoolbox" class="inline" title="Private datasets and tasks - visible only to me"><a href="index.html#/">MY TOOLBOX</a></li>
+        <li id="menu_datasets" class="inline active" title="Public datasets - visible to all users"><a href="index.html#/data">DATASETS</a></li>
+        <li id="menu_fft" class="inline" title="Public tasks - visible to all users"><a href="index.html#/fft">CLASSIFICATION TASKS</a></li>
+        <li id="menu_heuristics" class="inline" title="Public tasks - visible to all users"><a href="index.html#/heur">COMPARISON TASKS</a></li>
+    </ul>
+</div>
+
+<div class="blue_area" ng-class="color_theme">
 
     <div>
-        <button ng-click="clickUpload()" class="buttons_grey button_load_csv" id="button_upload_csv_file">Upload CSV File</button>
+        <button ng-click="clickUpload()" class="button_action button_load_csv inline" id="button_upload_csv_file">Upload CSV File</button>
         <input type="file" custom-on-change="uploadFile" id="csv-file" name="files">
 
-        <!--<select id="button_sort" class="button_grey">
-            <option>Sort By:</option>
-            <option value="date">Date</option>
-            <option value="kind">Kind</option>
-            <option value="title">Title</option>
-            <option value="usage">Usage</option>
-            <option value="author">Author</option>
-            </optgroup>
-        </select>-->
+        <div class="search_filter inline">
+            <!--solution with angular.js-->
+            Search: <input ng-model="query" type="text"/>
+            Sorty by:
+            <a href="" ng-click="sortField ='title'; reverse = !reverse">Title</a>,
+            <a href="" ng-init="sortField='date';reverse=true" ng-click="sortField ='date'; reverse = !reverse">Date</a>,
+            <a href="" ng-click="sortField ='uploader'; reverse = !reverse">Uploader</a>,
+            <a href="" ng-click="sortField ='usage_users'; reverse = !reverse">Usage</a>
+        </div>
 
-        <select id="button_view" class="button_grey">
-            <option>View As:</option>
-            <option value="list">List</option>
-            <option value="grid">Grid</option>
-            </optgroup>
-        </select>
     </div>
 
 </div>
@@ -28,24 +34,35 @@
 <div id="white_area">
 
     <!--solution with angular.js-->
-    Search: <input ng-model="query" type="text"/>
+    <!--Search: <input ng-model="query" type="text"/>
     Sorty by: <a href="" ng-click="sortField ='title'; reverse = !reverse">Title</a>,
-    <a href="" ng-click="sortField ='date'; reverse = !reverse">Date</a>,
+    <a href="" ng-init="sortField='date';reverse=true" ng-click="sortField ='date'; reverse = !reverse">Date</a>,
     <a href="" ng-click="sortField ='uploader'; reverse = !reverse">Uploader</a>,
-    <a href="" ng-click="sortField ='usage_users'; reverse = !reverse">Usage</a>
+    <a href="" ng-click="sortField ='usage_users'; reverse = !reverse">Usage</a>-->
 
-    <ul id ="view_tools" class="view-list">
+    <ul class="view-list one-column">
         <li ng-repeat="entry in datasets | filter:query | orderBy:sortField:reverse" on-finish-render="ngRepeatFinished">
-            <a class="image inline" href="#/data/{{entry.DatasetId}}"><img ng-src="img/{{entry.Image}}" width="96" height="96"></a>
-            <div id="titleblock_id" class="titleblock inline">
-                <h2 class="title">{{entry.Title}}</h2>
-                <h4><span class="date">{{entry.Date}}</span> by <span class="username">{{entry.UserName}}</span></h4>
-                <h4 class="date_author"><span class="size_attributes">{{entry.SizeCues}}</span> variables x <span class="size_cases">{{entry.SizeCases}}</span> cases</h4>
-                <h4><span class="usage_users">{{entry.UsageUsers}}</span> users for <span class="usage_ffts">{{entry.UsageFfts}}</span> FFTs and <span class="usage_heuristics">{{entry.UsageHeuristics}}</span> heuristics</h4>
+            <div class="iconblock inline">
+                <a class="image inline" href="#/data/{{entry.DatasetId}}">
+                    <img ng-src="img/public/{{entry.Image}}">
+                </a>
             </div>
-            <div class="infoblock inline">
-                <h4><span class="access">{{entry.Access}}</span></h4>
-                <span class="description">{{entry.Description}}</span>
+            <div class="titleblock inline">
+                <div class="header">
+                    <h2>{{entry.Title}}</h2>
+                </div>
+                <div class="infoblock">
+                    <div class="info inline">
+                        <h4 class="date">{{entry.Date | date:'yyyy-MM-dd, HH:mm'}}</h4>
+                        <h4 class="username">By {{entry.UserName}}</h4>
+                        <h4 class="size">{{entry.SizeCues}} attributes x {{entry.SizeCases}} cases</h4>
+                        <!--<h4 class="usage">Used by {{entry.UsageUsers}} users for {{entry.UsageTasks}} tasks</h4>-->
+                        <h4 class="access">{{entry.Access}} access</h4>
+                    </div>
+                    <div class="details inline">
+                        <div class="description">{{entry.Description}}</div>
+                    </div>
+                </div>
             </div>
         </li>
     </ul>

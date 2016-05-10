@@ -6,6 +6,8 @@
  UNIVERSAL - for all ffts and heuristics
  *****************************/
 
+/*
+
 function RestoreCuesArrowsAndExits(myHeuristicName, myTreeArray) {
 
     // select text, depending on the heuristic
@@ -48,7 +50,7 @@ function RestoreCuesArrowsAndExits(myHeuristicName, myTreeArray) {
 
             UpdateArrowsAndExits(myHeuristicName, myTreeArray);
 
-            /*switch (myCueObj.BranchNo +'|'+ myCueObj.BranchYes) {
+            /!*switch (myCueObj.BranchNo +'|'+ myCueObj.BranchYes) {
 
                 case 'exit|continue':
 
@@ -86,11 +88,11 @@ function RestoreCuesArrowsAndExits(myHeuristicName, myTreeArray) {
                     DrawArrowToNextCue(myCueId, myNoText);
 
                     break;
-            }*/
+            }*!/
         }
 
         // do for the last cue
-        /*if (myIndex == myTreeArray.length-1) {
+        /!*if (myIndex == myTreeArray.length-1) {
 
             switch (myHeuristicName) {
 
@@ -122,14 +124,14 @@ function RestoreCuesArrowsAndExits(myHeuristicName, myTreeArray) {
 
                     break;
             }
-        }*/
+        }*!/
     });
 }
 
 function UpdateArrowsAndExits(myHeuristicName, myTreeArray) {
-    console.log('Updating arrows and exits...');
+    //console.log('Updating arrows and exits...');
 
-    // select text, depending on the heuristic
+    // select text, depending on the heuristic  FIX THIS!!!
     switch (myHeuristicName) {
 
         case 'Fast-and-Frugal Tree':
@@ -159,6 +161,10 @@ function UpdateArrowsAndExits(myHeuristicName, myTreeArray) {
         //debugger;
 
         var myCueId = myCueObj.CueName;
+        //var myNoText = myCueObj.BranchNoName;
+        //var myYesText = myCueObj.BranchYesName;
+        var myNoText = myCueObj.BranchNoName;
+        var myYesText = myCueObj.BranchYesName;
 
         switch (myCueObj.BranchNo +'|'+ myCueObj.BranchYes) {
 
@@ -271,7 +277,7 @@ function AddExitNode(myCueId, myExitClass, myExitArrowText, myExitTitle) {
 
     // for the second EXIT node, change class depending on the first node
     if (myExitClass == 'second') {
-        console.log(myExitsArray);
+        //console.log(myExitsArray);
 
         switch (myExitsArray[0]) {
             case 'exit_left':
@@ -298,7 +304,7 @@ function AddExitNode(myCueId, myExitClass, myExitArrowText, myExitTitle) {
                 'font-size="10px" stroke-width="1" stroke="none"'+
                 'fill="black">'+ myExitArrowText +'</text>';
             var myIconHtml =  '<div title="Switch EXIT Direction">'+
-                '<svg class="button_controls button_switch switch_to_right" height="20" width="20">'+
+                '<svg class="button_control button_switch switch_to_right" height="20" width="20">'+
                 '<polyline class="right" points="7 3,14 10,7 17"/>'+
                 '</svg>'+
                 '</div>';
@@ -312,7 +318,7 @@ function AddExitNode(myCueId, myExitClass, myExitArrowText, myExitTitle) {
                 'font-size="10px" stroke-width="1" stroke="none"'+
                 'fill="black">'+ myExitArrowText +'</text>';
             var myIconHtml =  '<div title="Switch EXIT Direction">'+
-                '<svg class="button_controls button_switch switch_to_left" height="20" width="20">'+
+                '<svg class="button_control button_switch switch_to_left" height="20" width="20">'+
                 '<polyline class="left" points="13 3,6 10,13 17"/>'+
                 '</svg>'+
                 '</div>';
@@ -436,7 +442,8 @@ function UpdateValidityTags(myHeuristic, myListId, myValidities) {
             case 'Take The Best':
 
                 // define the html code
-                var myHtml = '<div class="widget_validity validity_ttb">v</div>';
+                //var myHtml = '<div class="widget_validity validity_ttb">v</div>';
+                var myHtml = '<div class="widget_validity validity_ttb"></div>';
                 break;
 
             case 'Weighted Tallying':
@@ -450,27 +457,16 @@ function UpdateValidityTags(myHeuristic, myListId, myValidities) {
                 break;
         }
 
-        // get the array of cues in the tree, "sortable" may be disabled ($('#tree').sortable('toArray') doesn't work)
-/*        var myTreeArray = GetElementsArray(myListId, 'widget');
-
-        var v = 1;
-        myTreeArray.forEach(function (myCueId) {
-
-            // add the html code
-            $(myHtml).hide().appendTo('#'+myCueId+' .widget_tags').fadeIn(300);
-            // add the index
-            $('#'+myCueId+' .widget_validity').html('v'+ v);
-            v++;
-        });*/
-
         // add the validity tags with index
         myValidities.forEach(function(myCueObj, myIndex) {
 
             // add the html code
             $(myHtml).hide().appendTo('#'+myCueObj.CueName+' .widget_tags').fadeIn(300);
+
             // add the index
-            var v = myCueObj.index + 1;
-            $('#'+myCueObj.CueName+' .widget_validity').html('v'+ v);
+            //var v = myCueObj.index + 1;
+            var v = myIndex + 1;
+            $('#'+myCueObj.CueName+' .widget_validity').html(v);
 
         })
 
@@ -478,3 +474,4 @@ function UpdateValidityTags(myHeuristic, myListId, myValidities) {
 }
 
 
+*/

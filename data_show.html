@@ -1,55 +1,85 @@
-<!--Here will be the table showing a dataset no.: {{dataset_id}}-->
-<!--Dataset entry: {{dataset_full[0].age}}-->
 
+<div id="blue_area_top" class="blue_area" ng-class="color_theme">
+    <h1 id="page_title">ADAPTIVE TOOLBOX Online</h1>
+    <img id="mpib_logo" src="img/MPIB_Logo_weiss.png" alt="Max Planck Institute for Human Development in Berlin, Germany">
 
-<div class="blue_area">
+    <ul class="" id="menu">
+        <li id="menu_mytoolbox" class="inline" ng-class="{'active':dataset_info.Access =='private'}" title="Private datasets and tasks - visible only to me"><a href="index.html#/">MY TOOLBOX</a></li>
+        <li id="menu_datasets" class="inline" ng-class="{'active':dataset_info.Access =='public'}" title="Public datasets - visible to all users"><a href="index.html#/data">DATASETS</a></li>
+        <li id="menu_fft" class="inline" title="Public tasks - visible to all users"><a href="index.html#/fft">CLASSIFICATION TASKS</a></li>
+        <li id="menu_heuristics" class="inline" title="Public tasks - visible to all users"><a href="index.html#/heur">COMPARISON TASKS</a></li>
+    </ul>
+</div>
+
+<div class="blue_area" ng-class="color_theme">
 
     <div>
-        <button id="save" class="button_grey">Save</button>
+        <button id="save" class="button_action" disabled>Save Copy To My Toolbox</button>
+        <button id="publish" class="button_action" disabled>Publish To All Users</button>
+        <button id="download" class="button_action" disabled>Download CSV File</button>
+        <button id="remove" class="button_action" disabled>Remove From My Toolbox</button>
+    </div>
 
+    <div>
+        <div class="inline">Use Heuristic: </div>
         <!--<a href="#/{{dataset_info.dataset_id}}/fft/1"><button id="create_fft" class="button_grey">Create FFT</button></a>-->
-        <a href="#/data/{{dataset_info.DatasetId}}/new_fft"><button id="create_fft" class="button_grey">Create FFT</button></a>
+        <a href="#/data/{{dataset_id}}/fft_new"><button id="create_fft" class="button_action button_blue" title="For Classification Task">Fast-and-Frugal Tree</button></a>
+        <a href="#/data/{{dataset_id}}/ttb_new"><button id="create_ttb" class="button_action button_green" title="For Comparison Task">Take The Best</button></a>
+        <a href="#/data/{{dataset_id}}/mini_new"><button id="create_mini" class="button_action button_green" title="For Comparison Task">Minimalist</button></a>
+        <a href="#/data/{{dataset_id}}/tall_new"><button id="create_tall" class="button_action button_green" title="For Comparison Task">Tallying</button></a>
+        <a href="#/data/{{dataset_id}}/weta_new"><button id="create_weta" class="button_action button_green" title="For Comparison Task">Weighted Tallying</button></a>
 
-        <select id="apply_heuristic" class="button_grey" onChange="window.location.href=this.value">
+        <!--<select id="apply_heuristic" class="button_grey" onChange="window.location.href=this.value">
             <option>Apply Heuristic:</option>
-            <option value="#/data/{{dataset_info.DatasetId}}/new_ttb">Take The Best</option>
-            <option value="#/data/{{dataset_info.DatasetId}}/new_mini">Minimalist</option>
-            <option value="#/data/{{dataset_info.DatasetId}}/new_tall">Tallying</option>
-            <option value="#/data/{{dataset_info.DatasetId}}/new_weta">Weighted Tallying</option>
+            <option value="#/data/{{dataset_id}}/ttb_new">Take The Best</option>
+            <option value="#/data/{{dataset_id}}/mini_new">Minimalist</option>
+            <option value="#/data/{{dataset_id}}/tall_new">Tallying</option>
+            <option value="#/data/{{dataset_id}}/weta_new">Weighted Tallying</option>
             </optgroup>
-        </select>
-
-        <button id="download" class="button_grey">Download</button>
-
-        <button id="remove" class="button_grey">Remove</button>
+        </select>-->
     </div>
 
 </div>
 
 <div id="white_area">
 
-    <!--show the dataset using handsontable.js -->
-    <div id="dataset_container" class="inline"></div>
+    <div id="dataset_container" class="inline">
+        <!--show the dataset using handsontable.js -->
+    </div>
 
-    <div id="info_container" class="inline">
+    <div id="dataset_info_column" class="info_column inline">
         <div class="titleblock">
-            <h3 class="title"><input ng-model="dataset_info.Title" type="text"/></h3>
-            <h5 class="date_author">{{dataset_info.Date | date:'yyyy-MM-dd, hh:mm'}} by {{dataset_info.UserName}}</h5>
-            <h5 class="properties">{{dataset_info.SizeCues}} attributes x {{dataset_info.SizeCases}} cases</h5>
-            <h5 class="usage">Used by {{dataset_info.UsageUsers}} users for {{dataset_info.UsageFfts}} FFTs and {{dataset_info.UsageHeuristics}} heuristics</h5>
-        </div>
-        <div class="infoblock">
-            <h5 class="access">{{dataset_info.Access}} access</h5>
-            <input ng-model="dataset_info.Description" type="text"/>
+            <h2 class="title">
+                <input ng-model="dataset_info.Title" class="input_title" type="text"/>
+                <!--<input ng-show="dataset_info.Access =='private'" ng-model="dataset_info.Title" class="input_title" type="text"/>
+                <span ng-show="dataset_info.Access =='public'">{{dataset_info.Title}}</span>-->
+            </h2>
+            <h4 class="date">{{dataset_info.Date | date:'yyyy-MM-dd, HH:mm'}}</h4>
+            <h4 class="username">By {{dataset_info.UserName}}</h4>
+            <h4 class="size">{{dataset_info.SizeCues}} attributes x {{dataset_info.SizeCases}} cases</h4>
+            <h4 class="usage">Used by {{dataset_info.UsageUsers}} users for {{dataset_info.UsageTasks}} tasks</h4>
+            <h4 class="access">{{dataset_info.Access}} access</h4>
+            <div class="details">
+                <textarea ng-model="dataset_info.Description" placeholder="Describe your dataset here..." type="text"/>
+            </div>
         </div>
 
         <table class="usage_table" >
-            <tr><th class="table_title" colspan="3">USAGE</th></tr>
-            <tr><th>Strategy</th><th>Date</th><th>User</th></tr>
-            <tr><td>My FFTree of the Day</td><td>17.08.2015</td><td>H.Neth</td></tr>
-            <tr><td>Newbie FFT</td><td>15.08.2015</td><td>E.Jablonskis</td></tr>
-            <tr><td>Take the Best</td><td>09.08.2015</td><td>L.Schooler</td></tr>
-            <tr><td>Minimalist</td><td>25.07.2015</td><td>S.Luan</td></tr>
+            <tr>
+                <th class="table_title" ng-class="color_theme" colspan="4">USAGE</th>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <th>Algorithm</th>
+                <th>Date</th>
+                <th>User</th>
+            </tr>
+            <tr ng-repeat="usageObj in dataset_usage">
+                <td class="valid_header color_data"><a href=#/{{usageObj.heuristic_abbr}}/{{usageObj.HeuristicId}}>{{usageObj.Title}}</a></td>
+                <td>{{usageObj.DecisionAlgorithm}}</td>
+                <td>{{usageObj.Date | date:'yyyy-MM-dd'}}</td>
+                <td>{{usageObj.UserName}}</td>
+            </tr>
         </table>
     </div>
 
